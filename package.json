@@ -1,0 +1,28 @@
+{
+  "name": "vision-ai",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev:web": "turbo run dev --filter=frontend",
+    "dev:api": "turbo run dev --filter=backend --filter=frontend",
+    "dev": "turbo run dev --parallel",
+    "build": "turbo run build --filter=backend --filter=frontend",
+    "lint": "turbo run lint --filter=backend --filter=frontend",
+    "test": "turbo run test --filter=backend --filter=frontend"
+  },
+  "private": true,
+  "packageManager": "npm@9.2.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "turbo": "^2.4.2"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
