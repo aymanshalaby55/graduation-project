@@ -1,0 +1,17 @@
+"use client";
+
+import { useUserContext } from "@/app/context/UserContext";
+import AdminModels from "@/components/shared/AdminModels";
+import Sidebar from "@/components/shared/Sidebar";
+import { redirect } from "next/navigation";
+import React from "react";
+
+const Dashboard = () => {
+  const { user }: any = useUserContext();
+  if (user?.user?.role === "user") {
+    redirect("/");
+  }
+  return <></>;
+};
+
+export default Dashboard;
