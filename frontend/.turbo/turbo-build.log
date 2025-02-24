@@ -1,0 +1,11 @@
+
+
+> frontend@1.0.0 build
+> next build
+
+sh: 1: next: not found
+[37;40mnpm[0m [0m[31;40mERR![0m [0m[35mLifecycle script `build` failed with error:[0m 
+[0m[37;40mnpm[0m [0m[31;40mERR![0m [0m[35mError: command failed[0m 
+[0m[37;40mnpm[0m [0m[31;40mERR![0m [0m[35m  in workspace: frontend@1.0.0[0m 
+[0m[37;40mnpm[0m [0m[31;40mERR![0m [0m[35m  at location: /home/ayman/Desktop/Programming/Graduation-Project/apps/frontend[0m 
+[0m

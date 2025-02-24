@@ -4,8 +4,8 @@ const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const { createServer } = require("http");
+const morgan = require("morgan");
 const { initializeSocket } = require("./utils/socket");
-
 // Import routes
 const videoRouter = require("./routers/videoRouts");
 const userRouter = require("./routers/userRoutes");
@@ -14,6 +14,9 @@ const aiCallRoutes = require("./routers/aiCallsRoutes");
 const pipelineRoutes = require("./routers/pipelineRoutes");
 
 // Create Express app and HTTP server
+
+
+
 const app = express();
 const httpServer = createServer(app);
 const io = initializeSocket(httpServer);
@@ -25,6 +28,8 @@ const corsOptions = {
   credentials: true,
   optionsSuccessStatus: 200,
 };
+// Morgan middleware for logging HTTP requests
+app.use(morgan(process.env.NODE_ENV === "development" ? "dev" : "combined"));
 
 app.use(cors(corsOptions));
 

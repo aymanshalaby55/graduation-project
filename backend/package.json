@@ -1,11 +1,12 @@
 {
-  "name": "video-analysis",
+  "name": "backend",
   "version": "1.0.0",
+  "private": true,
   "description": "Graduation Project backend task ",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --watch app.js"
+    "dev": "node --watch app.js"
   },
   "author": "Ayman shalaby, Ahmed hashem",
   "license": "ISC",
@@ -22,6 +23,7 @@
     "form-data": "^4.0.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.2.1",
+    "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
     "nodemon": "^3.1.0",
     "socket.io": "^4.8.1",
