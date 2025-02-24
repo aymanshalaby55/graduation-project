@@ -1,0 +1,24 @@
+{
+  "name": "graduation-project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "frontend": "cd frontend && npm run dev",
+    "backend": "cd backend && node app.js",
+    "models": "cd models && source venv/bin/activate && python app.py",
+    "start": "concurrently \"npm run frontend\" \"npm run backend\" \"npm run models\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AhmeWagih/graduation-project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/AhmeWagih/graduation-project/issues"
+  },
+  "homepage": "https://github.com/AhmeWagih/graduation-project#readme",
+  "description": ""
+}
