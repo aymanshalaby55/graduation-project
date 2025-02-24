@@ -2,30 +2,41 @@ version: "3.8"
 
 services:
   frontend:
-    build: ./frontend
+    image: frontend:latest
     ports:
-      - "3001:3001"
+      - "3000:3000"
     depends_on:
       - backend
+      - ai-model
     networks:
-      - app-network
+      - application-networks
 
   backend:
-    build: ./backend
+    image: backend:latest
     ports:
       - "4040:4040"
     depends_on:
-      - models
+      - db
+      - ai-model
     networks:
-      - app-network
+      - backend-networks
+      - application-networks
 
-  models:
-    build: ./models
+  ai-model:
+    image: human-detection:latest
     ports:
       - "5000:5000"
     networks:
-      - app-network
+      - application-networks
+  db:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    networks:
+      - backend-networks
 
 networks:
-  app-network:
+  backend-networks:
+    driver: bridge
+  application-networks:
     driver: bridge
