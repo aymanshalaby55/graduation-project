@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 
 const videoSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: true,
+  },
   videoPath: {
     type: String,
     required: true,
@@ -17,6 +21,12 @@ const videoSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: "aiModel",
   },
+  tags: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: "Tag",
+    },
+  ],
 });
 
 const Video = mongoose.model("Video", videoSchema);

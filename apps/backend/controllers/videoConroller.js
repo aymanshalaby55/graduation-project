@@ -9,6 +9,7 @@ const {
 
 const Video = require("../models/videoModel");
 const User = require("../models/userModel");
+const TagModel = require("../models/tagModel");
 
 // Promisify fs functions we need
 const stat = util.promisify(fs.stat);
@@ -55,6 +56,7 @@ exports.uploadVideo = CatchAsync(async (req, res, next) => {
             fieldname: file.fieldname,
             size: file.size,
           },
+          title: req.body.title,
           storageLimit: newStorageLimit,
         };
 
@@ -159,6 +161,45 @@ exports.streamVideos = CatchAsync(async (req, res, next) => {
     res.writeHead(200, head);
     streamNextVideo(0);
   }
+});
+
+exports.addVideoTag = CatchAsync(async (req, res) => {
+  const { videoId } = req.params;
+  const { tagName } = req.body;
+
+  // Check if video exists
+  const video = await Video.findById(videoId);
+  if (!video) {
+    return res.status(404).json({ message: "Video not found" });
+  }
+
+  // Create new tag
+  const newTag = await TagModel.create({
+    tagName,
+    videoId: video._id,
+  });
+
+  res.status(201).json({
+    status: "success",
+    data: {
+      tag: newTag,
+    },
+  });
+});
+
+exports.getTags = CatchAsync(async (req, res) => {
+  // Get all tags available for user to pick from
+  const tags = await TagModel.find({});
+
+  if (!tags || tags.length === 0) {
+    return res.status(404).json({ message: "No tags found" });
+  }
+
+  res.status(200).json({
+    status: "success",
+    results: tags.length,
+    data: { tags },
+  });
 });
 
 exports.getAllVideos = CatchAsync(async (req, res) => {

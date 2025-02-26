@@ -49,7 +49,7 @@ const upload = multer({
 
 // Process video upload jobs
 videoUploadQueue.process(async (job) => {
-  const { userId, file, storageLimit } = job.data;
+  const { userId, file, storageLimit , title } = job.data;
 
   try {
     // Ensure storage directory exists
@@ -71,6 +71,7 @@ videoUploadQueue.process(async (job) => {
 
     // Create video document
     const video = await Video.create({
+      title: title,
       originalName: file.originalname,
       videoPath: filename,
       videoSize: file.size,

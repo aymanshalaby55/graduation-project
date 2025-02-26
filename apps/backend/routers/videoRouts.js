@@ -10,6 +10,8 @@ router.use(protect);
 router.get("/getAllVideos", protect, videoController.getAllVideos);
 router.get("/getUserVideos", protect, videoController.getUserVideos);
 router.post("/uploadVideo", videoController.uploadVideo);
+router.post("/addTag/:videoId", videoController.addVideoTag);
+router.get("/getAllTags", videoController.getTags);
 // router.get('/getVideo', videoController.getVideo);
 
 router.delete("/deleteVideo/:videoId", videoController.deleteVideo);
