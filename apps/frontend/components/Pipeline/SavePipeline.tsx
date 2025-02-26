@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -16,16 +16,15 @@ import { useRouter } from 'next/navigation';
 import api from '@/app/utils/api';
 import { useToast } from '@/components/ui/use-toast';
 import { useReactFlow } from '@xyflow/react';
+// import { useReactFlow } from 'react-flow-renderer';
 
 interface Pipeline {
-  flowData?: string;
-  name?: string;
-  miniMapData?: string; // Add this field
+  flowData: string;
+  name: string;
 }
 
-const SavePipeline = ({ flowData }: Pipeline) => {
+const SavePipeline = ({ flowData }: { flowData: string }) => {
   const [name, setName] = useState<string>('');
-  const { getNodes, getEdges, getViewport } = useReactFlow(); // Add this
   const router = useRouter();
   const { toast } = useToast();
   const { mutate: savePipeline, isPending } = useMutation({
@@ -36,8 +35,8 @@ const SavePipeline = ({ flowData }: Pipeline) => {
     onSuccess: (data) => {
       console.log(data);
       toast({
-        title: "Pipeline saved successfully!",
-        description: 'Your pipeline has been saved. You can view it in the community section.',
+        title: 'Success',
+        description: 'Pipeline saved successfully.',
         variant: 'default',
       });
       router.push('/community');
@@ -46,36 +45,34 @@ const SavePipeline = ({ flowData }: Pipeline) => {
       console.log(err);
       if (err.response.status === 409) {
         toast({
-          title: 'هناك مستخدم بالفعل لهذه البيانات',
-          description: 'يرجى استخدام بيانات مختلفة.',
+          title: 'Error',
+          description: 'There is already a user with this data.',
           variant: 'destructive',
         });
       }
       if (err.response.status === 404) {
         toast({
-          title: 'تأكد من كتابتك لجميع البيانات',
-          description: 'يرجى التحقق من البيانات المدخلة والمحاولة مرة أخرى.',
+          title: 'Error',
+          description: 'Please make sure all data is entered correctly.',
           variant: 'destructive',
         });
       }
     },
   });
 
-  const captureMiniMap = useCallback(() => {
-    const nodes = getNodes();
-    const edges = getEdges();
-    const viewport = getViewport();
-    
-    return JSON.stringify({
-      nodes,
-      edges,
-      viewport
-    });
-  }, [getNodes, getEdges, getViewport]);
+  const { getNodes, getEdges, getViewport } = useReactFlow();
 
   const handleSave = () => {
-    const miniMapData = captureMiniMap();
-    savePipeline({ flowData, name, miniMapData });
+    const currentFlow = {
+      nodes: getNodes(),
+      edges: getEdges(),
+      viewport: getViewport(),
+    };
+    
+    savePipeline({ 
+      name,
+      flowData: JSON.stringify(currentFlow)
+    });
   };
 
   return (

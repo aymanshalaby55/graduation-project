@@ -25,7 +25,7 @@ interface Pipeline {
     username: string;
   };
   createdAt: Date;
-  miniMapData?: string;
+  flowData: string;
 }
 
 const PageWrapper = ({
@@ -35,7 +35,7 @@ const PageWrapper = ({
   children: React.ReactNode;
   error?: boolean;
 }) => (
-  <div className="container mx-auto px-4 py-8">
+  <div className="container py-8">
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-2">
         <h1 className="text-3xl font-bold tracking-tight">
@@ -51,6 +51,44 @@ const PageWrapper = ({
     </div>
   </div>
 );
+
+const FlowPreview = ({ pipelineId }: { pipelineId: string }) => {
+  const { data: flowData, isLoading, error } = useQuery({
+    queryKey: ['PipelineFlow', pipelineId],
+    queryFn: async () => {
+      const { data } = await api.get(`pipeline/getPipeline/${pipelineId}`);
+      return typeof data.flowData === 'string' ? JSON.parse(data.flowData) : data.flowData;
+    },
+  });
+
+  if (isLoading) return <div>Loading preview...</div>;
+  if (error || !flowData) return <div>Error loading preview</div>;
+
+  return (
+    <div style={{ height: '200px', width: '100%' }}>
+      <ReactFlowProvider>
+        <ReactFlow
+          nodes={flowData.nodes ?? []}
+          edges={flowData.edges ?? []}
+          fitView
+          fitViewOptions={{ padding: 0.2 }}
+          nodesDraggable={false}
+          nodesConnectable={false}
+          elementsSelectable={false}
+          zoomOnScroll={false}
+          panOnScroll={false}
+          preventScrolling={false}
+          defaultViewport={flowData.viewport ?? { x: 0, y: 0, zoom: 1 }}
+        >
+          <Background />
+        </ReactFlow>
+      </ReactFlowProvider>
+    </div>
+  );
+};
+
+
+
 
 export default function CommunityPage() {
   const { user }: any = useUserContext();
@@ -68,7 +106,7 @@ export default function CommunityPage() {
     refetchOnWindowFocus: false,
   });
 
-  console.log(allPipelines);
+  // console.log(allPipelines);
 
   if (isLoading) {
     return (
@@ -122,86 +160,65 @@ export default function CommunityPage() {
     }
   };
 
-  // const PipelineMiniMap = ({ flowData }: { flowData: string }) => {
-  //   try {
-  //     const flow = JSON.parse(flowData);
-  //     return (
-  //       <div style={{ height: '200px', width: '100%' }}>
-  //         <ReactFlowProvider>
-  //           <ReactFlow
-  //             nodes={flow.nodes}
-  //             edges={flow.edges}
-  //             fitView
-  //             nodesDraggable={false}
-  //             nodesConnectable={false}
-  //             elementsSelectable={false}
-  //             zoomOnScroll={false}
-  //             panOnScroll={false}
-  //             preventScrolling={true}
-  //           >
-  //             <Background />
-  //           </ReactFlow>
-  //         </ReactFlowProvider>
-  //       </div>
-  //     );
-  //   } catch (error) {
-  //     return <div>Error loading pipeline preview</div>;
-  //   }
-  // };
-
   return (
     <PageWrapper>
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {allPipelines?.pipelines?.map((pipeline: Pipeline) => (
-          <Card key={pipeline._id} className="flex flex-col">
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <Link href={`/profile/${pipeline.user.username}`}>
-                    <Avatar className="cursor-pointer">
-                      <AvatarImage
-                        src={`https://ui-avatars.com/api/?name=${pipeline.user.username}`}
-                        alt={pipeline.user.username}
-                      />
-                      <AvatarFallback>
-                        {pipeline.user.username?.slice(0, 1).toUpperCase()}
-                      </AvatarFallback>
-                    </Avatar>
-                  </Link>
-                  <div className="flex flex-col">
-                    <CardTitle className="text-lg">{pipeline.name}</CardTitle>
-                    <span className="text-sm text-muted-foreground">
-                      {pipeline.user.username}
-                    </span>
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
+        {allPipelines?.pipelines?.length > 0 ? (
+          allPipelines.pipelines.map((pipeline: Pipeline) => (
+            <Card key={pipeline._id} className="flex flex-col">
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <Link href={`/profile/${pipeline.user.username}`}>
+                      <Avatar className="cursor-pointer">
+                        <AvatarImage
+                          src={`https://ui-avatars.com/api/?name=${pipeline.user.username}`}
+                          alt={pipeline.user.username}
+                        />
+                        <AvatarFallback>
+                          {pipeline.user.username?.slice(0, 1).toUpperCase()}
+                        </AvatarFallback>
+                      </Avatar>
+                    </Link>
+                    <div className="flex flex-col">
+                      <CardTitle className="text-lg">{pipeline.name}</CardTitle>
+                      <span className="text-sm text-muted-foreground">
+                        {pipeline.user.username}
+                      </span>
+                    </div>
                   </div>
+                  <span className="text-sm text-muted-foreground">
+                    {/* {new Date(pipeline.createdAt).toLocaleDateString()} */}
+                    {/* {pipeline.createdAt} */}
+                    26/2/2025
+                  </span>
                 </div>
-                <span className="text-sm text-muted-foreground">
-                  {new Date(pipeline.createdAt).toLocaleDateString()}
-                </span>
-              </div>
-            </CardHeader>
-            <CardContent>
-              {/* {pipeline.miniMapData && (
-                <PipelineMiniMap flowData={pipeline.miniMapData} />
-              )} */}
-              <p className="text-sm text-muted-foreground">
-                This pipeline is shared with the community. Click the button
-                below to load it into your workspace.
-              </p>
-            </CardContent>
-            <CardFooter className="flex items-center gap-4">
-              <LoadPipelineButton id={pipeline._id} />
-              {pipeline.user.username === user?.username && (
-                <Button
-                  variant="destructive"
-                  onClick={() => handleDelete(pipeline._id)}
-                >
-                  Delete
-                </Button>
-              )}
-            </CardFooter>
-          </Card>
-        ))}
+              </CardHeader>
+              <CardContent>
+                <FlowPreview pipelineId={pipeline._id} />
+                {/* <p className="text-sm text-muted-foreground mt-4">
+                  This pipeline is shared with the community. Click the button
+                  below to load it into your workspace.
+                </p> */}
+              </CardContent>
+              <CardFooter className="flex items-center gap-4">
+                <LoadPipelineButton id={pipeline._id} />
+                {pipeline.user.username === user?.username && (
+                  <Button
+                    variant="destructive"
+                    onClick={() => handleDelete(pipeline._id)}
+                  >
+                    Delete
+                  </Button>
+                )}
+              </CardFooter>
+            </Card>
+          ))
+        ) : (
+          <div className="flex justify-center items-center h-full">
+            <p className="text-xl font-semibold">No pipelines available</p>
+          </div>
+        )}
       </div>
     </PageWrapper>
   );

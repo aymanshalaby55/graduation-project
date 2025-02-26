@@ -138,9 +138,9 @@ const MainPipelineScreen = () => {
           style={{ backgroundColor: '#F7F9FB' }}
           nodeTypes={nodeTypes}
         >
+          {/* <MiniMap nodeStrokeColor="blue" nodeColor="lightblue" /> */}
           <Controls />
           <Background />
-          {/* <MiniMap /> */}
           {nodes.length > 0 && (
             <div className="relative h-screen">
               <div className="flex gap-4 flex-col absolute top-5 right-5">
