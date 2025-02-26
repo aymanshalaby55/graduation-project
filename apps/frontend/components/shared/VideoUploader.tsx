@@ -105,34 +105,34 @@ const VideoUploader = () => {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
           <div className="grid gap-4">
-            {/* <div className="grid gap-2">
+            <div className="grid gap-2">
               <Label htmlFor="title">Title</Label>
               <Input
                 id="title"
                 className="!outline-none"
                 placeholder="Enter video title"
               />
-            </div> */}
+            </div>
             <div className="grid gap-2">
               <Label htmlFor="video">Video File</Label>
-              <FileUpload onChange={handleFileChange}/> 
+              <FileUpload onChange={handleFileChange} />
             </div>
-            {/* <div className="grid gap-2">
+            <div className="grid gap-2">
               <Label htmlFor="tags">Tags</Label>
               <Input
                 id="tags"
                 className="!outline-none"
                 placeholder="Add tags separated by commas"
               />
-            </div> */}
-            <Button type="submit" className="w-full">Upload</Button>
+            </div>
+            <Button
+              type="submit"
+              className="w-full inline-flex p-2 text-md animate-shimmer rounded-md border border-slate-800 
+            bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] font-medium text-white transition-colors"
+            >
+              Upload
+            </Button>
           </div>
-          {/* <button
-            type="submit"
-            className="inline-flex mb-10 p-2 w-fit text-md animate-shimmer rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] font-medium text-white transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
-          >
-            Upload
-          </button> */}
         </form>
       </Form>
     </div>

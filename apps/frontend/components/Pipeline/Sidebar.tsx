@@ -34,13 +34,13 @@ const Sidebar = () => {
         >
           <h1>YOLO Models</h1>
         </div>
-        <div
+        {/* <div
           className="dndnode output"
           onDragStart={(event) => onDragStart(event, 'analyzeButton')}
           draggable
         >
           Analyze Button
-        </div>
+        </div> */}
       </div>
 
       {/* Button at the bottom */}

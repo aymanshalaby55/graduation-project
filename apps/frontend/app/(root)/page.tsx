@@ -1,6 +1,5 @@
 "use client";
 
-import FightDetectionButton from "@/components/Pipeline/FightDetectionButton";
 import CardsContainer from "@/components/shared/CardsContainer";
 import { Hero } from "@/components/shared/Hero";
 import { HowItWorks } from "@/components/shared/HowItWork";
