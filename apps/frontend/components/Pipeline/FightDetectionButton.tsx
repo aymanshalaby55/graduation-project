@@ -1,8 +1,7 @@
 "use client";
 
-import { memo, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { Handle, Position } from "@xyflow/react";
 import { AlertCircle, CheckCircle2, Loader2, PlayCircle } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -17,7 +16,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useVideoAnalysisContext } from "@/app/context/VideoAnalysisContext";
 import api from "@/app/utils/api";
 
-const FightDetectionButton = ({ nodes }: { nodes: any[] }) => {
+const FightDetectionButton = () => {
   const { videoAnalysisData, socketStatus } = useVideoAnalysisContext();
   const [jobIds, setJobIds] = useState<string[]>([]);
   const [showDialog, setShowDialog] = useState(false);
@@ -98,21 +97,13 @@ const FightDetectionButton = ({ nodes }: { nodes: any[] }) => {
     }
   }, [socketStatus, jobIds]);
 
-  const isDisabled =
-    isPending ||
-    (jobIds.length > 0 && socketStatus[jobIds[0]]?.status !== "completed") ||
-    !nodes ||
-    nodes.length < 2 ||
-    nodes.every((node) => node.type === nodes[0].type);
-
   return (
-    <div className="relative">
+    <div className="relative z-50">
       <Button
         size="lg"
         variant="default"
         onClick={handleAnalyzeClick}
-        disabled={isDisabled}
-        className="w-full gap-2 font-medium"
+        className="z-50 font-medium"
       >
         {isPending ? (
           <Loader2 className="h-4 w-4 animate-spin" />
@@ -171,11 +162,8 @@ const FightDetectionButton = ({ nodes }: { nodes: any[] }) => {
           </div>
         </DialogContent>
       </Dialog>
-
-      <Handle type="target" position={Position.Left} />
-      <Handle type="source" position={Position.Right} />
     </div>
   );
 };
 
-export default memo(FightDetectionButton);
+export default FightDetectionButton;

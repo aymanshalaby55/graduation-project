@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
 // import { redirect } from "next/navigation";
 // import { useUserContext } from "../../context/UserContext";
-import { ReactFlowProvider } from '@xyflow/react';
-import { DnDProvider } from '@/app/context/DnDContext';
-import MainPipelineScreen from '@/components/pipeline/MainScreen';
+import { ReactFlowProvider } from "@xyflow/react";
+import { DnDProvider } from "@/app/context/DnDContext";
+import MainPipelineScreen from "@/components/حipeline/MainScreen";
 
 const Page = () => {
   // const { user }: any = useUserContext();

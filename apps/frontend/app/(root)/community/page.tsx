@@ -1,22 +1,22 @@
-'use client';
+"use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { useQuery } from '@tanstack/react-query';
-import api from '@/app/utils/api';
-import LoadPipelineButton from '@/components/pipeline/LoadPipelineButton';
-import { Button } from '@/components/ui/button';
-import { useUserContext } from '@/app/context/UserContext';
-import { useToast } from '@/components/ui/use-toast';
-import Swal from 'sweetalert2';
-import Link from 'next/link';
-import { ReactFlow, ReactFlowProvider, Background } from '@xyflow/react';
+} from "@/components/ui/card";
+import { useQuery } from "@tanstack/react-query";
+import api from "@/app/utils/api";
+import LoadPipelineButton from "@/components/حipeline/LoadPipelineButton";
+import { Button } from "@/components/ui/button";
+import { useUserContext } from "@/app/context/UserContext";
+import { useToast } from "@/components/ui/use-toast";
+import Swal from "sweetalert2";
+import Link from "next/link";
+import { ReactFlow, ReactFlowProvider, Background } from "@xyflow/react";
 
 interface Pipeline {
   _id: string;
@@ -41,10 +41,10 @@ const PageWrapper = ({
         <h1 className="text-3xl font-bold tracking-tight">
           Community Pipelines
         </h1>
-        <p className={`text-muted-foreground ${error ? 'text-red-500' : ''}`}>
+        <p className={`text-muted-foreground ${error ? "text-red-500" : ""}`}>
           {error
-            ? 'Error loading pipelines. Please try again later.'
-            : 'Discover and try out pipelines created by the community'}
+            ? "Error loading pipelines. Please try again later."
+            : "Discover and try out pipelines created by the community"}
         </p>
       </div>
       {children}
@@ -53,11 +53,17 @@ const PageWrapper = ({
 );
 
 const FlowPreview = ({ pipelineId }: { pipelineId: string }) => {
-  const { data: flowData, isLoading, error } = useQuery({
-    queryKey: ['PipelineFlow', pipelineId],
+  const {
+    data: flowData,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["PipelineFlow", pipelineId],
     queryFn: async () => {
       const { data } = await api.get(`pipeline/getPipeline/${pipelineId}`);
-      return typeof data.flowData === 'string' ? JSON.parse(data.flowData) : data.flowData;
+      return typeof data.flowData === "string"
+        ? JSON.parse(data.flowData)
+        : data.flowData;
     },
   });
 
@@ -65,7 +71,7 @@ const FlowPreview = ({ pipelineId }: { pipelineId: string }) => {
   if (error || !flowData) return <div>Error loading preview</div>;
 
   return (
-    <div style={{ height: '200px', width: '100%' }}>
+    <div style={{ height: "200px", width: "100%" }}>
       <ReactFlowProvider>
         <ReactFlow
           nodes={flowData.nodes ?? []}
@@ -87,9 +93,6 @@ const FlowPreview = ({ pipelineId }: { pipelineId: string }) => {
   );
 };
 
-
-
-
 export default function CommunityPage() {
   const { user }: any = useUserContext();
   const { toast } = useToast();
@@ -98,9 +101,9 @@ export default function CommunityPage() {
     isLoading,
     error,
   } = useQuery({
-    queryKey: ['Pipeline'],
+    queryKey: ["Pipeline"],
     queryFn: async () => {
-      const { data } = await api.get('pipeline/getAllPipelines');
+      const { data } = await api.get("pipeline/getAllPipelines");
       return data;
     },
     refetchOnWindowFocus: false,
@@ -127,35 +130,35 @@ export default function CommunityPage() {
   const handleDelete = async (id: string) => {
     try {
       const result = await Swal.fire({
-        title: 'Are you sure?',
+        title: "Are you sure?",
         text: "You won't be able to revert this!",
-        icon: 'warning',
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!',
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
       });
 
       if (result.isConfirmed) {
         await api.delete(`pipeline/deletePipeline/${id}`);
         toast({
-          title: 'Pipeline deleted successfully!',
-          description: 'The pipeline has been removed from the community.',
-          variant: 'default',
+          title: "Pipeline deleted successfully!",
+          description: "The pipeline has been removed from the community.",
+          variant: "default",
         });
         Swal.fire({
-          title: 'Deleted!',
-          text: 'Your file has been deleted.',
-          icon: 'success',
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
         });
       }
     } catch (error) {
-      console.error('Error deleting pipeline:', error);
+      console.error("Error deleting pipeline:", error);
       toast({
-        title: 'Error deleting pipeline',
+        title: "Error deleting pipeline",
         description:
-          'There was an issue deleting the pipeline. Please try again.',
-        variant: 'destructive',
+          "There was an issue deleting the pipeline. Please try again.",
+        variant: "destructive",
       });
     }
   };

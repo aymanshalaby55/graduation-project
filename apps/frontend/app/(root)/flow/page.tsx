@@ -1,15 +1,15 @@
-'use client';
-import React, { Suspense } from 'react';
-import MainPipelineScreen from '@/components/pipeline/MainScreen';
-import { ReactFlowProvider } from '@xyflow/react';
-import { redirect } from 'next/navigation';
-import { useUserContext } from '../../context/UserContext';
-import { DnDProvider } from '@/app/context/DnDContext';
+"use client";
+import React, { Suspense } from "react";
+import { ReactFlowProvider } from "@xyflow/react";
+import { redirect } from "next/navigation";
+import { useUserContext } from "../../context/UserContext";
+import { DnDProvider } from "@/app/context/DnDContext";
+import MainPipelineScreen from "@/components/pipeline/MainScreen";
 const Page = () => {
   const { user }: any = useUserContext();
   const loggedIn = !!user;
   if (!loggedIn) {
-    redirect('/');
+    redirect("/");
   }
 
   return (
