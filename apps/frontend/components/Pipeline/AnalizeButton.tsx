@@ -16,7 +16,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useVideoAnalysisContext } from "@/app/context/VideoAnalysisContext";
 import api from "@/app/utils/api";
 
-const FightDetectionButton = () => {
+const AnalizeButton = () => {
   const { videoAnalysisData, socketStatus } = useVideoAnalysisContext();
   const [jobIds, setJobIds] = useState<string[]>([]);
   const [showDialog, setShowDialog] = useState(false);
@@ -100,17 +100,17 @@ const FightDetectionButton = () => {
   return (
     <div className="relative z-50">
       <Button
-        size="lg"
+        size="sm"
         variant="default"
         onClick={handleAnalyzeClick}
-        className="z-50 font-medium"
+        className="z-50 font-medium flex gap-2 bg-green-600 hover:bg-green-700 text-white"
       >
         {isPending ? (
           <Loader2 className="h-4 w-4 animate-spin" />
         ) : (
           <PlayCircle className="h-4 w-4" />
         )}
-        Analyze Video
+        Run
       </Button>
 
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
@@ -166,4 +166,4 @@ const FightDetectionButton = () => {
   );
 };
 
-export default FightDetectionButton;
+export default AnalizeButton;
