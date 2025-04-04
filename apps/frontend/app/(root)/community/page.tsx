@@ -10,13 +10,13 @@ import {
 } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import api from "@/app/utils/api";
-import LoadPipelineButton from "@/components/حipeline/LoadPipelineButton";
 import { Button } from "@/components/ui/button";
 import { useUserContext } from "@/app/context/UserContext";
 import { useToast } from "@/components/ui/use-toast";
 import Swal from "sweetalert2";
 import Link from "next/link";
 import { ReactFlow, ReactFlowProvider, Background } from "@xyflow/react";
+import LoadPipelineButton from "@/components/pipeline/LoadPipelineButton";
 
 interface Pipeline {
   _id: string;
