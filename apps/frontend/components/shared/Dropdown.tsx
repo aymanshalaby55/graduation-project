@@ -7,16 +7,12 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useUserContext } from "@/app/context/UserContext";
-import { Button } from "../ui/button";
-import Link from "next/link";
-
-import { AnimatedTooltip } from "../ui/animated-tooltip";
-
-
+} from '@/components/ui/dropdown-menu';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useUserContext } from '@/app/context/UserContext';
+import { Button } from '../ui/button';
+import Link from 'next/link';
+import { AnimatedTooltip } from '../ui/animated-tooltip';
 
 const Dropdown = () => {
   const { user, logout }: any = useUserContext();
@@ -24,15 +20,15 @@ const Dropdown = () => {
     {
       id: 1,
       name: user?.user?.username,
-      designation: "Software Engineer",
-      image:'/images/avatar.png'
+      designation: 'Software Engineer',
+      image: '/images/avatar.png',
     },
   ];
   return (
     <>
       <DropdownMenu>
         <DropdownMenuTrigger>
-        <AnimatedTooltip items={people} />
+          <AnimatedTooltip items={people} />
           {/* <Avatar>
             <AvatarFallback className="text-black">
               {user?.user?.username?.slice(0, 1).toUpperCase()}
@@ -50,7 +46,7 @@ const Dropdown = () => {
           </DropdownMenuItem>
           <DropdownMenuSeparator />
 
-          {user?.user?.role === "admin" && (
+          {user?.user?.role === 'admin' && (
             <>
               <DropdownMenuItem>
                 <Link href="/dashboard">Dashboard</Link>

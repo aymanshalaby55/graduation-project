@@ -58,7 +58,7 @@ const EditUserForm = ({ username, email, dateOfBirth, userId }: UserProps) => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col justify-start gap-5 p-12 rounded-lg"
+        className="flex flex-col justify-start gap-5 rounded-lg"
       >
         {/* <div>
           <FormField

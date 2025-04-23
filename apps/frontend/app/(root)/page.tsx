@@ -14,7 +14,7 @@ export default function Home() {
         rangeY={1200}
         particleCount={500}
         baseHue={120}
-        className="flex items-center flex-col justify-center px-2 md:px-10  py-4 w-full h-full"
+        className="flex items-start flex-col justify-center px-2 md:px-10 py-4 w-full h-full"
       >
         <Hero />
         <CardsContainer />

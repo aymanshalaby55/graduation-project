@@ -29,35 +29,39 @@ const Navbar = () => {
         {/* Desktop Navigation */}
         <div className="hidden min-[980px]:flex items-center gap-6">
           <Link href="/" className="hover:text-gray-400 transition-colors">
-            <Logo
+            {/* <Logo
               title={'Home'}
               styles="bg-gradient-to-br from-slate-300 to-slate-500 bg-clip-text text-transparent text-2xl md:text-2xl font-medium tracking-tight text-center"
-            />
+            /> */}
+            Home
           </Link>
           <Link
             href="#features"
             className="hover:text-gray-400 transition-colors"
           >
-            <Logo
+            {/* <Logo
               title={'Features'}
               styles="bg-gradient-to-br from-slate-300 to-slate-500 bg-clip-text text-transparent text-2xl md:text-2xl font-medium tracking-tight text-center"
-            />
+            /> */}
+            Feature
           </Link>
           <Link href="/" className="hover:text-gray-400 transition-colors">
-            <Logo
+            {/* <Logo
               title={'Contact'}
               styles="bg-gradient-to-br from-slate-300 to-slate-500 bg-clip-text text-transparent text-2xl md:text-2xl font-medium tracking-tight text-center"
-            />
+            /> */}
+            Contact
           </Link>
         </div>
         <div className="hidden min-[980px]:flex items-center gap-6">
           {loggedIn ? (
             <div className="flex items-center gap-4">
-              <Link href="/videos/user">
-                <Logo
+              <Link href="/videos/user" className='hover:text-gray-400 transition-colors'>
+                {/* <Logo
                   title={'Videos Manager'}
                   styles="bg-gradient-to-br from-slate-300 to-slate-500 bg-clip-text text-transparent text-2xl md:text-2xl font-medium tracking-tight text-center"
-                />
+                /> */}
+                Video Manager
               </Link>
               <Dropdown />
             </div>
@@ -158,7 +162,7 @@ const Navbar = () => {
                       Videos Manager
                     </Button>
                   </Link>
-                  <Dropdown />
+                  {/* <Dropdown /> */}
                 </div>
               ) : (
                 <div className="flex flex-col space-y-4">
