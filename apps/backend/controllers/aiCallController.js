@@ -5,7 +5,7 @@ const aiProcessingQueue = require("../services/aiQueues");
 exports.addVideosToQueue = catchAsync(async (req, res, next) => {
   try {
     const { videos } = req.body;
-
+    const { modelId } = req.params;
     if (!videos || !Array.isArray(videos) || videos.length === 0) {
       return res.status(400).json({
         status: "error",
@@ -13,6 +13,8 @@ exports.addVideosToQueue = catchAsync(async (req, res, next) => {
       });
     }
 
+
+    // search model by id 
     await Promise.all(
       videos.map((video) =>
         aiProcessingQueue
