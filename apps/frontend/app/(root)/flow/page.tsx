@@ -4,7 +4,8 @@ import { ReactFlowProvider } from "@xyflow/react";
 import { redirect } from "next/navigation";
 import { useUserContext } from "../../context/UserContext";
 import { DnDProvider } from "@/app/context/DnDContext";
-import MainPipelineScreen from "@/components/pipeline/MainScreen";
+import MainPipelineScreen from "@/components/Pipeline/MainScreen";
+// import MainPipelineScreen from "@/components/pipeline/MainScreen";
 const Page = () => {
   const { user }: any = useUserContext();
   const loggedIn = !!user;
