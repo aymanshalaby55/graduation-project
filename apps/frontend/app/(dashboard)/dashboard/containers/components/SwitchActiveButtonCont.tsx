@@ -2,7 +2,7 @@
 
 import api from "@/app/utils/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Switch } from "../ui/switch";
+import { Switch } from "../../../../../components/ui/switch";
 
 type SwitchProps = {
   containerId: string;

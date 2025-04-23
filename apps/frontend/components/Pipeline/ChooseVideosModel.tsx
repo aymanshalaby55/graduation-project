@@ -1,20 +1,23 @@
-"use client";
+'use client';
 
-import { useState } from "react";
+import { useState } from 'react';
 
-import { motion, AnimatePresence } from "framer-motion";
-import { useVideoAnalysisContext } from "@/app/context/VideoAnalysisContext";
-import { createPortal } from "react-dom";
-import { Button } from "@/components/ui/button";
-import { Check, Film, Trash2, Upload } from "lucide-react";
-import FightDetectionButton from "./AnalizeButton";
-import { Badge } from "../ui/badge";
+import { motion, AnimatePresence } from 'framer-motion';
+import { useVideoAnalysisContext } from '@/app/context/VideoAnalysisContext';
+import { createPortal } from 'react-dom';
+import { Button } from '@/components/ui/button';
+import { Check, Film, Trash2, Upload } from 'lucide-react';
+import FightDetectionButton from './AnalizeButton';
+import { Badge } from '../ui/badge';
 import {
   Dialog,
   DialogContent,
   DialogFooter,
+  DialogHeader,
+  DialogTitle,
   DialogTrigger,
-} from "../ui/dialog";
+} from '../ui/dialog';
+import VideoUploader from '../shared/VideoUploader';
 
 interface Video {
   _id: string;
@@ -72,10 +75,27 @@ export function ChooseVideosModal({ videos }: ChooseVideosModalProps) {
               <p className="text-lg text-muted-foreground">
                 No videos uploaded
               </p>
-              <Button variant="outline" className="mt-4">
+              {/* <Button variant="outline" className="mt-4">
                 <Upload className="mr-2 h-4 w-4" />
                 Upload Videos
-              </Button>
+              </Button> */}
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button
+                    className="w-full sm:w-auto rounded-lg"
+                    variant="secondary"
+                  >
+                    <Upload className="mr-2 h-4 w-4" />
+                    Upload Video
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Upload a new video</DialogTitle>
+                  </DialogHeader>
+                  <VideoUploader />
+                </DialogContent>
+              </Dialog>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -89,8 +109,8 @@ export function ChooseVideosModal({ videos }: ChooseVideosModalProps) {
                     whileHover={{ scale: 1.02 }}
                     className={`relative rounded-lg border ${
                       selectedVideos.includes(video.videoPath)
-                        ? "border-primary ring-2 ring-primary"
-                        : "border-border"
+                        ? 'border-primary ring-2 ring-primary'
+                        : 'border-border'
                     } overflow-hidden cursor-pointer transition-colors`}
                     onClick={() => handleVideoSelect(video.videoPath)}
                   >
@@ -109,7 +129,7 @@ export function ChooseVideosModal({ videos }: ChooseVideosModalProps) {
                               Selected
                             </>
                           ) : (
-                            "Select Video"
+                            'Select Video'
                           )}
                         </Button>
                       </div>
@@ -172,14 +192,14 @@ export function ChooseVideosModal({ videos }: ChooseVideosModalProps) {
               <Film className="mr-2 h-4 w-4" />
               {selectedVideos.length > 0
                 ? `${selectedVideos.length} Videos Selected`
-                : "Choose Videos"}
+                : 'Choose Videos'}
             </span>
             <span className="-translate-x-40 group-hover/modal-btn:translate-x-0 absolute inset-0 flex items-center justify-center transition duration-500">
               ✈️
             </span>
           </Button>
         </DialogTrigger>
-        {typeof window !== "undefined" &&
+        {typeof window !== 'undefined' &&
           createPortal(<ModalContent />, document.body)}
       </Dialog>
     </div>

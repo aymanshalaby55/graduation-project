@@ -1,4 +1,4 @@
-import Sidebar from "@/components/shared/Sidebar";
+import Sidebar from "@/app/(dashboard)/dashboard/components/Sidebar";
 import "../globals.css";
 import Navbar from "@/components/shared/Navbar";
 import QueryProvider from "@/components/shared/QueryProvider";

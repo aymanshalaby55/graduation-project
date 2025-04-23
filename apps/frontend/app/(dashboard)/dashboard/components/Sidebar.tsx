@@ -1,26 +1,31 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import React, { useState } from "react";
+import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+import React, { useState } from 'react';
 
 const Sidebar = () => {
   const links = [
     {
-      name: "Containers",
+      name: 'Containers',
+      navTo: 'containers',
     },
     {
-      name: "Users",
+      name: 'Users',
+      navTo: 'users',
     },
     {
-      name: "Edit Models",
+      name: 'Edit Model',
+      navTo: 'models/editModel',
     },
     {
-      name: "Models",
+      name: 'Models',
+      navTo: 'models',
     },
     {
-      name: "Videos",
+      name: 'Videos',
+      navTo: 'videos',
     },
   ];
 
@@ -46,12 +51,12 @@ const Sidebar = () => {
       <div className="flex flex-col gap-7 p-5">
         {links.map((link) => (
           <Link
-            href={`/dashboard/${link.name.toLowerCase()}`}
+            href={`/dashboard/${link.navTo}`}
             key={link.name}
             className={`mb-4 p-3 rounded-lg font-semibold ${
-              pathname.toLowerCase() === `/dashboard/${link.name.toLowerCase()}`
-                ? "shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]"
-                : ""
+              pathname === `/dashboard/${link.navTo}`
+                ? 'shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]'
+                : ''
             }`}
           >
             {link.name}

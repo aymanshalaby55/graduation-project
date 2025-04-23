@@ -1,7 +1,7 @@
 "use client";
 
 import { Trash2 } from "lucide-react";
-import { Button } from "../ui/button";
+import { Button } from "../../../../../components/ui/button";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import api from "@/app/utils/api";
 
