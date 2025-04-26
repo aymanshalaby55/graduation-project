@@ -41,6 +41,8 @@ const DropDownNode = ({ data }: any) => {
     }
   };
 
+  console.log(selectedModels);
+
   return (
     <div className="flex flex-col gap-5 p-1 bg-white">
       <div>

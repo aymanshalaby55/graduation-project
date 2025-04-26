@@ -1,11 +1,8 @@
-// components/MainPipelineScreen.tsx
-'use client';
-import React, { useRef, useCallback, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation'; // Import useSearchParams
+"use client";
+import React, { useRef, useCallback, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import {
   ReactFlow,
-  ReactFlowProvider,
-  Edge,
   Connection,
   addEdge,
   useNodesState,
@@ -13,17 +10,16 @@ import {
   Controls,
   useReactFlow,
   Background,
-  MiniMap,
-} from '@xyflow/react';
-import '@xyflow/react/dist/style.css';
-import { useDnD } from '@/app/context/DnDContext';
-import '@/app/index.css';
-import { Button } from '../ui/button';
-import VideoUploaderNode from './VideoUploaderNode';
-import DropDownNode from './DropDownNode';
-import Sidebar from './Sidebar';
-import SavePipeline from './SavePipeline';
-import AnalizeButton from './AnalizeButton';
+} from "@xyflow/react";
+import "@xyflow/react/dist/style.css";
+import { useDnD } from "@/app/context/DnDContext";
+import "@/app/index.css";
+import { Button } from "../ui/button";
+import VideoUploaderNode from "./VideoUploaderNode";
+import DropDownNode from "./DropDownNode";
+import Sidebar from "./Sidebar";
+import SavePipeline from "./SavePipeline";
+import AnalizeButton from "./AnalizeButton";
 
 const initialNodes: any[] = [];
 
@@ -44,7 +40,7 @@ const MainPipelineScreen = () => {
 
   // Use useSearchParams to access the URL query parameters
   const searchParams = useSearchParams();
-  const encodedFlow = searchParams.get('pipeline'); // Get the encoded pipeline data
+  const encodedFlow = searchParams.get("pipeline"); // Get the encoded pipeline data
 
   const flow = toObject();
   const jsonFlow = JSON.stringify(flow, null, 2);
@@ -61,7 +57,7 @@ const MainPipelineScreen = () => {
 
   const onDragOver = useCallback((event: React.DragEvent) => {
     event.preventDefault();
-    event.dataTransfer.dropEffect = 'move';
+    event.dataTransfer.dropEffect = "move";
   }, []);
 
   const onDrop = useCallback(
@@ -110,7 +106,7 @@ const MainPipelineScreen = () => {
         const savedFlow = JSON.parse(decodedFlow); // Parse the JSON string
         handleLoadPipeline(savedFlow); // Load the pipeline
       } catch (error) {
-        console.error('Error parsing pipeline data:', error);
+        console.error("Error parsing pipeline data:", error);
       }
     }
   }, [encodedFlow, handleLoadPipeline]);
@@ -119,7 +115,7 @@ const MainPipelineScreen = () => {
     <div className="dndflow">
       <div
         className="reactflow-wrapper"
-        style={{ height: '100vh', width: '100vw' }}
+        style={{ height: "100vh", width: "100vw" }}
         ref={reactFlowWrapper}
       >
         <ReactFlow
@@ -131,7 +127,7 @@ const MainPipelineScreen = () => {
           onDrop={onDrop}
           onDragOver={onDragOver}
           fitView
-          style={{ backgroundColor: '#F7F9FB' }}
+          style={{ backgroundColor: "#F7F9FB" }}
           nodeTypes={nodeTypes}
         >
           {/* <MiniMap nodeStrokeColor="blue" nodeColor="lightblue" /> */}
@@ -143,19 +139,13 @@ const MainPipelineScreen = () => {
                 <Button
                   onClick={clearNodes}
                   className="z-50"
-                  variant={'destructive'}
+                  variant={"destructive"}
                 >
                   Clear All Nodes
                 </Button>
                 <SavePipeline flowData={jsonFlow} />
               </div>
-              {/* <Button
-                className=" flex items-center gap-2 absolute bottom-20 right-5 bg-green-600 hover:bg-green-700 z-50 text-white"
-                variant={'default'}
-              >
-                Run
-                <Play className="w-4 h-4" />
-              </Button> */}
+
               <div className="absolute bottom-20 right-5 z-50">
                 <AnalizeButton />
               </div>
