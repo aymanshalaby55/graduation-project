@@ -53,6 +53,7 @@ videoUploadQueue.process(async (job) => {
 
   try {
     // Ensure storage directory exists
+    console.log(title);
     try {
       await access(VIDEO_STORAGE_PATH);
     } catch (err) {
@@ -71,7 +72,7 @@ videoUploadQueue.process(async (job) => {
 
     // Create video document
     const video = await Video.create({
-      title: title,
+      title: title || file.originalname, // Use provided title or fallback to original filename
       originalName: file.originalname,
       videoPath: filename,
       videoSize: file.size,
