@@ -36,7 +36,7 @@ exports.uploadVideo = CatchAsync(async (req, res, next) => {
     const newStorageLimit = user.storageLimit - totalSize;
 
     // Check storage limit
-    // if (newStorageLimit ) {
+    // if (newStorageLimit) {
     //   return res.status(400).json({
     //     message: "Storage limit exceeded. Please upgrade for more storage.",
     //   });
@@ -45,6 +45,8 @@ exports.uploadVideo = CatchAsync(async (req, res, next) => {
       // Update user's storage limit
       user.storageLimit = newStorageLimit;
       await user.save();
+
+      console.log(req.body);
 
       // Queue jobs for each video
       const uploadJobs = req.files.map((file) => {

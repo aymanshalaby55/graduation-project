@@ -18,7 +18,8 @@ aiProcessingQueue.process(async (job) => {
     console.log(
       `Started processing job: ${job.id}, video: ${job.data.videoPath}`,
     );
-
+    
+    console.log(job.data);
     io.emit("analysisStarted", {
       jobId: job.id,
       videoPath: job.data.videoPath,
@@ -35,7 +36,7 @@ aiProcessingQueue.process(async (job) => {
     );
 
     const { data: modelResult } = await axios.post(
-      `http://127.0.0.1:5000/detect`,
+      job.data.model.modelUrl,
       {
         video_path: videoPath,
       },
@@ -50,12 +51,14 @@ aiProcessingQueue.process(async (job) => {
 
     const result = {
       videoPath: job.data.videoPath,
+      model: job.data.model.name,
       status: "Completed",
     };
 
     console.log(
       `Completed processing job: ${job.id}, video: ${job.data.videoPath}`,
     );
+
     io.emit("analysisComplete", {
       jobId: job.id,
       result,
