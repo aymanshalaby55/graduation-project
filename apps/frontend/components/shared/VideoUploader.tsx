@@ -29,12 +29,16 @@ const VideoUploader = () => {
 
   const formSchema = z.object({
     videoPath: z.string().nonempty('Video path is required'),
+    title: z.string().nonempty('Title is required'),
+    tags: z.string().optional(),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       videoPath: '',
+      title: '',
+      tags: '',
     },
   });
 
@@ -97,6 +101,8 @@ const VideoUploader = () => {
     }
     const formData = new FormData();
     formData.append('videoPath', selectedFile);
+    formData.append('title', values.title);
+    formData.append('tags', values.tags || '');
     uploadVideo(formData);
   };
 
@@ -111,6 +117,7 @@ const VideoUploader = () => {
                 id="title"
                 className="!outline-none"
                 placeholder="Enter video title"
+                {...form.register('title')}
               />
             </div>
             <div className="grid gap-2">
@@ -123,6 +130,7 @@ const VideoUploader = () => {
                 id="tags"
                 className="!outline-none"
                 placeholder="Add tags separated by commas"
+                {...form.register('tags')}
               />
             </div>
             <Button
