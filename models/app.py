@@ -6,11 +6,11 @@ import os
 
 app = Flask(__name__)
 
-model = YOLO('yolov8n.pt')
+model = YOLO('yolov8n.pt') 
 
 def process_video(video_path):
     video = cv2.VideoCapture(video_path)
-    
+
     if not video.isOpened():
         return None
 
@@ -26,21 +26,21 @@ def process_video(video_path):
         ret, frame = video.read()
         if not ret:
             break
-        
+
         results = model(frame)
-        
+
         for result in results:
             for box in result.boxes:
-                if int(box.cls[0]) == 0:  
+                if int(box.cls[0]) == 0: 
                     human_detected = True
                     x1, y1, x2, y2 = map(int, box.xyxy[0])
                     cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
-        
+
         out.write(frame)
-    
+
     video.release()
     out.release()
-    
+
     if human_detected:
         return output_path
     else:
@@ -49,18 +49,14 @@ def process_video(video_path):
 
 @app.route('/detect', methods=['POST'])
 def detect_video():
-    
     data = request.get_json()
     if not data or 'video_path' not in data:
         return jsonify({"error": "No video path provided"}), 400
-    
+
     video_path = data['video_path']
     result = process_video(video_path)
-    
-    if result != "not found":
-        return jsonify({"video_path": video_path})
-    else:
-        return jsonify({"message": "No humans detected"})
+
+    return jsonify({"detected": result != "not found"})
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000,debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
