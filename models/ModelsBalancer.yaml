@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: ai-app
-          image: ahmedateya/flask-test:letest
+          image: ahmedwagih02/human-detection:latest
           ports:
             - containerPort: 5000
           resources:
