@@ -2,15 +2,11 @@
 
 import React, { memo } from "react";
 import { Handle, Position } from "@xyflow/react";
-import VideoUploader from "../shared/VideoUploader";
-import { useUserContext } from "@/app/context/UserContext";
 import api from "@/app/utils/api";
 import { useQuery } from "@tanstack/react-query";
 import VideoSelector from "./VideoSelector";
 
 const VideoUploaderNode = ({ data }: any) => {
-  const { user }: any = useUserContext();
-
   const { data: userVideos } = useQuery({
     queryKey: ["userVideos"],
     queryFn: async () => {

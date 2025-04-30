@@ -13,9 +13,11 @@ import { useUserContext } from '@/app/context/UserContext';
 import { Button } from '../ui/button';
 import Link from 'next/link';
 import { AnimatedTooltip } from '../ui/animated-tooltip';
+import { useRouter } from 'next/navigation';
 
 const Dropdown = () => {
   const { user, logout }: any = useUserContext();
+  const router = useRouter();
   const people = [
     {
       id: 1,
@@ -24,39 +26,39 @@ const Dropdown = () => {
       image: '/images/avatar.png',
     },
   ];
+
+  const handleNavigation = (path: string) => {
+    router.push(path);
+  };
+
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger>
+        <DropdownMenuTrigger className='outline-none'>
           <AnimatedTooltip items={people} />
-          {/* <Avatar>
-            <AvatarFallback className="text-black">
-              {user?.user?.username?.slice(0, 1).toUpperCase()}
-            </AvatarFallback>
-          </Avatar> */}
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuLabel>{user?.user?.username}</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
-            <Link href={`/profile/${user?.user?._id}`}>Profile</Link>
+          <DropdownMenuItem onClick={() => handleNavigation(`/profile/${user?.user?._id}`)}>
+            Profile
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Link href="/videos/user">Video Manager</Link>
+          <DropdownMenuItem onClick={() => handleNavigation('/videos/user')}>
+            Video Manager
           </DropdownMenuItem>
           <DropdownMenuSeparator />
 
           {user?.user?.role === 'admin' && (
             <>
-              <DropdownMenuItem>
-                <Link href="/dashboard">Dashboard</Link>
+              <DropdownMenuItem onClick={() => handleNavigation('/dashboard')}>
+                Dashboard
               </DropdownMenuItem>
               <DropdownMenuSeparator />
             </>
           )}
 
           <DropdownMenuItem>
-            <Button className="w-full" onClick={() => logout()}>
+            <Button className="w-full" onClick={() => { logout(); }}>
               Logout
             </Button>
           </DropdownMenuItem>
