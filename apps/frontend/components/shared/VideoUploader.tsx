@@ -1,24 +1,18 @@
 'use client';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from '../ui/form';
+import { Form } from '../ui/form';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useToast } from '../ui/use-toast';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import api from '@/app/utils/api';
-import Image from 'next/image';
 import { FileUpload } from '@/components/ui/file-upload'; // Import Aceternity UI FileUpload
 import { useUserContext } from '@/app/context/UserContext';
 import { Label } from '../ui/label';
+import { DialogClose } from '../ui/dialog';
 
 const VideoUploader = () => {
   const { toast } = useToast();
@@ -26,7 +20,7 @@ const VideoUploader = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const { user }: any = useUserContext();
-
+  const closeDialogRef = useRef(null);
   const formSchema = z.object({
     videoPath: z.string().nonempty('Video path is required'),
     title: z.string().nonempty('Title is required'),
@@ -64,6 +58,9 @@ const VideoUploader = () => {
         title: "You've successfully uploaded the video!",
         variant: 'default',
       });
+      if (closeDialogRef.current) {
+        (closeDialogRef.current as any).click();
+      }
     },
     onError: (error) => {
       toast({
@@ -108,6 +105,7 @@ const VideoUploader = () => {
 
   return (
     <div className="w-full max-w-4xl mx-auto h-fit  bg-white dark:bg-black border-neutral-200 dark:border-neutral-800 rounded-lg">
+      <DialogClose ref={closeDialogRef} className="hidden" />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
           <div className="grid gap-4">

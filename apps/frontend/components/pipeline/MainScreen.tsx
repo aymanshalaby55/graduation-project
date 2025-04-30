@@ -1,6 +1,7 @@
+// components/MainPipelineScreen.tsx
 "use client";
 import React, { useRef, useCallback, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation"; // Import useSearchParams
 import {
   ReactFlow,
   Connection,
@@ -10,6 +11,7 @@ import {
   Controls,
   useReactFlow,
   Background,
+  MiniMap,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { useDnD } from "@/app/context/DnDContext";
