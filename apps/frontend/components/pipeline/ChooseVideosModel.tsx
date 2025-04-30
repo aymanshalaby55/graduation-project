@@ -30,29 +30,32 @@ interface ChooseVideosModalProps {
 }
 
 export function ChooseVideosModal({ videos }: ChooseVideosModalProps) {
-  const { setVideoAnalysisData } = useVideoAnalysisContext();
+  const { setVideoAnalysisData, videoAnalysisData } = useVideoAnalysisContext();
   const [selectedVideos, setSelectedVideos] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
 
   const handleVideoSelect = (videoPath: string) => {
     setSelectedVideos((prev) => {
       const isSelected = prev.includes(videoPath);
-      return isSelected
+      const updated = isSelected
         ? prev.filter((path) => path !== videoPath)
         : [...prev, videoPath];
+
+      setVideoAnalysisData((prevData: any) => ({
+        ...prevData,
+        videos: updated,
+      }));
+
+      return updated;
     });
   };
 
   const handleClearSelection = () => {
     setSelectedVideos([]);
-  };
-
-  const handleSaveSelection = () => {
-    setVideoAnalysisData((prevData: any) => ({
-      ...prevData,
-      videos: selectedVideos,
+    setVideoAnalysisData((prev: any) => ({
+      ...prev,
+      videos: [],
     }));
-    setIsOpen(false);
   };
 
   const ModalContent = () => (
@@ -72,6 +75,10 @@ export function ChooseVideosModal({ videos }: ChooseVideosModalProps) {
               <p className="text-lg text-muted-foreground">
                 No videos uploaded
               </p>
+              {/* <Button variant="outline" className="mt-4">
+                <Upload className="mr-2 h-4 w-4" />
+                Upload Videos
+              </Button> */}
               <Dialog>
                 <DialogTrigger asChild>
                   <Button
@@ -127,33 +134,33 @@ export function ChooseVideosModal({ videos }: ChooseVideosModalProps) {
                         </Button>
                       </div>
                     </div>
-                  </div>
-                
-                  {/* Video Info */}
-                  <div className="p-3">
-                    <p className="font-medium truncate" title={video.originalName}>
-                      {video.originalName}
-                    </p>
-                  </div>
-                
-                  {/* Selection Badge */}
-                  {selectedVideos.includes(video.videoPath) && (
-                    <div className="absolute top-2 right-2 z-20">
-                      <Badge>
-                        <Check className="h-3 w-3 mr-1" />
-                        Selected
-                      </Badge>
+
+                    {/* Video Info */}
+                    <div className="p-3">
+                      <p
+                        className="font-medium truncate"
+                        title={video.originalName}
+                      >
+                        {video.originalName}
+                      </p>
                     </div>
-                  )}
-                </motion.div>
-                
+
+                    {/* Selection Indicator */}
+                    {selectedVideos.includes(video.videoPath) && (
+                      <div className="absolute top-2 right-2">
+                        <Badge>
+                          <Check className="h-3 w-3 mr-1" />
+                          Selected
+                        </Badge>
+                      </div>
+                    )}
+                  </motion.div>
                 ))}
               </AnimatePresence>
             </div>
           )}
         </div>
 
-        {/* Footer */}
         <DialogFooter className="flex justify-between items-center px-6 py-4 border-t">
           <Button
             variant="outline"
@@ -166,9 +173,6 @@ export function ChooseVideosModal({ videos }: ChooseVideosModalProps) {
           <div className="flex gap-3">
             <Button variant="outline" onClick={() => setIsOpen(false)}>
               Cancel
-            </Button>
-            <Button onClick={handleSaveSelection}>
-              Confirm Selection
             </Button>
           </div>
         </DialogFooter>
