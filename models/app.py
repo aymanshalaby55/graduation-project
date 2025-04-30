@@ -56,7 +56,7 @@ def detect_video():
     video_path = data['video_path']
     result = process_video(video_path)
 
-    return jsonify({"detected": result != "not found"})
+    return jsonify({"result != "not found"})
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
