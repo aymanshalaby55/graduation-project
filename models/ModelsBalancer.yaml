@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ai-app
+  name: model-app
   labels:
-    app: ai-app
+    app: model-app
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: ai-app
+      app: model-app
   template:
     metadata:
       labels:
-        app: ai-app
+        app: model-app
     spec:
       containers:
-        - name: ai-app
+        - name: model-app
           image: ahmedwagih02/human-detection:latest
           ports:
             - containerPort: 5000
@@ -30,24 +30,24 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ai-app-service
+  name: model-app-service
 spec:
   type: LoadBalancer
   ports:
     - port: 80
       targetPort: 5000
   selector:
-    app: ai-app
+    app: model-app
 ---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: ai-app-hpa
+  name: model-app-hpa
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: ai-app
+    name: model-app
   minReplicas: 2
   maxReplicas: 10
   metrics:
