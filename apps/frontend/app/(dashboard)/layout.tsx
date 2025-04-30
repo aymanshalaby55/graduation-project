@@ -23,7 +23,7 @@ export default function RootLayout({
             <div className="w-1/6 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] ">
               <Sidebar />
             </div>
-            <div className="flex-1 p-6 bg-gray-100">
+            <div className="flex-1 p-6 bg-gray-100 overflow-y-auto">
               {/* <Navbar /> */}
               {children}
             </div>

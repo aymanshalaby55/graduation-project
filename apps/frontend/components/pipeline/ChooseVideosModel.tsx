@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-
 import { motion, AnimatePresence } from "framer-motion";
 import { useVideoAnalysisContext } from "@/app/context/VideoAnalysisContext";
 import { createPortal } from "react-dom";
@@ -29,32 +28,29 @@ interface ChooseVideosModalProps {
 }
 
 export function ChooseVideosModal({ videos }: ChooseVideosModalProps) {
-  const { setVideoAnalysisData, videoAnalysisData } = useVideoAnalysisContext();
+  const { setVideoAnalysisData } = useVideoAnalysisContext();
   const [selectedVideos, setSelectedVideos] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
 
   const handleVideoSelect = (videoPath: string) => {
     setSelectedVideos((prev) => {
       const isSelected = prev.includes(videoPath);
-      const updated = isSelected
+      return isSelected
         ? prev.filter((path) => path !== videoPath)
         : [...prev, videoPath];
-
-      setVideoAnalysisData((prevData: any) => ({
-        ...prevData,
-        videos: updated,
-      }));
-
-      return updated;
     });
   };
 
   const handleClearSelection = () => {
     setSelectedVideos([]);
-    setVideoAnalysisData((prev: any) => ({
-      ...prev,
-      videos: [],
+  };
+
+  const handleSaveSelection = () => {
+    setVideoAnalysisData((prevData: any) => ({
+      ...prevData,
+      videos: selectedVideos,
     }));
+    setIsOpen(false);
   };
 
   const ModalContent = () => (
@@ -74,10 +70,6 @@ export function ChooseVideosModal({ videos }: ChooseVideosModalProps) {
               <p className="text-lg text-muted-foreground">
                 No videos uploaded
               </p>
-              {/* <Button variant="outline" className="mt-4">
-                <Upload className="mr-2 h-4 w-4" />
-                Upload Videos
-              </Button> */}
               <Dialog>
                 <DialogTrigger asChild>
                   <Button
@@ -101,26 +93,32 @@ export function ChooseVideosModal({ videos }: ChooseVideosModalProps) {
               <AnimatePresence>
                 {videos.map((video) => (
                   <motion.div
-                    key={video._id}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    whileHover={{ scale: 1.02 }}
-                    className={`relative rounded-lg border ${
-                      selectedVideos.includes(video.videoPath)
-                        ? "border-primary ring-2 ring-primary"
-                        : "border-border"
-                    } overflow-hidden cursor-pointer transition-colors`}
-                    onClick={() => handleVideoSelect(video.videoPath)}
-                  >
-                    {/* Video Preview */}
-                    <div className="aspect-video bg-muted relative group">
-                      <video
-                        src={video.videoPath}
-                        className="w-full h-full object-cover"
-                        preload="metadata"
-                      />
-                      <div className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                  key={video._id}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  whileHover={{ scale: 1.02 }}
+                  className={`relative rounded-lg border ${
+                    selectedVideos.includes(video.videoPath)
+                      ? "border-primary ring-2 ring-primary"
+                      : "border-border"
+                  } overflow-hidden transition-colors`}
+                >
+                  {/* Video Preview */}
+                  <div className="aspect-video bg-muted relative group">
+                    <video
+                      src={video.videoPath}
+                      className="w-full h-full object-cover"
+                      preload="metadata"
+                      controls={false} // No controls
+                    />
+                
+                    {/* Overlay for click (separate) */}
+                    <div
+                      className="absolute inset-0 z-10 bg-transparent cursor-pointer"
+                      onClick={() => handleVideoSelect(video.videoPath)}
+                    >
+                      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                         <Button variant="secondary" size="sm">
                           {selectedVideos.includes(video.videoPath) ? (
                             <>
@@ -133,33 +131,33 @@ export function ChooseVideosModal({ videos }: ChooseVideosModalProps) {
                         </Button>
                       </div>
                     </div>
-
-                    {/* Video Info */}
-                    <div className="p-3">
-                      <p
-                        className="font-medium truncate"
-                        title={video.originalName}
-                      >
-                        {video.originalName}
-                      </p>
+                  </div>
+                
+                  {/* Video Info */}
+                  <div className="p-3">
+                    <p className="font-medium truncate" title={video.originalName}>
+                      {video.originalName}
+                    </p>
+                  </div>
+                
+                  {/* Selection Badge */}
+                  {selectedVideos.includes(video.videoPath) && (
+                    <div className="absolute top-2 right-2 z-20">
+                      <Badge>
+                        <Check className="h-3 w-3 mr-1" />
+                        Selected
+                      </Badge>
                     </div>
-
-                    {/* Selection Indicator */}
-                    {selectedVideos.includes(video.videoPath) && (
-                      <div className="absolute top-2 right-2">
-                        <Badge>
-                          <Check className="h-3 w-3 mr-1" />
-                          Selected
-                        </Badge>
-                      </div>
-                    )}
-                  </motion.div>
+                  )}
+                </motion.div>
+                
                 ))}
               </AnimatePresence>
             </div>
           )}
         </div>
 
+        {/* Footer */}
         <DialogFooter className="flex justify-between items-center px-6 py-4 border-t">
           <Button
             variant="outline"
@@ -172,6 +170,9 @@ export function ChooseVideosModal({ videos }: ChooseVideosModalProps) {
           <div className="flex gap-3">
             <Button variant="outline" onClick={() => setIsOpen(false)}>
               Cancel
+            </Button>
+            <Button onClick={handleSaveSelection}>
+              Confirm Selection
             </Button>
           </div>
         </DialogFooter>
