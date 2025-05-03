@@ -21,49 +21,13 @@ spec:
             - containerPort: 5000
           resources:
             requests:
-              cpu: 100m
-              memory: 128Mi
-            limits:
               cpu: 500m
-              memory: 256Mi
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: model-app-service
-spec:
-  type: LoadBalancer
-  ports:
-    - port: 80
-      targetPort: 5000
-  selector:
-    app: model-app
----
-apiVersion: autoscaling/v2
-kind: HorizontalPodAutoscaler
-metadata:
-  name: model-app-hpa
-spec:
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: model-app
-  minReplicas: 2
-  maxReplicas: 10
-  metrics:
-    - type: Resource
-      resource:
-        name: cpu
-        target:
-          type: Utilization
-          averageUtilization: 50
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: metrics-server-config
-  namespace: kube-system
-data:
-  args: |
-    --kubelet-insecure-tls
-    --kubelet-preferred-address-types=InternalIP
+              memory: 512Mi
+            limits:
+              cpu: "1"
+              memory: 1Gi
+
+
+# minikube addons enable metrics-server
+# minikube service model-app-service
+# kubectl get hpa model-app-hpa --watch

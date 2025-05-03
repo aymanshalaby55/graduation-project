@@ -40,6 +40,8 @@ export default function VideoManager() {
   
     return Number.parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i]
   }
+  console.log(userVideos?.data?.userVideos, 'userVideos');
+  
   return (
     <div className="container py-8">
       <div className="flex flex-col gap-6">

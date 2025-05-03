@@ -9,12 +9,14 @@ const aiProcessingQueue = new Queue("ai-processing", {
     host: process.env.REDIS_HOST || "localhost",
     port: process.env.REDIS_PORT || 6379,
   },
+  
 });
+
 
 aiProcessingQueue.process(async (job) => {
   try {
     const io = getSocketIO();
-
+    
     console.log(
       `Started processing job: ${job.id}, video: ${job.data.videoPath}`,
     );

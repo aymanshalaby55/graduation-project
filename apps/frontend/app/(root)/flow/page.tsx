@@ -9,9 +9,9 @@ import MainPipelineScreen from "@/components/pipeline/MainScreen";
 const Page = () => {
   const { user }: any = useUserContext();
   const loggedIn = !!user;
-  if (!loggedIn) {
-    redirect("/");
-  }
+  // if (!loggedIn) {
+  //   redirect("/");
+  // }
 
   return (
     <Suspense fallback={<div>Loading...</div>}>

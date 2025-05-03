@@ -36,7 +36,7 @@ const Navbar = () => {
             Home
           </Link>
           <Link
-            href="#features"
+            href="/#features"
             className="hover:text-gray-400 transition-colors"
           >
             {/* <Logo
@@ -45,7 +45,7 @@ const Navbar = () => {
             /> */}
             Feature
           </Link>
-          <Link href="/" className="hover:text-gray-400 transition-colors">
+          <Link href="#features" className="hover:text-gray-400 transition-colors">
             {/* <Logo
               title={'Contact'}
               styles="bg-gradient-to-br from-slate-300 to-slate-500 bg-clip-text text-transparent text-2xl md:text-2xl font-medium tracking-tight text-center"

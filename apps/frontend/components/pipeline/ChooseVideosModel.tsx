@@ -57,7 +57,13 @@ export function ChooseVideosModal({ videos }: ChooseVideosModalProps) {
       videos: [],
     }));
   };
-
+  const handleSaveSelection = () => {
+    setVideoAnalysisData((prevData: any) => ({
+      ...prevData,
+      videos: selectedVideos,
+    }));
+    setIsOpen(false);
+  };
   const ModalContent = () => (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="max-w-4xl w-[90vw] max-h-[85vh] overflow-y-auto">
@@ -173,6 +179,9 @@ export function ChooseVideosModal({ videos }: ChooseVideosModalProps) {
           <div className="flex gap-3">
             <Button variant="outline" onClick={() => setIsOpen(false)}>
               Cancel
+            </Button>
+            <Button onClick={handleSaveSelection}>
+              Confirm Selection
             </Button>
           </div>
         </DialogFooter>
