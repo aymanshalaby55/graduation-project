@@ -32,7 +32,7 @@ const LoadPipelineButton = ({ id }: LoadPipelineProps) => {
       className="text-white bg-[#4CAF50] hover:bg-[#4CAF50]/90"
       variant={'default'}
     >
-      Load Pipeline
+      Clone
     </Button>
   );
 };

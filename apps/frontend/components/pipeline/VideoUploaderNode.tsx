@@ -18,7 +18,6 @@ const VideoUploaderNode = ({ data }: any) => {
   return (
     <div>
       <VideoSelector videos={userVideos?.data?.userVideos} />
-      {/* <VideoUploader /> */}
       <Handle type="source" position={Position.Right} />
     </div>
   );

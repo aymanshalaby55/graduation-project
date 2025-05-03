@@ -19,6 +19,7 @@ import ImageUploader from "./ImageUploader";
 import { UserValidation } from "@/lib/validations/user";
 import api from "@/app/utils/api";
 import { useMutation } from "@tanstack/react-query";
+import { useUserContext } from "@/app/context/UserContext";
 
 // Define the validation schema
 
@@ -30,6 +31,7 @@ interface UserProps {
 }
 
 const EditUserForm = ({ username, email, dateOfBirth, userId }: UserProps) => {
+  const { user }: any = useUserContext();
   const router = useRouter();
   const form = useForm({
     resolver: zodResolver(UserValidation),

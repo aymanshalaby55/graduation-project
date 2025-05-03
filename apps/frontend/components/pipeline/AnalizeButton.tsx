@@ -26,7 +26,7 @@ const AnalizeButton = () => {
       try {
         const { data } = await api.post(`aiCalls/addVideosToQueue`, {
           videos: videoAnalysisData.videos,
-          models: videoAnalysisData.models,
+          modelsId: videoAnalysisData.models,
         });
         return data;
       } catch (error) {
