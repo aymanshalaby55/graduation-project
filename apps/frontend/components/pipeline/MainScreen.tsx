@@ -129,7 +129,7 @@ const MainPipelineScreen = () => {
           onDrop={onDrop}
           onDragOver={onDragOver}
           fitView
-          style={{ backgroundColor: "#F7F9FB" }}
+          // style={{ backgroundColor: "#F7F9FB" }}
           nodeTypes={nodeTypes}
         >
           {/* <MiniMap nodeStrokeColor="blue" nodeColor="lightblue" /> */}
