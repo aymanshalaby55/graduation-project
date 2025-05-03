@@ -14,19 +14,11 @@ import { Button } from '../ui/button';
 import Link from 'next/link';
 import { AnimatedTooltip } from '../ui/animated-tooltip';
 import { useRouter } from 'next/navigation';
+import { LogOut } from 'lucide-react';
 
 const Dropdown = () => {
   const { user, logout }: any = useUserContext();
   const router = useRouter();
-  const people = [
-    {
-      id: 1,
-      name: user?.user?.username,
-      designation: 'Software Engineer',
-      image: '/images/avatar.png',
-    },
-  ];
-
   const handleNavigation = (path: string) => {
     router.push(path);
   };
@@ -34,18 +26,26 @@ const Dropdown = () => {
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger className='outline-none'>
-          <AnimatedTooltip items={people} />
+        <DropdownMenuTrigger className="outline-none">
+          <Avatar className="w-10 h-10">
+            <AvatarImage
+              src={user?.user?.profilePicture}
+              alt="User profile picture"
+            />
+            <AvatarFallback className="bg-gradient-to-br from-slate-300 to-slate-500 bg-clip-text text-transparent text-2xl md:text-2xl font-medium tracking-tight text-center">
+              {user?.user?.username.charAt(0).toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuLabel>{user?.user?.username}</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => handleNavigation(`/profile/${user?.user?._id}`)}>
+          <DropdownMenuItem
+            onClick={() => handleNavigation(`/profile/${user?.user?._id}`)}
+          >
             Profile
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => handleNavigation('/videos/user')}>
-            Video Manager
-          </DropdownMenuItem>
+
           <DropdownMenuSeparator />
 
           {user?.user?.role === 'admin' && (
@@ -57,10 +57,11 @@ const Dropdown = () => {
             </>
           )}
 
-          <DropdownMenuItem>
-            <Button className="w-full" onClick={() => { logout(); }}>
-              Logout
-            </Button>
+          <DropdownMenuItem
+            onClick={() => logout()}
+            className="flex items-center justify-center hover:bg-slate-100 cursor-pointer"
+          >
+            <LogOut />
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

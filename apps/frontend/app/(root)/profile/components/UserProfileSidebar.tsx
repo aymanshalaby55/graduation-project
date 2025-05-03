@@ -1,9 +1,11 @@
-'use cleint';
+'use client';
 import { Bell, LogOut, Settings, Shield, User } from 'lucide-react';
 import React, { useState } from 'react';
 import { Button } from '../../../../components/ui/button';
 import Image from 'next/image';
 import { Tooltip, TooltipProvider } from '../../../../components/ui/tooltip';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useUserContext } from '@/app/context/UserContext';
 
 const SidebarItem = ({
   icon,
@@ -23,17 +25,20 @@ const SidebarItem = ({
   </button>
 );
 const UserProfileSidebar = () => {
+  const { user, logout }: any = useUserContext();
   const [activeTab, setActiveTab] = useState('profile');
   return (
     <div className="sticky top-24 flex md:flex-col flex-row items-center gap-6 p-4 rounded-2xl bg-white shadow-sm border border-gray-100">
       <div className="relative">
-        <Image
-          width={60}
-          height={60}
-          alt="User Avatar"
-          src="/images/avatar.png"
-          className="rounded-full border-2 border-white shadow-md"
-        />
+        <Avatar className="w-10 h-10">
+          <AvatarImage
+            src={user?.user?.profilePicture}
+            alt="User profile picture"
+          />
+          <AvatarFallback className="bg-gradient-to-br from-slate-300 to-slate-500  bg-clip-text text-transparent text-2xl md:text-2xl font-medium tracking-tight text-center">
+            {user?.user?.username.charAt(0).toUpperCase()}
+          </AvatarFallback>
+        </Avatar>
         <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
       </div>
 
