@@ -18,6 +18,7 @@ import Link from 'next/link';
 import { ReactFlow, ReactFlowProvider, Background } from '@xyflow/react';
 import LoadPipelineButton from '@/components/pipeline/LoadPipelineButton';
 import { Search } from 'lucide-react';
+import FlowPreview from '@/components/shared/FlowPreview';
 
 interface Pipeline {
   _id: string;
@@ -83,47 +84,6 @@ const PageWrapper = ({
   </div>
 );
 
-const FlowPreview = ({ pipelineId }: { pipelineId: string }) => {
-  const {
-    data: flowData,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ['PipelineFlow', pipelineId],
-    queryFn: async () => {
-      const { data } = await api.get(`pipeline/getPipeline/${pipelineId}`);
-      return typeof data.flowData === 'string'
-        ? JSON.parse(data.flowData)
-        : data.flowData;
-    },
-  });
-
-  if (isLoading) return <div>Loading preview...</div>;
-  if (error || !flowData) return <div>Error loading preview</div>;
-
-  return (
-    <div style={{ height: '200px', width: '100%' }}>
-      <ReactFlowProvider>
-        <ReactFlow
-          nodes={flowData.nodes ?? []}
-          edges={flowData.edges ?? []}
-          fitView
-          fitViewOptions={{ padding: 0.2 }}
-          nodesDraggable={false}
-          nodesConnectable={false}
-          elementsSelectable={false}
-          zoomOnScroll={false}
-          panOnScroll={false}
-          preventScrolling={false}
-          defaultViewport={flowData.viewport ?? { x: 0, y: 0, zoom: 1 }}
-        >
-          <Background />
-        </ReactFlow>
-      </ReactFlowProvider>
-    </div>
-  );
-};
-
 export default function CommunityPage() {
   const { user }: any = useUserContext();
   const { toast } = useToast();
@@ -145,9 +105,9 @@ export default function CommunityPage() {
   if (isLoading) {
     return (
       <PageWrapper>
-        <div className="flex justify-center items-center h-full">
+        <div className="flex flex-col gap-4 justify-center items-center h-full">
           <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
-          {/* <p className="ml-4 text-xl font-semibold">Loading pipelines...</p> */}
+          <p className="ml-4 text-xl font-semibold">Loading pipelines...</p>
         </div>
       </PageWrapper>
     );
@@ -196,58 +156,25 @@ export default function CommunityPage() {
 
   return (
     <PageWrapper>
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {allPipelines?.pipelines?.length > 0 ? (
           allPipelines.pipelines.map((pipeline: Pipeline) => (
             <Card key={pipeline._id} className="flex flex-col">
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <Link href={`/profile/${pipeline.user.username}`}>
-                      <Avatar className="cursor-pointer">
-                        <AvatarImage
-                          src={`https://ui-avatars.com/api/?name=${pipeline.user.username}`}
-                          alt={pipeline.user.username}
-                        />
-                        <AvatarFallback>
-                          {pipeline.user.username?.slice(0, 1).toUpperCase()}
-                        </AvatarFallback>
-                      </Avatar>
-                    </Link>
-                    <div className="flex flex-col">
-                      <CardTitle className="text-lg">{pipeline.name}</CardTitle>
-                      <span className="text-sm text-muted-foreground">
-                        {pipeline.user.username}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <button className="text-yellow-500 hover:text-yellow-600">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                    </button>
-                    <span className="text-sm text-muted-foreground">
-                      {/* {new Date(pipeline.createdAt).toLocaleDateString()} */}
-                      {/* {pipeline.createdAt} */}
-                      26/2/2025
-                    </span>
+              <CardHeader className="!p-0 max-h-[200px]">
+                <FlowPreview pipelineId={pipeline._id} />
+              </CardHeader>
+              <CardContent className="pt-4">
+                <div className="flex flex-col gap-3">
+                  <Link className='hover:underline' href={`/flow/${pipeline?._id}`}>
+                    <CardTitle className="text-lg">{pipeline.name}</CardTitle>
+                  </Link>
+                  <div className="flex items-center justify-between gap-3">
+                    <p>{pipeline?.user?.username || 'mllml'}</p>
+                    <span>12/5/2025</span>
                   </div>
                 </div>
-              </CardHeader>
-              <CardContent>
-                <FlowPreview pipelineId={pipeline._id} />
-                {/* <p className="text-sm text-muted-foreground mt-4">
-                  This pipeline is shared with the community. Click the button
-                  below to load it into your workspace.
-                </p> */}
               </CardContent>
-              <CardFooter className="flex items-center gap-4">
+              {/* <CardFooter className="flex items-center gap-4">
                 <LoadPipelineButton id={pipeline._id} />
                 {pipeline.user.username === user?.username && (
                   <Button
@@ -257,7 +184,7 @@ export default function CommunityPage() {
                     Delete
                   </Button>
                 )}
-              </CardFooter>
+              </CardFooter> */}
             </Card>
           ))
         ) : (

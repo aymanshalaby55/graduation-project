@@ -29,7 +29,7 @@ const LoadPipelineButton = ({ id }: LoadPipelineProps) => {
   return (
     <Button
       onClick={loadSavedPipeline}
-      className="text-white bg-[#4CAF50] hover:bg-[#4CAF50]/90"
+      className="text-white  h-[40px]"
       variant={'default'}
     >
       Clone
