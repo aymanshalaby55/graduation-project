@@ -41,10 +41,8 @@ const DropDownNode = ({ data }: any) => {
     }
   };
 
-  console.log(videoAnalysisData);
-
   return (
-    <div className="flex flex-col gap-5 p-1 bg-white">
+    <div className="flex flex-col gap-5 p-1 bg-black">
       <div>
         <select
           className="p-2 rounded-lg capitalize"
