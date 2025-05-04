@@ -73,13 +73,13 @@ const PageWrapper = ({
           <input
             type="search"
             className="block w-full p-4 pl-10 text-sm border rounded-md bg-background border-input"
-            placeholder="Search for a mind map"
+            placeholder="Search for a pipeline"
             // value={search}
             // onChange={(e) => setSearch(e.target.value)}
           />
         </div>
       </div>
-      <div className="container">{children}</div>
+      <div className="container pb-6">{children}</div>
     </div>
   </div>
 );
@@ -100,7 +100,7 @@ export default function CommunityPage() {
     refetchOnWindowFocus: false,
   });
 
-  // console.log(allPipelines);
+  console.log(allPipelines);
 
   if (isLoading) {
     return (
@@ -169,7 +169,7 @@ export default function CommunityPage() {
                     <CardTitle className="text-lg">{pipeline.name}</CardTitle>
                   </Link>
                   <div className="flex items-center justify-between gap-3">
-                    <p>{pipeline?.user?.username || 'mllml'}</p>
+                    <p>{pipeline?.user?.username}</p>
                     <span>12/5/2025</span>
                   </div>
                 </div>

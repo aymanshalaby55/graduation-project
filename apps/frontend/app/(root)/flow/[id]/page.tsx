@@ -51,12 +51,12 @@ const Page = () => {
               <p className="font-semibold">{0}</p>
             </div>
           </div>
-          <LoadPipelineButton id={id} />
+          <LoadPipelineButton id={id.toString()} />
         </div>
       </div>
       <hr className="my-10" />
       {/* end of the header */}
-      <FlowPreview pipelineId={id} />
+      <FlowPreview pipelineId={id.toString()} />
     </div>
   );
 };

@@ -30,6 +30,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Checkbox } from '@/components/ui/checkbox';
+import Link from 'next/link';
 
 interface Video {
   id?: string;
@@ -140,10 +141,12 @@ export default function VideoManager() {
                   <Trash className="h-4 w-4 mr-2" />
                   Delete Selected ({selectedVideos.length})
                 </Button>
-                <Button variant="default" size="sm">
-                  <Play className="h-4 w-4 mr-2" />
-                  Analyze Selected ({selectedVideos.length})
-                </Button>
+                <Link href={'/flow'}>
+                  <Button variant="default" size="sm">
+                    <Play className="h-4 w-4 mr-2" />
+                    Analyze Selected ({selectedVideos.length})
+                  </Button>
+                </Link>
               </>
             )}
             <Dialog>
@@ -232,7 +235,10 @@ export default function VideoManager() {
                             video.id || video._id
                           )}
                           onCheckedChange={(checked) =>
-                            handleSelectVideo(video.id || video._id || '', !!checked)
+                            handleSelectVideo(
+                              video.id || video._id || '',
+                              !!checked
+                            )
                           }
                         />
                       </td>

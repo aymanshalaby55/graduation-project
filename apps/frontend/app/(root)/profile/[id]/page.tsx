@@ -1,44 +1,150 @@
 'use client';
 
-import { useState } from 'react';
-import UserProfileSidebar from '@/app/(root)/profile/components/UserProfileSidebar';
-import UserProfileHeader from '../components/UserProfileHeader';
-import PersonalInfo from '../components/PersonalInfo';
-import PremiumFeature from '../components/PremiumFeature';
-import AccountManagement from '../components/AccountManagement';
-import ConnectedAccounts from '../components/ConnectedAccounts';
-import TwoFA from '../components/2FA';
-import RecentActivity from '../components/RecentActivity';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import {
+  BookOpen,
+  FileSearch2,
+  Grid,
+  LogOut,
+  Settings,
+  Star,
+} from 'lucide-react';
+import { Tooltip, TooltipProvider } from '../../../../components/ui/tooltip';
+import { useUserContext } from '@/app/context/UserContext';
+import Overview from '../components/Overview';
+import Pipelines from '../components/Pipelines';
+import Favourites from '../components/Favourites';
+import Setting from '../components/Settings';
 
-const UserProfile = () => {
+const SidebarItem = ({
+  icon,
+  title,
+  active = false,
+  onClick,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  active?: boolean;
+  onClick: () => void;
+}) => (
+  <Tooltip>
+    <button
+      onClick={onClick}
+      className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 
+        ${active ? 'bg-blue-600 text-white shadow-md shadow-blue-200' : 'text-gray-700 hover:bg-gray-100'}`}
+      aria-label={title}
+    >
+      {icon}
+    </button>
+  </Tooltip>
+);
+
+const UserProfileSidebar = ({
+  activeTab,
+  setActiveTab,
+}: {
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
+}) => {
+  const { logout } = useUserContext();
+  const router = useRouter();
+
+  const handleTabClick = (tab: string) => {
+    if (tab === 'templates') {
+      router.push('/community');
+    } else {
+      setActiveTab(tab);
+    }
+  };
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-7xl">
+    <div className="sticky top-24 flex md:flex-col flex-row items-center gap-6 p-4 rounded-2xl bg-white shadow-sm border border-gray-100">
+      <div className="flex md:flex-col flex-row gap-4 w-full items-center">
+        <TooltipProvider>
+          <SidebarItem
+            icon={<FileSearch2 size={18} />}
+            title="Overview"
+            active={activeTab === 'overview'}
+            onClick={() => handleTabClick('overview')}
+          />
+
+          <SidebarItem
+            icon={<BookOpen size={18} />}
+            title="Pipelines"
+            active={activeTab === 'pipelines'}
+            onClick={() => handleTabClick('pipelines')}
+          />
+
+          <SidebarItem
+            icon={<Star size={18} />}
+            title="Favourites"
+            active={activeTab === 'favourites'}
+            onClick={() => handleTabClick('favourites')}
+          />
+
+          <SidebarItem
+            icon={<Grid size={18} />}
+            title="Templates"
+            active={activeTab === 'templates'}
+            onClick={() => handleTabClick('templates')}
+          />
+
+          <SidebarItem
+            icon={<Settings size={18} />}
+            title="Settings"
+            active={activeTab === 'settings'}
+            onClick={() => handleTabClick('settings')}
+          />
+        </TooltipProvider>
+      </div>
+
+      <div className="mt-auto">
+        <TooltipProvider>
+          <Tooltip>
+            <button
+              className="w-10 h-10 rounded-full flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors"
+              onClick={logout}
+              aria-label="Logout"
+            >
+              <LogOut size={18} />
+            </button>
+          </Tooltip>
+        </TooltipProvider>
+      </div>
+    </div>
+  );
+};
+
+const UserProfile = () => {
+  const [activeTab, setActiveTab] = useState('profile');
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'overview':
+        return <Overview />;
+      case 'pipelines':
+        return <Pipelines />;
+      case 'favourites':
+        return <Favourites />;
+      case 'settings':
+        return <Setting />;
+      default:
+        return <Overview />;
+    }
+  };
+
+  return (
+    <div className="container mx-auto px-8 py-8 ">
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-        {/* Sidebar */}
         <div className="md:col-span-1">
-          <UserProfileSidebar />
+          <UserProfileSidebar
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
         </div>
 
-        {/* Main Content */}
-        <div className="md:col-span-11">
-          <UserProfileHeader />
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Left Column */}
-            <div className="md:col-span-2 space-y-6">
-              <PersonalInfo />
-              <PremiumFeature />
-              <AccountManagement />
-            </div>
-            {/* Right Column */}
-            <div className="md:col-span-1 space-y-6">
-              <TwoFA/>
-              <ConnectedAccounts />
-              <RecentActivity/>
-            </div>
-          </div>
-        </div>
+        <div className="md:col-span-11">{renderContent()}</div>
       </div>
     </div>
   );
