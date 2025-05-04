@@ -22,6 +22,7 @@ import DropDownNode from "./DropDownNode";
 import Sidebar from "./Sidebar";
 import SavePipeline from "./SavePipeline";
 import AnalizeButton from "./AnalizeButton";
+import { useVideoAnalysisContext } from "@/app/context/VideoAnalysisContext";
 
 const initialNodes: any[] = [];
 
@@ -43,6 +44,14 @@ const MainPipelineScreen = () => {
   // Use useSearchParams to access the URL query parameters
   const searchParams = useSearchParams();
   const encodedFlow = searchParams.get("pipeline"); // Get the encoded pipeline data
+
+  const { socketStatus } = useVideoAnalysisContext();
+
+  const hasPendingJob = Object.values(socketStatus || {}).some(
+    (job: any) => job.status === "pending"
+  );
+
+  console.log(hasPendingJob);
 
   const flow = toObject();
   const jsonFlow = JSON.stringify(flow, null, 2);
@@ -129,10 +138,8 @@ const MainPipelineScreen = () => {
           onDrop={onDrop}
           onDragOver={onDragOver}
           fitView
-          // style={{ backgroundColor: "#F7F9FB" }}
           nodeTypes={nodeTypes}
         >
-          {/* <MiniMap nodeStrokeColor="blue" nodeColor="lightblue" /> */}
           <Controls />
           <Background />
           {nodes.length > 0 && (
@@ -149,7 +156,7 @@ const MainPipelineScreen = () => {
               </div>
 
               <div className="absolute bottom-20 right-5 z-50">
-                <AnalizeButton />
+                <AnalizeButton hasPendingJob={false} />
               </div>
             </div>
           )}
