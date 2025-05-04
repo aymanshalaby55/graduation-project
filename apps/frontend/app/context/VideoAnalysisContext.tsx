@@ -27,12 +27,14 @@ interface VideoAnalysisContextType {
   socketStatus: {
     [jobId: string]: SocketJobStatus;
   };
+  clearSocketStatus: () => void; // Add this line
 }
 
 const VideoAnalysisContext = createContext<VideoAnalysisContextType>({
   videoAnalysisData: { videos: [], models: [] },
   setVideoAnalysisData: () => {},
   socketStatus: {},
+  clearSocketStatus: () => {}, // Add this line
 });
 
 const VideoAnalysisProvider = ({ children }: { children: React.ReactNode }) => {
@@ -121,12 +123,17 @@ const VideoAnalysisProvider = ({ children }: { children: React.ReactNode }) => {
     };
   }, []);
 
+  const clearSocketStatus = () => {
+    setSocketStatus({});
+  };
+
   return (
     <VideoAnalysisContext.Provider
       value={{
         videoAnalysisData,
         setVideoAnalysisData,
         socketStatus,
+        clearSocketStatus,
       }}
     >
       {children}
