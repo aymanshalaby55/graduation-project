@@ -8,7 +8,7 @@ import UserProfileHeader from './UserProfileHeader';
 
 const Setting = () => {
   return (
-    <>
+    <div className="container mx-auto max-w-7xl px-4 p-6 flex flex-col gap-6">
       <UserProfileHeader />
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Left Column */}
@@ -23,7 +23,7 @@ const Setting = () => {
           <RecentActivity />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

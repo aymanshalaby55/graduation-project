@@ -84,13 +84,6 @@ const UserProfileSidebar = ({
           />
 
           <SidebarItem
-            icon={<Grid size={18} />}
-            title="Templates"
-            active={activeTab === 'templates'}
-            onClick={() => handleTabClick('templates')}
-          />
-
-          <SidebarItem
             icon={<Settings size={18} />}
             title="Settings"
             active={activeTab === 'settings'}

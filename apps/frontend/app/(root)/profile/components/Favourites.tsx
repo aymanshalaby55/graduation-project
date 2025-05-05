@@ -36,7 +36,7 @@ const PageWrapper = ({
 }) => (
   <div className="">
     <div className="flex flex-col gap-6">
-      <div className="container mx-auto p-6 flex flex-col gap-6">
+      <div className="container mx-auto max-w-7xl px-4 p-6 flex flex-col gap-6">
         <div className="flex sm:items-center items-start flex-col sm:flex-row gap-2 sm:gap-0 justify-between">
           <h1 className="text-2xl font-semibold">My Favorites Pipelines</h1>
           <Link href="/community">
@@ -65,7 +65,7 @@ const PageWrapper = ({
           </div>
         </div>
       </div>
-      <div className="container pb-6">{children}</div>
+      <div className="container max-w-7xl px-4 mx-auto pb-6">{children}</div>
     </div>
   </div>
 );

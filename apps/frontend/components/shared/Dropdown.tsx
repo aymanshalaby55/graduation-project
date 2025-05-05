@@ -23,7 +23,7 @@ const Dropdown = () => {
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger className="outline-none">
+        <DropdownMenuTrigger className="outline-none rounded-lg bg-primary/5 hover:bg-primary/10 dark:bg-primary/40 dark:hover:bg-primary/30">
           <Avatar className="w-10 h-10">
             <AvatarImage
               src={user?.user?.profilePicture}
