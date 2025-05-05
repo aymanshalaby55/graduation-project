@@ -29,19 +29,19 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-4">
             <Link
-              href="/#about"
+              href="/#home"
               className="text-foreground/80 hover:text-foreground"
             >
               Home
             </Link>
             <Link
-              href="/#skills"
+              href="/#features"
               className="text-foreground/80 hover:text-foreground"
             >
-              Feature
+              Features
             </Link>
             <Link
-              href="/#projects"
+              href="/community"
               className="text-foreground/80 hover:text-foreground"
             >
               Community
@@ -79,25 +79,25 @@ const Navbar = () => {
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1">
               <Link
-                href="/#about"
+                href="/#home"
                 className="block px-3 py-2 rounded-md text-foreground/80 hover:text-foreground hover:bg-accent"
                 onClick={() => setIsOpen(false)}
               >
-                About
+                Home
               </Link>
               <Link
-                href="/#skills"
+                href="/#features"
                 className="block px-3 py-2 rounded-md text-foreground/80 hover:text-foreground hover:bg-accent"
                 onClick={() => setIsOpen(false)}
               >
-                Skills
+                Features
               </Link>
               <Link
-                href="/#projects"
+                href="/community"
                 className="block px-3 py-2 rounded-md text-foreground/80 hover:text-foreground hover:bg-accent"
                 onClick={() => setIsOpen(false)}
               >
-                Projects
+                Community
               </Link>
               <Link
                 href="/#contact"
