@@ -1,7 +1,7 @@
-import { useDnD } from "@/app/context/DnDContext";
 import React from "react";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import { useDnD } from "@/context/DnDContext";
 
 const Sidebar = () => {
   const [_, setType] = useDnD() || [];

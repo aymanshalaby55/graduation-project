@@ -13,8 +13,8 @@ import {
 } from "@/components/ui/dialog";
 import { Progress } from "@/components/ui/progress";
 import { Card, CardContent } from "@/components/ui/card";
-import { useVideoAnalysisContext } from "@/app/context/VideoAnalysisContext";
-import api from "@/app/utils/api";
+import { useVideoAnalysisContext } from "@/context/VideoAnalysisContext";
+import api from "@/utils/api";
 
 const AnalizeButton = ({ hasPendingJob }: { hasPendingJob: boolean }) => {
   let { videoAnalysisData, socketStatus, clearSocketStatus } =

@@ -14,7 +14,6 @@ import {
   MiniMap,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
-import { useDnD } from "@/app/context/DnDContext";
 import "@/app/index.css";
 import { Button } from "../ui/button";
 import VideoUploaderNode from "./VideoUploaderNode";
@@ -22,7 +21,8 @@ import DropDownNode from "./DropDownNode";
 import Sidebar from "./Sidebar";
 import SavePipeline from "./SavePipeline";
 import AnalizeButton from "./AnalizeButton";
-import { useVideoAnalysisContext } from "@/app/context/VideoAnalysisContext";
+import { useVideoAnalysisContext } from "@/context/VideoAnalysisContext";
+import { useDnD } from "@/context/DnDContext";
 
 const initialNodes: any[] = [];
 

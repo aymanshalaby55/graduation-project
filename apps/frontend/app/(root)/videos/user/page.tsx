@@ -20,7 +20,6 @@ import {
   Tag,
   X,
 } from 'lucide-react';
-import api from '@/app/utils/api';
 import { useQuery } from '@tanstack/react-query';
 import VideoUploader from '@/components/shared/VideoUploader';
 import {
@@ -30,6 +29,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Checkbox } from '@/components/ui/checkbox';
+import Link from 'next/link';
+import api from '@/utils/api';
 
 interface Video {
   id?: string;
@@ -129,7 +130,7 @@ export default function VideoManager() {
   }, [videos, sortConfig]);
 
   return (
-    <div className="container py-8">
+    <div className="container py-8 max-w-7xl mx-auto px-4">
       <div className="flex flex-col gap-6">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <h1 className="text-3xl font-bold">Your Videos</h1>
@@ -140,10 +141,12 @@ export default function VideoManager() {
                   <Trash className="h-4 w-4 mr-2" />
                   Delete Selected ({selectedVideos.length})
                 </Button>
-                <Button variant="default" size="sm">
-                  <Play className="h-4 w-4 mr-2" />
-                  Analyze Selected ({selectedVideos.length})
-                </Button>
+                <Link href={'/flow'}>
+                  <Button variant="default" size="sm">
+                    <Play className="h-4 w-4 mr-2" />
+                    Analyze Selected ({selectedVideos.length})
+                  </Button>
+                </Link>
               </>
             )}
             <Dialog>
@@ -232,7 +235,10 @@ export default function VideoManager() {
                             video.id || video._id
                           )}
                           onCheckedChange={(checked) =>
-                            handleSelectVideo(video.id || video._id || '', !!checked)
+                            handleSelectVideo(
+                              video.id || video._id || '',
+                              !!checked
+                            )
                           }
                         />
                       </td>

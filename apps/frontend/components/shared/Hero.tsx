@@ -1,8 +1,8 @@
 "use client";
 import { motion } from "framer-motion";
 import { HeroHighlight, Highlight } from "../ui/hero-highlight";
-import { useUserContext } from "@/app/context/UserContext";
 import Link from "next/link";
+import { useUserContext } from "@/context/UserContext";
 
 export function Hero() {
   const { user }: any = useUserContext();

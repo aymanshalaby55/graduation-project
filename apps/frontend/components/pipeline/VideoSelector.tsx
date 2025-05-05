@@ -2,8 +2,8 @@
 
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import api from "@/app/utils/api";
 import { ChooseVideosModal } from "./ChooseVideosModel";
+import api from "@/utils/api";
 
 interface Video {
   _id: string;

@@ -3,8 +3,8 @@
 import React, { memo, useState } from "react";
 import { Handle, Position } from "@xyflow/react";
 import { useQuery } from "@tanstack/react-query";
-import api from "@/app/utils/api";
-import { useVideoAnalysisContext } from "@/app/context/VideoAnalysisContext";
+import api from "@/utils/api";
+import { useVideoAnalysisContext } from "@/context/VideoAnalysisContext";
 
 const DropDownNode = ({ data }: any) => {
   const { videoAnalysisData, setVideoAnalysisData }: any =

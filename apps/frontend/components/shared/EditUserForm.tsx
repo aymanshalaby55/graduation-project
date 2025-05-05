@@ -15,11 +15,9 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
-import ImageUploader from "./ImageUploader";
-import { UserValidation } from "@/lib/validations/user";
-import api from "@/app/utils/api";
 import { useMutation } from "@tanstack/react-query";
-import { useUserContext } from "@/app/context/UserContext";
+import { useUserContext } from "@/context/UserContext";
+import { UserValidation } from "@/lib/validation/user";
 
 // Define the validation schema
 

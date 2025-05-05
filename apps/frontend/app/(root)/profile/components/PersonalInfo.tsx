@@ -4,11 +4,10 @@ import ProfileCard from './ProfileCard';
 import { Skeleton } from '@/components/ui/skeleton';
 import EditUserForm from '@/components/shared/EditUserForm';
 import { User } from 'lucide-react';
-import { UserInfoProps } from '@/Types';
 import { useQuery } from '@tanstack/react-query';
-import api from '@/app/utils/api';
 import { useParams } from 'next/navigation';
-import { useUserContext } from '@/app/context/UserContext';
+import { UserInfoProps } from '@/types';
+import api from '@/utils/api';
 
 const PersonalInfo = () => {
   const { id } = useParams<{ id: string }>();

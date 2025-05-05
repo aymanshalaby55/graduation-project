@@ -3,10 +3,11 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-import { useUserContext } from "@/app/context/UserContext";
 import { Button } from "../ui/button";
 import Dropdown from "./Dropdown";
 import { Logo } from "./Logo";
+import { useUserContext } from "@/context/UserContext";
+import { ModeToggle } from "./ThemeToggle";
 
 const Navbar = () => {
   const { logout, user }: any = useUserContext();
@@ -14,8 +15,8 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <div className="text-white bg-black shadow-md border-b border-gray-600">
-      <div className="container flex justify-between items-center py-3 ">
+    <div className=" transition-all duration-300 bg-background/80 backdrop-blur-md border-b shadow-sm">
+      <div className="container flex justify-between items-center py-3 max-w-7xl mx-auto px-4">
         <Link href="/" className="flex gap-2 items-center">
           <Logo
             title={"VisionAI Chrono"}
@@ -59,16 +60,7 @@ const Navbar = () => {
         <div className="hidden min-[980px]:flex items-center gap-6">
           {loggedIn ? (
             <div className="flex items-center gap-4">
-              <Link
-                href="/videos/user"
-                className="hover:text-gray-400 transition-colors"
-              >
-                {/* <Logo
-                  title={'Videos Manager'}
-                  styles="bg-gradient-to-br from-slate-300 to-slate-500 bg-clip-text text-transparent text-2xl md:text-2xl font-medium tracking-tight text-center"
-                /> */}
-                Video Manager
-              </Link>
+              <ModeToggle/>
               <Dropdown />
             </div>
           ) : (
