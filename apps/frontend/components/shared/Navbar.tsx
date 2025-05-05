@@ -52,17 +52,48 @@ const Navbar = () => {
             >
               Contact
             </Link>
-            <ModeToggle />
-            <Dropdown />
           </div>
-
+          <div className="hidden md:flex items-center gap-2">
+            {loggedIn ? (
+              <div className="flex items-center gap-2">
+                <Dropdown />
+              </div>
+            ) : (
+              <div className="flex items-center gap-2">
+                <Link href="/sign-in">
+                  <Button className="hover:bg-gray-700">Sign In</Button>
+                </Link>
+                <Link href="/sign-up">
+                  <Button variant="default" className="hover:bg-gray-700">
+                    Sign Up
+                  </Button>
+                </Link>
+              </div>
+            )}
+            <ModeToggle />
+          </div>
           {/* Mobile Navigation Button */}
           <div className="md:hidden flex items-center gap-2">
+            {loggedIn ? (
+              <div className="flex items-center gap-2">
+                <Dropdown />
+              </div>
+            ) : (
+              <div className="flex items-center gap-2">
+                <Link href="/sign-in">
+                  <Button className="hover:bg-gray-700">Sign In</Button>
+                </Link>
+                <Link href="/sign-up">
+                  <Button variant="default" className="hover:bg-gray-700">
+                    Sign Up
+                  </Button>
+                </Link>
+              </div>
+            )}
             <ModeToggle />
-            <Dropdown />
             <Button
               variant="ghost"
-              className="ml-2"
+              className=""
               onClick={() => setIsOpen(!isOpen)}
             >
               {isOpen ? (

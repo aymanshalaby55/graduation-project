@@ -1,9 +1,9 @@
 "use client";
 
-import { useUserContext } from "@/app/context/UserContext";
-import api from "@/app/utils/api";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
+import { useUserContext } from "@/context/UserContext";
+import api from "@/utils/api";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import { redirect } from "next/navigation";
