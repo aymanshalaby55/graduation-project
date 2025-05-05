@@ -30,4 +30,4 @@ def get_result_image():
     return send_file("uploads/result.jpg", mimetype='image/jpeg')
 
 if __name__ == '__main__': 
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5050, debug=True)
