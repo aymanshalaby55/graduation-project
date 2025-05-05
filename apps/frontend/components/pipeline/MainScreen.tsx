@@ -47,11 +47,13 @@ const MainPipelineScreen = () => {
 
   const { socketStatus } = useVideoAnalysisContext();
 
-  const hasPendingJob = Object.values(socketStatus || {}).some(
-    (job: any) => job.status === "pending"
+  const pendingJobs = Object.values(socketStatus || {}).filter(
+    (job) => job.status === "pending"
   );
 
-  console.log(hasPendingJob);
+  const completedJobs = Object.values(socketStatus || {}).filter(
+    (job) => job.status === "completed"
+  );
 
   const flow = toObject();
   const jsonFlow = JSON.stringify(flow, null, 2);
@@ -141,6 +143,38 @@ const MainPipelineScreen = () => {
           nodeTypes={nodeTypes}
         >
           <Controls />
+          <div className="absolute top-5 left-5 z-50 bg-white/80 backdrop-blur-sm rounded-lg p-4 shadow-lg">
+            <div className="text-sm font-medium">
+              <h3 className="text-base font-bold mb-2">Jobs Status</h3>
+              {Object.entries(socketStatus || {}).map(
+                ([id, job]: [string, any]) => (
+                  <div key={id} className="mb-2 flex items-center gap-2">
+                    <div
+                      className={`w-2 h-2 rounded-full ${
+                        job.status === "completed"
+                          ? "bg-green-500"
+                          : job.status === "pending"
+                          ? "bg-yellow-500"
+                          : "bg-gray-500"
+                      }`}
+                    />
+                    <span>
+                      Job {id}: {job.status}
+                    </span>
+                    {job.progress !== undefined && (
+                      <span className="text-xs text-gray-600">
+                        ({job.progress}%)
+                      </span>
+                    )}
+                  </div>
+                )
+              )}
+              {!socketStatus ||
+                (Object.keys(socketStatus).length === 0 && (
+                  <div className="text-gray-500">No active jobs</div>
+                ))}
+            </div>
+          </div>
           <Background />
           {nodes.length > 0 && (
             <div className="relative h-screen">
