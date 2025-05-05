@@ -1,9 +1,9 @@
 'use client';
 
-import api from '@/app/utils/api';
 import LoadPipelineButton from '@/components/pipeline/LoadPipelineButton';
 import FlowPreview from '@/components/shared/FlowPreview';
 import { Button } from '@/components/ui/button';
+import api from '@/utils/api';
 import { Check, Star } from 'lucide-react';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -47,7 +47,7 @@ const Page = () => {
   console.log(pipelineData);
 
   return (
-    <div className="mx-auto container p-10">
+    <div className="mx-auto max-w-7xl px-4 container p-10">
       {/* start of the header */}
       <div className="flex justify-between gap-2">
         <div className="flex-grow">

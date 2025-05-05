@@ -11,11 +11,11 @@ import {
   Star,
 } from 'lucide-react';
 import { Tooltip, TooltipProvider } from '../../../../components/ui/tooltip';
-import { useUserContext } from '@/app/context/UserContext';
 import Overview from '../components/Overview';
 import Pipelines from '../components/Pipelines';
 import Favourites from '../components/Favourites';
 import Setting from '../components/Settings';
+import { useUserContext } from '@/context/UserContext';
 
 const SidebarItem = ({
   icon,
@@ -135,7 +135,7 @@ const UserProfile = () => {
   };
 
   return (
-    <div className="container mx-auto px-8 py-8 ">
+    <div className="container max-w-7xl mx-auto px-4 py-8 ">
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
         <div className="md:col-span-1">
           <UserProfileSidebar

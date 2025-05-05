@@ -20,7 +20,6 @@ import {
   Tag,
   X,
 } from 'lucide-react';
-import api from '@/app/utils/api';
 import { useQuery } from '@tanstack/react-query';
 import VideoUploader from '@/components/shared/VideoUploader';
 import {
@@ -31,6 +30,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Checkbox } from '@/components/ui/checkbox';
 import Link from 'next/link';
+import api from '@/utils/api';
 
 interface Video {
   id?: string;
@@ -130,7 +130,7 @@ export default function VideoManager() {
   }, [videos, sortConfig]);
 
   return (
-    <div className="container py-8">
+    <div className="container py-8 max-w-7xl mx-auto px-4">
       <div className="flex flex-col gap-6">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <h1 className="text-3xl font-bold">Your Videos</h1>

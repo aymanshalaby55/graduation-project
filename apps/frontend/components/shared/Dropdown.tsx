@@ -9,12 +9,9 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { useUserContext } from '@/app/context/UserContext';
-import { Button } from '../ui/button';
-import Link from 'next/link';
-import { AnimatedTooltip } from '../ui/animated-tooltip';
 import { useRouter } from 'next/navigation';
 import { LogOut } from 'lucide-react';
+import { useUserContext } from '@/context/UserContext';
 
 const Dropdown = () => {
   const { user, logout }: any = useUserContext();
@@ -44,6 +41,9 @@ const Dropdown = () => {
             onClick={() => handleNavigation(`/profile/${user?.user?._id}`)}
           >
             Profile
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => handleNavigation(`/videos/user`)}>
+            Video Manager
           </DropdownMenuItem>
 
           <DropdownMenuSeparator />

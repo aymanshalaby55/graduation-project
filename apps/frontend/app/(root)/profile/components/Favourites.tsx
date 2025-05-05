@@ -8,14 +8,14 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { useQuery } from '@tanstack/react-query';
-import api from '@/app/utils/api';
 import { Button } from '@/components/ui/button';
-import { useUserContext } from '@/app/context/UserContext';
 import { useToast } from '@/components/ui/use-toast';
 import Swal from 'sweetalert2';
 import Link from 'next/link';
 
 import FlowPreview from '@/components/shared/FlowPreview';
+import { useUserContext } from '@/context/UserContext';
+import api from '@/utils/api';
 
 interface Pipeline {
   _id: string;

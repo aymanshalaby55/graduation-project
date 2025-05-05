@@ -3,7 +3,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import api from "../utils/api";
 import { useToast } from "@/components/ui/use-toast";
-import { useMutation } from "@tanstack/react-query";
 
 const UserContext = createContext({});
 const useUserContext = () => useContext(UserContext);

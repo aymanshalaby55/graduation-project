@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react';
 import { Button } from '../ui/button';
 import { useQuery } from '@tanstack/react-query';
-import api from '@/app/utils/api';
 import { useRouter } from 'next/navigation';
+import api from '@/utils/api';
 
 interface LoadPipelineProps {
   id: string;

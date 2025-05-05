@@ -3,11 +3,9 @@
 import { useState } from "react";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useVideoAnalysisContext } from "@/app/context/VideoAnalysisContext";
 import { createPortal } from "react-dom";
 import { Button } from "@/components/ui/button";
 import { Check, Film, Trash2, Upload } from "lucide-react";
-import FightDetectionButton from "./AnalizeButton";
 import { Badge } from "../ui/badge";
 import {
   Dialog,
@@ -18,6 +16,7 @@ import {
   DialogTrigger,
 } from "../ui/dialog";
 import VideoUploader from "../shared/VideoUploader";
+import { useVideoAnalysisContext } from "@/context/VideoAnalysisContext";
 
 interface Video {
   _id: string;

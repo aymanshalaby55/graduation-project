@@ -9,9 +9,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { useQuery } from '@tanstack/react-query';
-import api from '@/app/utils/api';
 import { Button } from '@/components/ui/button';
-import { useUserContext } from '@/app/context/UserContext';
 import { useToast } from '@/components/ui/use-toast';
 import Swal from 'sweetalert2';
 import Link from 'next/link';
@@ -19,6 +17,8 @@ import { ReactFlow, ReactFlowProvider, Background } from '@xyflow/react';
 import LoadPipelineButton from '@/components/pipeline/LoadPipelineButton';
 import { Search } from 'lucide-react';
 import FlowPreview from '@/components/shared/FlowPreview';
+import { useUserContext } from '@/context/UserContext';
+import api from '@/utils/api';
 
 interface Pipeline {
   _id: string;
@@ -79,7 +79,7 @@ const PageWrapper = ({
           />
         </div>
       </div>
-      <div className="container pb-6">{children}</div>
+      <div className="container max-w-7xl mx-auto px-4 pb-6">{children}</div>
     </div>
   </div>
 );

@@ -1,12 +1,11 @@
 import type { Metadata } from 'next';
-import { Inter, Readex_Pro } from 'next/font/google';
-import '../globals.css';
+import { Readex_Pro } from 'next/font/google';
+import '../globals.css'
 import Navbar from '@/components/shared/Navbar';
 import { Toaster } from '@/components/ui/toaster';
-import { UserProvider } from '../context/UserContext';
-import QueryProvider from '@/components/shared/QueryProvider';
-import Footer from '@/components/shared/Footer';
-import { VideoAnalysisProvider } from '../context/VideoAnalysisContext';
+import QueryProvider from '@/components/providers/QueryProvider';
+import { UserProvider } from '@/context/UserContext';
+import { VideoAnalysisProvider } from '@/context/VideoAnalysisContext';
 
 const inter = Readex_Pro({ subsets: ['arabic'] });
 
