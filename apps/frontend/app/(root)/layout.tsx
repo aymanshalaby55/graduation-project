@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
 import { Readex_Pro } from 'next/font/google';
-import '../globals.css'
+import '../globals.css';
 import Navbar from '@/components/shared/Navbar';
 import { Toaster } from '@/components/ui/toaster';
 import QueryProvider from '@/components/providers/QueryProvider';
 import { UserProvider } from '@/context/UserContext';
 import { VideoAnalysisProvider } from '@/context/VideoAnalysisContext';
+import { ThemeProvider } from '@/components/providers/ThemeProvider';
 
 const inter = Readex_Pro({ subsets: ['arabic'] });
 
@@ -22,17 +23,24 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <UserProvider>
-          <VideoAnalysisProvider>
-            <QueryProvider>
-              <main className="sticky top-0 z-50">
-                <Navbar />
-              </main>
-              <div className="">{children}</div>
-              {/* <Footer /> */}
-            </QueryProvider>
-          </VideoAnalysisProvider>
-        </UserProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange={false}
+        >
+          <UserProvider>
+            <VideoAnalysisProvider>
+              <QueryProvider>
+                <main className="sticky top-0 z-50">
+                  <Navbar />
+                </main>
+                <div className="">{children}</div>
+                {/* <Footer /> */}
+              </QueryProvider>
+            </VideoAnalysisProvider>
+          </UserProvider>
+        </ThemeProvider>
         <Toaster />
       </body>
     </html>
