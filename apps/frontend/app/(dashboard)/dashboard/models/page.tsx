@@ -1,12 +1,12 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
-import api from "@/app/utils/api";
 import Link from "next/link";
 import { View } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import SwitchActiveButton from "@/components/shared/SwitchActiveButton";
 import AdminAddModelForm from "@/app/(dashboard)/dashboard/models/components/AdminAddModelForm";
 import DeleteModelButton from "./components/DeleteModelButton";
+import api from "@/utils/api";
 
 const AdminModels = () => {
   const { data: allModels } = useQuery({

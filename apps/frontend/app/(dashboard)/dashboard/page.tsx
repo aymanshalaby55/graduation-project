@@ -1,6 +1,6 @@
 "use client";
 
-import { useUserContext } from "@/app/context/UserContext";
+import { useUserContext } from "@/context/UserContext";
 import { redirect } from "next/navigation";
 import React from "react";
 

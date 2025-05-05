@@ -28,7 +28,10 @@ const FlowPreview = ({ pipelineId }: { pipelineId: string }) => {
   if (error || !flowData) return <div>Error loading preview</div>;
 
   return (
-    <div style={{ height: '70vh', position: 'relative'}}>
+    <div
+      style={{ height: '70vh', position: 'relative' }}
+      className="h-[70vh] relative bg-[#F7F9FB] dark:bg-[#1A1A1A]"
+    >
       <ReactFlowProvider>
         <ReactFlow
           nodes={flowData.nodes ?? []}
@@ -43,7 +46,7 @@ const FlowPreview = ({ pipelineId }: { pipelineId: string }) => {
           // onConnect={onConnect}
           // onDrop={onDrop}
           fitView
-          style={{ backgroundColor: "#F7F9FB" }}
+          // style={{ backgroundColor: '#F7F9FB' }}
           // nodeTypes={nodeTypes}
         >
           <Controls />

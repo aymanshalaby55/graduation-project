@@ -1,6 +1,5 @@
 "use client";
 
-import api from "@/app/utils/api";
 import { useQuery } from "@tanstack/react-query";
 import {
   Table,
@@ -14,6 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import SelectSorting from "@/components/shared/SelectSorting";
+import api from "@/utils/api";
 
 const Users = () => {
   const [searchParam, setSearchParams] = useState("");

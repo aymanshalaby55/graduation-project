@@ -1,7 +1,7 @@
 "use client";
 
-import api from "@/app/utils/api";
 import EditModelForm from "@/app/(dashboard)/dashboard/models/components/EditModelForm";
+import api from "@/utils/api";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 

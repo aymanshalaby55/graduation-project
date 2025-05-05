@@ -1,11 +1,10 @@
 "use client"
 
-import api from "@/app/utils/api"
 import { useQuery } from "@tanstack/react-query"
 import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
 import { FileVideo, Play, Tag } from "lucide-react"
 import { Skeleton } from "@/components/ui/skeleton"
+import api from "@/utils/api"
 
 const Videos = () => {
   const {

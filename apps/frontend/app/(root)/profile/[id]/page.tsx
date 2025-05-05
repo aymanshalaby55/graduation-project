@@ -32,7 +32,11 @@ const SidebarItem = ({
     <button
       onClick={onClick}
       className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 
-        ${active ? 'bg-blue-600 text-white shadow-md shadow-blue-200' : 'text-gray-700 hover:bg-gray-100'}`}
+        ${
+          active
+            ? 'bg-primary text-white dark:bg-primary'
+            : 'text-gray-400 hover:bg-secondary hover:text-gray-600 dark:hover:bg-foreground dark:hover:text-gray-900'
+        }`}
       aria-label={title}
     >
       {icon}
@@ -59,7 +63,7 @@ const UserProfileSidebar = ({
   };
 
   return (
-    <div className="sticky top-24 flex md:flex-col flex-row items-center gap-6 p-4 rounded-2xl bg-white shadow-sm border border-gray-100">
+    <div className="sticky top-24 flex md:flex-col flex-row items-center gap-6 p-4 rounded-2xl bg-white dark:bg-secondary shadow-sm border border-gray-100 dark:border-gray-700">
       <div className="flex md:flex-col flex-row gap-4 w-full items-center">
         <TooltipProvider>
           <SidebarItem
@@ -130,7 +134,7 @@ const UserProfile = () => {
   return (
     <div className="container max-w-7xl mx-auto px-4 py-8 ">
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-        <div className="md:col-span-1">
+        <div className="md:col-span-1 ">
           <UserProfileSidebar
             activeTab={activeTab}
             setActiveTab={setActiveTab}

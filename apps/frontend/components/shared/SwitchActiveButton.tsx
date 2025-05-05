@@ -1,8 +1,8 @@
 "use client";
 
-import api from "@/app/utils/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Switch } from "../ui/switch";
+import api from "@/utils/api";
 
 type SwitchProps = {
   isActive: boolean;

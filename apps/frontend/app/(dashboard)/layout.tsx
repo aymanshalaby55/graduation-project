@@ -1,6 +1,5 @@
 import Sidebar from "@/app/(dashboard)/dashboard/components/Sidebar";
 import "../globals.css";
-import Navbar from "@/components/shared/Navbar";
 import QueryProvider from "@/components/providers/QueryProvider";
 import { Readex_Pro } from "next/font/google";
 
