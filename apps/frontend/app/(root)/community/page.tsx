@@ -100,7 +100,7 @@ export default function CommunityPage() {
     refetchOnWindowFocus: false,
   });
 
-  console.log(allPipelines);
+  console.log("pipelines", allPipelines);
 
   if (isLoading) {
     return (
@@ -118,42 +118,6 @@ export default function CommunityPage() {
     return <PageWrapper error children={undefined} />;
   }
 
-  const handleDelete = async (id: string) => {
-    try {
-      const result = await Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!',
-      });
-
-      if (result.isConfirmed) {
-        await api.delete(`pipeline/deletePipeline/${id}`);
-        toast({
-          title: 'Pipeline deleted successfully!',
-          description: 'The pipeline has been removed from the community.',
-          variant: 'default',
-        });
-        Swal.fire({
-          title: 'Deleted!',
-          text: 'Your file has been deleted.',
-          icon: 'success',
-        });
-      }
-    } catch (error) {
-      console.error('Error deleting pipeline:', error);
-      toast({
-        title: 'Error deleting pipeline',
-        description:
-          'There was an issue deleting the pipeline. Please try again.',
-        variant: 'destructive',
-      });
-    }
-  };
-
   return (
     <PageWrapper>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -165,26 +129,23 @@ export default function CommunityPage() {
               </CardHeader>
               <CardContent className="pt-4">
                 <div className="flex flex-col gap-3">
-                  <Link className='hover:underline' href={`/flow/${pipeline?._id}`}>
+                  <Link
+                    className="hover:underline"
+                    href={`/flow/${pipeline?._id}`}
+                  >
                     <CardTitle className="text-lg">{pipeline.name}</CardTitle>
                   </Link>
                   <div className="flex items-center justify-between gap-3">
-                    <p>{pipeline?.user?.username}</p>
+                    {/* <Link
+                      className="hover:underline"
+                      href={`/profile/${pipeline?.user?._id}`}
+                    >
+                    </Link> */}
+                      <p>{pipeline?.user?.username}</p>
                     <span>12/5/2025</span>
                   </div>
                 </div>
               </CardContent>
-              {/* <CardFooter className="flex items-center gap-4">
-                <LoadPipelineButton id={pipeline._id} />
-                {pipeline.user.username === user?.username && (
-                  <Button
-                    variant="destructive"
-                    onClick={() => handleDelete(pipeline._id)}
-                  >
-                    Delete
-                  </Button>
-                )}
-              </CardFooter> */}
             </Card>
           ))
         ) : (

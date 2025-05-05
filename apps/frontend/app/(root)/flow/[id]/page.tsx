@@ -11,12 +11,17 @@ import { useEffect, useState } from 'react';
 const Page = () => {
   const { id } = useParams();
   const [pipelineData, setPipelineData] = useState(null);
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [starCount, setStarCount] = useState(0);
 
   useEffect(() => {
     const fetchPipeline = async () => {
       try {
         const response = await api.get(`pipeline/getPipeline/${id}`);
-        setPipelineData(response.data);
+        const data = response.data;
+        setPipelineData(data);
+        setIsFavorite(data.isFavorite || false);
+        setStarCount(data.starCount || 0);
       } catch (error) {
         console.error('Error fetching pipeline:', error);
       }
@@ -24,6 +29,20 @@ const Page = () => {
 
     fetchPipeline();
   }, [id]);
+
+  const handleToggleFavorite = async () => {
+    try {
+      const newFavorite = !isFavorite;
+      const response = await api.put(`/pipeline/toggleFavorite/${id}`, {
+        isFavorite: newFavorite,
+      });
+
+      setIsFavorite(response.data.isFavorite);
+      setStarCount(response.data.starCount);
+    } catch (error) {
+      console.error('Error toggling favorite:', error);
+    }
+  }
 
   console.log(pipelineData);
 
@@ -42,13 +61,17 @@ const Page = () => {
         <div className="flex flex-row gap-5 h-[40px]">
           <div className="flex flex-row">
             <Button
-              className="h-[40px] text-lg rounded-r-none cursor-pointer flex items-center justify-center p-2 gap-2"
+              className={`h-[40px] text-lg rounded-r-none cursor-pointer flex items-center justify-center p-2 gap-2 hover:bg-none ${
+                isFavorite ? 'text-yellow-500' : ''
+              }`}
               variant="outline"
+              onClick={handleToggleFavorite}
             >
-              <Star size={20} /> <span>Star</span>
+              <Star size={20} fill={isFavorite ? '#facc15' : 'none'} />
+              <span>Star</span>
             </Button>
             <div className="px-4 border h-[40px] flex items-center justify-center p-2 rounded-r-md">
-              <p className="font-semibold">{0}</p>
+            <span>{pipelineData?.starredBy?.length || 0}</span>
             </div>
           </div>
           <LoadPipelineButton id={id.toString()} />
