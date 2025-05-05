@@ -8,11 +8,11 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useToast } from '../ui/use-toast';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import api from '@/app/utils/api';
 import { FileUpload } from '@/components/ui/file-upload'; // Import Aceternity UI FileUpload
-import { useUserContext } from '@/app/context/UserContext';
 import { Label } from '../ui/label';
 import { DialogClose } from '../ui/dialog';
+import { useUserContext } from '@/context/UserContext';
+import api from '@/utils/api';
 
 const VideoUploader = () => {
   const { toast } = useToast();

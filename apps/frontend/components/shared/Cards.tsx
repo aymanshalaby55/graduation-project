@@ -1,5 +1,4 @@
 import { CardSpotlight } from "@/components/ui/card-spotlight";
-import Image from "next/image";
 
 interface CardProps {
   title: string;

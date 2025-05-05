@@ -3,8 +3,8 @@
 import React, { memo, useState } from "react";
 import { Handle, Position } from "@xyflow/react";
 import { useQuery } from "@tanstack/react-query";
-import api from "@/app/utils/api";
-import { useVideoAnalysisContext } from "@/app/context/VideoAnalysisContext";
+import api from "@/utils/api";
+import { useVideoAnalysisContext } from "@/context/VideoAnalysisContext";
 
 const DropDownNode = ({ data }: any) => {
   const { videoAnalysisData, setVideoAnalysisData }: any =
@@ -41,10 +41,8 @@ const DropDownNode = ({ data }: any) => {
     }
   };
 
-  console.log(videoAnalysisData);
-
   return (
-    <div className="flex flex-col gap-5 p-1 bg-white">
+    <div className="flex flex-col gap-5 p-1 bg-black">
       <div>
         <select
           className="p-2 rounded-lg capitalize"

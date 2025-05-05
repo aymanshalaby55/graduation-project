@@ -13,6 +13,25 @@ const pipelineSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: "User",
   },
+  isFavorite: {
+    type: Boolean,
+    default: false,
+  },
+  starCount: { type: Number, default: 0 },
+  isPublic: {
+    type: Boolean,
+    default: false,
+  },
+  starredBy: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
+  ],
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 const Pipeline = mongoose.model("Pipeline", pipelineSchema);

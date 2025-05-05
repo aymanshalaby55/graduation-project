@@ -1,189 +1,147 @@
 'use client';
-import { useState } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
 
-import { useUserContext } from '@/app/context/UserContext';
+import { useState } from 'react';
+import Link from 'next/link';
+import { Menu, X } from 'lucide-react';
 import { Button } from '../ui/button';
-import Dropdown from './Dropdown';
+import { ModeToggle } from './ThemeToggle';
+import { useUserContext } from '@/context/UserContext';
 import { Logo } from './Logo';
+import Dropdown from './Dropdown';
 
 const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const { logout, user }: any = useUserContext();
   const loggedIn = !!user;
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   return (
-    <div className="text-white bg-black shadow-md">
-      <div className="container flex justify-between items-center py-3 ">
-        <Link href="/" className="flex gap-2 items-center">
-          <Logo
-            title={'VisionAI Chrono'}
-            styles="bg-gradient-to-br from-slate-300 to-slate-500 bg-clip-text text-transparent text-2xl md:text-4xl font-medium tracking-tight text-center"
-          />
-          {/* <p className="max-sm:hidden font-satoshi font-semibold text-lg text-white tracking-wide">
-            VisionAI Chrono
-          </p> */}
-        </Link>
+    <nav className=" w-full bg-background/80 backdrop-blur-sm z-50 border-b">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-16">
+          <div className="flex items-center">
+            <Link href="/" className="flex gap-2 items-center">
+              <Logo
+                title={'VisionAI Chrono'}
+                styles="bg-gradient-to-br from-slate-300 to-slate-500 bg-clip-text text-transparent text-2xl md:text-4xl font-medium tracking-tight text-center"
+              />
+            </Link>
+          </div>
 
-        {/* Desktop Navigation */}
-        <div className="hidden min-[980px]:flex items-center gap-6">
-          <Link href="/" className="hover:text-gray-400 transition-colors">
-            {/* <Logo
-              title={'Home'}
-              styles="bg-gradient-to-br from-slate-300 to-slate-500 bg-clip-text text-transparent text-2xl md:text-2xl font-medium tracking-tight text-center"
-            /> */}
-            Home
-          </Link>
-          <Link
-            href="/#features"
-            className="hover:text-gray-400 transition-colors"
-          >
-            {/* <Logo
-              title={'Features'}
-              styles="bg-gradient-to-br from-slate-300 to-slate-500 bg-clip-text text-transparent text-2xl md:text-2xl font-medium tracking-tight text-center"
-            /> */}
-            Feature
-          </Link>
-          <Link href="#features" className="hover:text-gray-400 transition-colors">
-            {/* <Logo
-              title={'Contact'}
-              styles="bg-gradient-to-br from-slate-300 to-slate-500 bg-clip-text text-transparent text-2xl md:text-2xl font-medium tracking-tight text-center"
-            /> */}
-            Contact
-          </Link>
-        </div>
-        <div className="hidden min-[980px]:flex items-center gap-6">
-          {loggedIn ? (
-            <div className="flex items-center gap-4">
-              <Link href="/videos/user" className='hover:text-gray-400 transition-colors'>
-                {/* <Logo
-                  title={'Videos Manager'}
-                  styles="bg-gradient-to-br from-slate-300 to-slate-500 bg-clip-text text-transparent text-2xl md:text-2xl font-medium tracking-tight text-center"
-                /> */}
-                Video Manager
-              </Link>
-              <Dropdown />
-            </div>
-          ) : (
-            <div className="flex items-center gap-4">
-              <Link href="/sign-in">
-                <Button className="hover:bg-gray-700">Sign In</Button>
-              </Link>
-              <Link href="/sign-up">
-                <Button variant="default" className="hover:bg-gray-700">
-                  Sign Up
-                </Button>
-              </Link>
-            </div>
-          )}
-        </div>
-
-        {/* Mobile Menu Toggle */}
-        <button
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className=" min-[980px]:hidden text-white focus:outline-none"
-        >
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d={
-                isMenuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'
-              }
-            />
-          </svg>
-        </button>
-
-        {/* Mobile Navigation */}
-        <div
-          className={`fixed inset-0 bg-black bg-opacity-80 z-50 transition-transform ${
-            isMenuOpen
-              ? 'transform translate-x-0'
-              : 'transform translate-x-full'
-          } `}
-        >
-          <div className="flex flex-col p-6 space-y-4">
-            <button
-              onClick={() => setIsMenuOpen(false)}
-              className="self-end text-white text-2xl focus:outline-none"
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-4">
+            <Link
+              href="/#home"
+              className="text-foreground/80 hover:text-foreground"
             >
-              <svg
-                className="w-8 h-8"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
-            <div className="flex flex-col space-y-4">
+              Home
+            </Link>
+            <Link
+              href="/#features"
+              className="text-foreground/80 hover:text-foreground"
+            >
+              Features
+            </Link>
+            <Link
+              href="/community"
+              className="text-foreground/80 hover:text-foreground"
+            >
+              Community
+            </Link>
+            <Link
+              href="/#contact"
+              className="text-foreground/80 hover:text-foreground"
+            >
+              Contact
+            </Link>
+          </div>
+          <div className="hidden md:flex items-center gap-2">
+            {loggedIn ? (
+              <div className="flex items-center gap-2">
+                <Dropdown />
+              </div>
+            ) : (
+              <div className="flex items-center gap-2">
+                <Link href="/sign-in">
+                  <Button className="hover:bg-gray-700">Sign In</Button>
+                </Link>
+                <Link href="/sign-up">
+                  <Button variant="default" className="hover:bg-gray-700">
+                    Sign Up
+                  </Button>
+                </Link>
+              </div>
+            )}
+            <ModeToggle />
+          </div>
+          {/* Mobile Navigation Button */}
+          <div className="md:hidden flex items-center gap-2">
+            {loggedIn ? (
+              <div className="flex items-center gap-2">
+                <Dropdown />
+              </div>
+            ) : (
+              <div className="flex items-center gap-2">
+                <Link href="/sign-in">
+                  <Button className="hover:bg-gray-700">Sign In</Button>
+                </Link>
+                <Link href="/sign-up">
+                  <Button variant="default" className="hover:bg-gray-700">
+                    Sign Up
+                  </Button>
+                </Link>
+              </div>
+            )}
+            <ModeToggle />
+            <Button
+              variant="ghost"
+              className=""
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              {isOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
+            </Button>
+          </div>
+        </div>
+
+        {/* Mobile Navigation Menu */}
+        {isOpen && (
+          <div className="md:hidden">
+            <div className="px-2 pt-2 pb-3 space-y-1">
               <Link
-                href="/"
-                className="text-white text-lg"
-                onClick={() => setIsMenuOpen(false)}
+                href="/#home"
+                className="block px-3 py-2 rounded-md text-foreground/80 hover:text-foreground hover:bg-accent"
+                onClick={() => setIsOpen(false)}
               >
                 Home
               </Link>
               <Link
-                href="#features"
-                className="text-white text-lg"
-                onClick={() => setIsMenuOpen(false)}
+                href="/#features"
+                className="block px-3 py-2 rounded-md text-foreground/80 hover:text-foreground hover:bg-accent"
+                onClick={() => setIsOpen(false)}
               >
                 Features
               </Link>
               <Link
-                href="/"
-                className="text-white text-lg"
-                onClick={() => setIsMenuOpen(false)}
+                href="/community"
+                className="block px-3 py-2 rounded-md text-foreground/80 hover:text-foreground hover:bg-accent"
+                onClick={() => setIsOpen(false)}
+              >
+                Community
+              </Link>
+              <Link
+                href="/#contact"
+                className="block px-3 py-2 rounded-md text-foreground/80 hover:text-foreground hover:bg-accent"
+                onClick={() => setIsOpen(false)}
               >
                 Contact
               </Link>
-              {loggedIn ? (
-                <div className="flex flex-col space-y-4">
-                  <Link
-                    href="/videos/user"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    <Button variant="secondary" className="w-full">
-                      Videos Manager
-                    </Button>
-                  </Link>
-                  {/* <Dropdown /> */}
-                </div>
-              ) : (
-                <div className="flex flex-col space-y-4">
-                  <Link href="/sign-in" onClick={() => setIsMenuOpen(false)}>
-                    <Button className="w-full">Sign In</Button>
-                  </Link>
-                  <Link href="/sign-up" onClick={() => setIsMenuOpen(false)}>
-                    <Button
-                      variant="default"
-                      className="w-full hover:bg-gray-700"
-                    >
-                      Sign Up
-                    </Button>
-                  </Link>
-                </div>
-              )}
             </div>
           </div>
-        </div>
+        )}
       </div>
-    </div>
+    </nav>
   );
 };
 

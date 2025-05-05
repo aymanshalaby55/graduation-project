@@ -13,13 +13,25 @@ import {
 } from "@/components/ui/dialog";
 import { Progress } from "@/components/ui/progress";
 import { Card, CardContent } from "@/components/ui/card";
-import { useVideoAnalysisContext } from "@/app/context/VideoAnalysisContext";
-import api from "@/app/utils/api";
+import { useVideoAnalysisContext } from "@/context/VideoAnalysisContext";
+import api from "@/utils/api";
 
-const AnalizeButton = () => {
-  const { videoAnalysisData, socketStatus } = useVideoAnalysisContext();
+const AnalizeButton = ({ hasPendingJob }: { hasPendingJob: boolean }) => {
+  let { videoAnalysisData, socketStatus, clearSocketStatus } =
+    useVideoAnalysisContext();
   const [jobIds, setJobIds] = useState<string[]>([]);
   const [showDialog, setShowDialog] = useState(false);
+
+  useEffect(() => {
+    const activeJobIds = Object.keys(socketStatus).filter(
+      (jobId) =>
+        socketStatus[jobId].status !== "completed" &&
+        socketStatus[jobId].status !== "error"
+    );
+    if (activeJobIds.length > 0 && jobIds.length === 0) {
+      setJobIds(activeJobIds);
+    }
+  }, [socketStatus, jobIds]);
 
   const { mutate: analyzeVideo, isPending } = useMutation({
     mutationFn: async () => {
@@ -43,8 +55,14 @@ const AnalizeButton = () => {
   });
 
   const handleAnalyzeClick = () => {
+    // Only clear socket status if we're starting a new analysis
+    if (jobIds.length === 0) {
+      clearSocketStatus();
+    }
     setShowDialog(true);
-    analyzeVideo();
+    if (jobIds.length === 0) {
+      analyzeVideo();
+    }
   };
 
   const getProgressDetails = () => {
@@ -105,13 +123,14 @@ const AnalizeButton = () => {
         variant="default"
         onClick={handleAnalyzeClick}
         className="z-50 font-medium flex gap-2 bg-green-600 hover:bg-green-700 text-white"
+        disabled={hasPendingJob}
       >
         {isPending ? (
           <Loader2 className="h-4 w-4 animate-spin" />
         ) : (
           <PlayCircle className="h-4 w-4" />
         )}
-        Run
+        {jobIds.length > 0 ? "View Progress" : "Run"}
       </Button>
 
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
