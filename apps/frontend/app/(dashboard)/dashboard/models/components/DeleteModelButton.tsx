@@ -2,8 +2,8 @@
 
 import { Trash2 } from "lucide-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import api from "@/app/utils/api";
 import { Button } from "@/components/ui/button";
+import api from "@/utils/api";
 
 type ModelDelete = {
   modelId: string;

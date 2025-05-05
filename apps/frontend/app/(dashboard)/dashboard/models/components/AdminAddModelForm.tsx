@@ -18,7 +18,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
 import { useMutation } from "@tanstack/react-query";
-import api from "@/app/utils/api";
+import api from "@/utils/api";
 
 const AdminAddModelForm = () => {
   const { mutate: createModel } = useMutation({
