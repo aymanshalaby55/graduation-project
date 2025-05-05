@@ -1,8 +1,8 @@
 "use client";
 import { motion } from "framer-motion";
 import { HeroHighlight, Highlight } from "../ui/hero-highlight";
-import { useUserContext } from "@/app/context/UserContext";
 import Link from "next/link";
+import { useUserContext } from "@/context/UserContext";
 
 export function Hero() {
   const { user }: any = useUserContext();
@@ -21,12 +21,12 @@ export function Hero() {
           duration: 0.5,
           ease: [0.4, 0.0, 0.2, 1],
         }}
-        className="text-2xl px-4 md:text-4xl lg:text-5xl font-bold text-neutral-100 dark:text-white max-w-4xl leading-relaxed lg:leading-snug text-center mx-auto "
+        className="flex flex-col text-2xl px-4 md:text-4xl lg:text-5xl font-bold text-neutral-100 dark:text-white max-w-4xl leading-relaxed lg:leading-snug text-center mx-auto "
       >
         Unlock the Power of Your Videos—Transcribe, summarize, and capture
         insights effortlessly
         <br />
-        <Highlight className="text-black dark:text-white">
+        <Highlight className="text-black dark:text-white mt-4">
           with our cutting-edge AI analyzer
         </Highlight>
         {!user ? (

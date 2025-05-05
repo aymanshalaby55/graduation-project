@@ -1,12 +1,13 @@
-'use client';
-import { useState } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
+"use client";
+import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
 
-import { useUserContext } from '@/app/context/UserContext';
-import { Button } from '../ui/button';
-import Dropdown from './Dropdown';
-import { Logo } from './Logo';
+import { Button } from "../ui/button";
+import Dropdown from "./Dropdown";
+import { Logo } from "./Logo";
+import { useUserContext } from "@/context/UserContext";
+import { ModeToggle } from "./ThemeToggle";
 
 const Navbar = () => {
   const { logout, user }: any = useUserContext();
@@ -14,11 +15,11 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <div className="text-white bg-black shadow-md">
-      <div className="container flex justify-between items-center py-3 ">
+    <div className=" transition-all duration-300 bg-background/80 backdrop-blur-md border-b shadow-sm">
+      <div className="container flex justify-between items-center py-3 max-w-7xl mx-auto px-4">
         <Link href="/" className="flex gap-2 items-center">
           <Logo
-            title={'VisionAI Chrono'}
+            title={"VisionAI Chrono"}
             styles="bg-gradient-to-br from-slate-300 to-slate-500 bg-clip-text text-transparent text-2xl md:text-4xl font-medium tracking-tight text-center"
           />
           {/* <p className="max-sm:hidden font-satoshi font-semibold text-lg text-white tracking-wide">
@@ -36,7 +37,7 @@ const Navbar = () => {
             Home
           </Link>
           <Link
-            href="#features"
+            href="/#features"
             className="hover:text-gray-400 transition-colors"
           >
             {/* <Logo
@@ -45,7 +46,10 @@ const Navbar = () => {
             /> */}
             Feature
           </Link>
-          <Link href="/" className="hover:text-gray-400 transition-colors">
+          <Link
+            href="#features"
+            className="hover:text-gray-400 transition-colors"
+          >
             {/* <Logo
               title={'Contact'}
               styles="bg-gradient-to-br from-slate-300 to-slate-500 bg-clip-text text-transparent text-2xl md:text-2xl font-medium tracking-tight text-center"
@@ -56,13 +60,7 @@ const Navbar = () => {
         <div className="hidden min-[980px]:flex items-center gap-6">
           {loggedIn ? (
             <div className="flex items-center gap-4">
-              <Link href="/videos/user" className='hover:text-gray-400 transition-colors'>
-                {/* <Logo
-                  title={'Videos Manager'}
-                  styles="bg-gradient-to-br from-slate-300 to-slate-500 bg-clip-text text-transparent text-2xl md:text-2xl font-medium tracking-tight text-center"
-                /> */}
-                Video Manager
-              </Link>
+              <ModeToggle/>
               <Dropdown />
             </div>
           ) : (
@@ -96,7 +94,7 @@ const Navbar = () => {
               strokeLinejoin="round"
               strokeWidth="2"
               d={
-                isMenuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'
+                isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"
               }
             />
           </svg>
@@ -106,8 +104,8 @@ const Navbar = () => {
         <div
           className={`fixed inset-0 bg-black bg-opacity-80 z-50 transition-transform ${
             isMenuOpen
-              ? 'transform translate-x-0'
-              : 'transform translate-x-full'
+              ? "transform translate-x-0"
+              : "transform translate-x-full"
           } `}
         >
           <div className="flex flex-col p-6 space-y-4">

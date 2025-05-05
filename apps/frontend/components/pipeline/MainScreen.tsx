@@ -1,6 +1,7 @@
+// components/MainPipelineScreen.tsx
 "use client";
 import React, { useRef, useCallback, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation"; // Import useSearchParams
 import {
   ReactFlow,
   Connection,
@@ -10,9 +11,9 @@ import {
   Controls,
   useReactFlow,
   Background,
+  MiniMap,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
-import { useDnD } from "@/app/context/DnDContext";
 import "@/app/index.css";
 import { Button } from "../ui/button";
 import VideoUploaderNode from "./VideoUploaderNode";
@@ -20,6 +21,8 @@ import DropDownNode from "./DropDownNode";
 import Sidebar from "./Sidebar";
 import SavePipeline from "./SavePipeline";
 import AnalizeButton from "./AnalizeButton";
+import { useVideoAnalysisContext } from "@/context/VideoAnalysisContext";
+import { useDnD } from "@/context/DnDContext";
 
 const initialNodes: any[] = [];
 
@@ -41,6 +44,16 @@ const MainPipelineScreen = () => {
   // Use useSearchParams to access the URL query parameters
   const searchParams = useSearchParams();
   const encodedFlow = searchParams.get("pipeline"); // Get the encoded pipeline data
+
+  const { socketStatus } = useVideoAnalysisContext();
+
+  const pendingJobs = Object.values(socketStatus || {}).filter(
+    (job) => job.status === "pending"
+  );
+
+  const completedJobs = Object.values(socketStatus || {}).filter(
+    (job) => job.status === "completed"
+  );
 
   const flow = toObject();
   const jsonFlow = JSON.stringify(flow, null, 2);
@@ -127,11 +140,41 @@ const MainPipelineScreen = () => {
           onDrop={onDrop}
           onDragOver={onDragOver}
           fitView
-          style={{ backgroundColor: "#F7F9FB" }}
           nodeTypes={nodeTypes}
         >
-          {/* <MiniMap nodeStrokeColor="blue" nodeColor="lightblue" /> */}
           <Controls />
+          <div className="absolute top-5 left-5 z-50 bg-white/80 backdrop-blur-sm rounded-lg p-4 shadow-lg">
+            <div className="text-sm font-medium">
+              <h3 className="text-base font-bold mb-2">Jobs Status</h3>
+              {Object.entries(socketStatus || {}).map(
+                ([id, job]: [string, any]) => (
+                  <div key={id} className="mb-2 flex items-center gap-2">
+                    <div
+                      className={`w-2 h-2 rounded-full ${
+                        job.status === "completed"
+                          ? "bg-green-500"
+                          : job.status === "pending"
+                          ? "bg-yellow-500"
+                          : "bg-gray-500"
+                      }`}
+                    />
+                    <span>
+                      Job {id}: {job.status}
+                    </span>
+                    {job.progress !== undefined && (
+                      <span className="text-xs text-gray-600">
+                        ({job.progress}%)
+                      </span>
+                    )}
+                  </div>
+                )
+              )}
+              {!socketStatus ||
+                (Object.keys(socketStatus).length === 0 && (
+                  <div className="text-gray-500">No active jobs</div>
+                ))}
+            </div>
+          </div>
           <Background />
           {nodes.length > 0 && (
             <div className="relative h-screen">
@@ -147,7 +190,7 @@ const MainPipelineScreen = () => {
               </div>
 
               <div className="absolute bottom-20 right-5 z-50">
-                <AnalizeButton />
+                <AnalizeButton hasPendingJob={false} />
               </div>
             </div>
           )}

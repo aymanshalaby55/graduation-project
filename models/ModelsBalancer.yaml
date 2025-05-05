@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: model-app
+  labels:
+    app: model-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: model-app
+  template:
+    metadata:
+      labels:
+        app: model-app
+    spec:
+      containers:
+        - name: model-app
+          image: ahmedwagih02/human-detection:latest
+          ports:
+            - containerPort: 5000
+          resources:
+            requests:
+              cpu: 500m
+              memory: 512Mi
+            limits:
+              cpu: "1"
+              memory: 1Gi
+
+
+# minikube addons enable metrics-server
+# minikube service model-app-service
+# kubectl get hpa model-app-hpa --watch

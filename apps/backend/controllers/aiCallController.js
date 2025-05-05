@@ -14,12 +14,13 @@ exports.addVideosToQueue = catchAsync(async (req, res, next) => {
       });
     }
     
-    if (!modelsId || !Array.isArray(modelsId) || modelsId.length === 0) {
-      return res.status(400).json({
-        status: "error",
-        message: "Invalid models array provided",
-      });
-    }
+    // if (!modelsId || !Array.isArray(modelsId) || modelsId.length === 0) {
+    //   return res.status(400).json({
+    //     status: "error",
+    //     message: "Invalid models array provided",
+    //   });
+    // }
+    console.log("videos", modelsId);
     // search model by id
     await Promise.all(modelsId.map(async (id) => {
       // model id

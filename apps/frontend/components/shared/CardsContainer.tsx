@@ -3,7 +3,7 @@ import { Cards } from "./Cards";
 
 const CardsContainer = () => {
   return (
-    <div className="flex flex-col md:flex-row gap-5 container w-full">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-5 container max-w-7xl mx-auto">
       <Cards
         description="Easily navigate through our intuitive platform designed for both
         beginners and experts."

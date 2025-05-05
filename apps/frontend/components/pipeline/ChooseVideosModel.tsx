@@ -3,7 +3,6 @@
 import { useState } from "react";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useVideoAnalysisContext } from "@/app/context/VideoAnalysisContext";
 import { createPortal } from "react-dom";
 import { Button } from "@/components/ui/button";
 import { Check, Film, Trash2, Upload } from "lucide-react";
@@ -17,6 +16,7 @@ import {
   DialogTrigger,
 } from "../ui/dialog";
 import VideoUploader from "../shared/VideoUploader";
+import { useVideoAnalysisContext } from "@/context/VideoAnalysisContext";
 
 interface Video {
   _id: string;
@@ -56,7 +56,13 @@ export function ChooseVideosModal({ videos }: ChooseVideosModalProps) {
       videos: [],
     }));
   };
-
+  const handleSaveSelection = () => {
+    setVideoAnalysisData((prevData: any) => ({
+      ...prevData,
+      videos: selectedVideos,
+    }));
+    setIsOpen(false);
+  };
   const ModalContent = () => (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="max-w-4xl w-[90vw] max-h-[85vh] overflow-y-auto">
@@ -172,6 +178,9 @@ export function ChooseVideosModal({ videos }: ChooseVideosModalProps) {
           <div className="flex gap-3">
             <Button variant="outline" onClick={() => setIsOpen(false)}>
               Cancel
+            </Button>
+            <Button onClick={handleSaveSelection}>
+              Confirm Selection
             </Button>
           </div>
         </DialogFooter>
