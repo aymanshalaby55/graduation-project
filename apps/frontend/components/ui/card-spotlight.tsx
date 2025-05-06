@@ -8,7 +8,7 @@ import { CanvasRevealEffect } from "./canvas-reveal-effect";
 export const CardSpotlight = ({
   children,
   radius = 350,
-  color = "#262626",
+  color = "",
   className,
   ...props
 }: {
@@ -35,7 +35,7 @@ export const CardSpotlight = ({
   return (
     <div
       className={cn(
-        "group/spotlight p-10 rounded-md relative border border-neutral-800 bg-black dark:border-neutral-800",
+        "group/spotlight p-10 rounded-md relative border border-gray-200 dark:border-gray-700",
         className
       )}
       onMouseMove={handleMouseMove}

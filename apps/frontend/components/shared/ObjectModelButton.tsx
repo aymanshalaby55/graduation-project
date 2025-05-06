@@ -3,7 +3,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { Button } from "../ui/button";
 import axios from "axios";
-import { useVideoAnalysisContext } from "@/app/context/VideoAnalysisContext";
+import { useVideoAnalysisContext } from "@/context/VideoAnalysisContext";
 
 interface AnalyzeButtonProps {
   text: string;

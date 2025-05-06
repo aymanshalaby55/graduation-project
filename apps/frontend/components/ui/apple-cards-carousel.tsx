@@ -204,7 +204,7 @@ export const Card = ({
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="bg-black/80 backdrop-blur-lg h-full w-full fixed inset-0"
+                className="bg-black/20 backdrop-blur-lg h-full w-full fixed inset-0"
               />
               <motion.div
                 initial={{ opacity: 0 }}
@@ -222,7 +222,7 @@ export const Card = ({
                 </button>
                 <motion.p
                   layoutId={layout ? `category-${card.title}` : undefined}
-                  className="text-base font-medium text-black dark:text-white"
+                  className="text-base font-medium "
                 >
                   {card.category}
                 </motion.p>
@@ -247,13 +247,13 @@ export const Card = ({
           <div className="relative z-40 p-8">
             <motion.p
               layoutId={layout ? `category-${card.category}` : undefined}
-              className="text-white text-sm md:text-base font-medium font-sans text-left"
+              className="text-sm md:text-base font-medium font-sans text-left"
             >
               {card.category}
             </motion.p>
             <motion.p
               layoutId={layout ? `title-${card.title}` : undefined}
-              className="text-white text-xl md:text-3xl font-semibold max-w-xs text-left [text-wrap:balance] font-sans mt-2"
+              className="text-xl md:text-3xl font-semibold max-w-xs text-left [text-wrap:balance] font-sans mt-2"
             >
               {card.title}
             </motion.p>
