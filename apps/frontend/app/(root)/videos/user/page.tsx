@@ -30,7 +30,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Checkbox } from '@/components/ui/checkbox';
 import Link from 'next/link';
-import api from '@/utils/api';
+import api, { BASEURL } from '@/utils/api';
 
 interface Video {
   id?: string;
@@ -64,9 +64,22 @@ export default function VideoManager() {
   });
 
   const videos = userVideos?.data?.userVideos || [];
+  console.log(videos);
 
   const handlePlayVideo = (videoPath: string) => {
-    setSelectedVideo(videoPath);
+    const supportedFormats = ['.mp4', '.webm', '.ogg'];
+    const isSupported = supportedFormats.some((format) =>
+      videoPath.toLowerCase().endsWith(format)
+    );
+    if (!isSupported) {
+      console.error('Unsupported video format:', videoPath);
+      alert('This video format is not supported. Please use MP4, WebM, or OGG.');
+      return;
+    }
+    // // const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3000';
+    // const fullPath = videoPath.startsWith('http') ? videoPath : `${BASEURL}${videoPath}`;
+    // console.log('Playing video with path:', fullPath);
+    // setSelectedVideo(fullPath);
   };
 
   const handleSort = (key: keyof Video) => {
@@ -189,18 +202,26 @@ export default function VideoManager() {
                       >
                         Title
                         <ArrowUpDown
-                          className={`ml-2 h-4 w-4 ${sortConfig.key === 'title' ? 'text-primary' : 'text-muted-foreground'}`}
+                          className={`ml-2 h-4 w-4 ${
+                            sortConfig.key === 'title'
+                              ? 'text-primary'
+                              : 'text-muted-foreground'
+                          }`}
                         />
                       </button>
                     </th>
                     <th className="h-12 px-4 text-left align-middle font-medium">
                       <button
-                        className="flex items-center font-medium"
+                        className="flex items-center font-medium text-nowrap"
                         onClick={() => handleSort('originalName')}
                       >
                         File Name
                         <ArrowUpDown
-                          className={`ml-2 h-4 w-4 ${sortConfig.key === 'originalName' ? 'text-primary' : 'text-muted-foreground'}`}
+                          className={`ml-2 h-4 w-4 ${
+                            sortConfig.key === 'originalName'
+                              ? 'text-primary'
+                              : 'text-muted-foreground'
+                          }`}
                         />
                       </button>
                     </th>
@@ -211,7 +232,11 @@ export default function VideoManager() {
                       >
                         Size
                         <ArrowUpDown
-                          className={`ml-2 h-4 w-4 ${sortConfig.key === 'videoSize' ? 'text-primary' : 'text-muted-foreground'}`}
+                          className={`ml-2 h-4 w-4 ${
+                            sortConfig.key === 'videoSize'
+                              ? 'text-primary'
+                              : 'text-muted-foreground'
+                          }`}
                         />
                       </button>
                     </th>
@@ -323,18 +348,31 @@ export default function VideoManager() {
 
       {/* Video Player Modal */}
       {selectedVideo && (
-        <Dialog
-          open={!!selectedVideo}
-          onOpenChange={() => setSelectedVideo(null)}
-        >
-          <DialogContent className="max-w-4xl">
-            <DialogHeader>
-              <DialogTitle>Video Player</DialogTitle>
-            </DialogHeader>
-            <video src={selectedVideo} className="w-full" controls autoPlay />
-          </DialogContent>
-        </Dialog>
+  <Dialog
+    open={!!selectedVideo}
+    onOpenChange={() => setSelectedVideo(null)}
+  >
+    <DialogContent className="max-w-4xl">
+      <DialogHeader>
+        <DialogTitle>Video Player</DialogTitle>
+      </DialogHeader>
+      {selectedVideo ? (
+        <video
+          src={selectedVideo}
+          className="w-full"
+          controls
+          autoPlay
+          onError={(e) => {
+            console.error('Video playback error:', e);
+            alert('Failed to load video. Please check the video URL or try again.');
+          }}
+        />
+      ) : (
+        <p className="text-red-500">No video selected.</p>
       )}
+    </DialogContent>
+  </Dialog>
+)}
     </div>
   );
 }

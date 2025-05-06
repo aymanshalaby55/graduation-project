@@ -17,11 +17,11 @@ const AdminContainers = () => {
   });
 
   return (
-    <div className="bg-gray-50 shadow-lg rounded-lg p-8">
-      <h1 className="text-center font-bold text-3xl mb-8 text-gray-900">
+    <div className="bg-secondary shadow-lg rounded-lg p-8">
+      <h1 className="text-center font-bold text-3xl mb-8">
         Containers Management
       </h1>
-      <div className="grid grid-cols-4 gap-4 border-b border-gray-300 px-4 pb-4 mb-4 text-gray-700">
+      <div className="grid grid-cols-4 gap-4 border-b border-gray-300 px-4 pb-4 mb-4 ">
         <h2 className="font-semibold text-lg">Containers</h2>
         <h2 className="font-semibold text-lg">Images</h2>
         <h2 className="font-semibold text-lg">Status</h2>

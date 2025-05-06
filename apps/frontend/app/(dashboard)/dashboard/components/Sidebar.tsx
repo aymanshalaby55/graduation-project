@@ -2,8 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import { usePathname} from 'next/navigation';
 
 const Sidebar = () => {
   const links = [
@@ -35,7 +34,7 @@ const Sidebar = () => {
     <div className="flex flex-col h-full p-4">
       <Link
         href="/"
-        className="flex flex-row justify-center gap-5 mb-10 border-b-2 p-4"
+        className="flex flex-row justify-center gap-5 mb-10 border-b-2 border-gray-200 dark:border-gray-500 p-4"
       >
         <Image
           src="/images/logo.svg"
@@ -44,16 +43,13 @@ const Sidebar = () => {
           height={30}
           className="object-contain"
         />
-        {/* <p className="max-sm:hidden font-satoshi font-semibold text-lg  tracking-wide">
-          VisionAI Chrono
-        </p> */}
       </Link>
       <div className="flex flex-col gap-7 p-5">
         {links.map((link) => (
           <Link
             href={`/dashboard/${link.navTo}`}
             key={link.name}
-            className={`mb-4 p-3 rounded-lg font-semibold ${
+            className={`mb-4 p-3 rounded-lg font-semibold dark:text-white text-black dark:hover:bg-primary/60 dark:hover:text-white hover:bg-primary/20 hover:text-primary ${
               pathname === `/dashboard/${link.navTo}`
                 ? 'shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]'
                 : ''

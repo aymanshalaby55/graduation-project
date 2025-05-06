@@ -13,7 +13,7 @@ if (typeof window !== "undefined") {
 //   process.env.NODE_ENV === "development"
 //     ? process.env.NEXT_PUBLIC_API_BASE_URL_LOCAL
 //     : process.env.NEXT_PUBLIC_API_BASE_URL_REMOTE;
-
+export const BASEURL = "http://localhost:4040/api/v1/" ;
 const api = axios.create({
   baseURL: "http://localhost:4040/api/v1/",
   withCredentials: true,

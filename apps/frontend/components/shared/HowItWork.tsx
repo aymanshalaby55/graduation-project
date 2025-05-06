@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import React from "react";
 import { Carousel, Card } from "@/components/ui/apple-cards-carousel";
 
@@ -10,7 +9,7 @@ export function HowItWorks() {
 
   return (
     <div className="w-full h-full py-20">
-      <h2 className="max-w-7xl text-white pl-4 mx-auto text-xl md:text-5xl font-bold font-sans">
+      <h2 className="max-w-7xl pl-4 mx-auto text-xl md:text-5xl font-bold font-sans">
         How This System Works
       </h2>
       <Carousel items={cards} />
@@ -21,9 +20,9 @@ export function HowItWorks() {
 const DummyContent = () => {
   return (
     <>
-      <div className="bg-[#F5F5F7] dark:bg-neutral-800 p-8 md:p-14 rounded-3xl mb-4">
-        <p className="text-neutral-600 dark:text-neutral-400 text-base md:text-2xl font-sans max-w-3xl mx-auto">
-          <span className="font-bold text-neutral-700 dark:text-neutral-200">
+      <div className="bg-secondary p-8 md:p-14 rounded-3xl mb-4">
+        <p className=" text-base md:text-2xl font-sans max-w-3xl mx-auto">
+          <span className="font-bold">
             Add Video Selector Node
           </span>{" "}
           Begin by adding the Video Selector node to your pipeline. This node

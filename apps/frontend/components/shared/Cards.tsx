@@ -9,8 +9,8 @@ export function Cards({ title, description }: CardProps) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 my-8">
       <CardSpotlight className="h-96 w-96">
-        <div className="text-center shadow-lg rounded-lg p-6 sm:p-10">
-          <h3 className="text-2xl font-bold relative z-20 mt-2 text-white">
+        <div className="text-center  rounded-lg p-6 sm:p-10">
+          <h3 className="text-2xl font-bold relative z-20 mt-2">
             {title}
           </h3>
           <p className="text-md font-bold relative z-20 mt-2 text-gray-400">

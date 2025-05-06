@@ -8,13 +8,12 @@ import { Vortex } from "@/components/ui/vortex";
 
 export default function Home() {
   return (
-    <main className="bg-black overflow-hidden">
+    <main className="overflow-hidden">
       <Vortex
-        backgroundColor="black"
         rangeY={1200}
         particleCount={500}
         baseHue={120}
-        className="flex items-start flex-col justify-center px-2 md:px-10 py-4 w-full h-full"
+        className="flex items-start flex-col bg-background dark:bg-black justify-center px-2 md:px-10 py-4 w-full h-full"
       >
         <Hero />
         <CardsContainer />
