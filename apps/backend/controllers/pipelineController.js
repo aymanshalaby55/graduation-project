@@ -69,38 +69,43 @@ async function deletePipeline(req, res) {
 }
 
 const toggleFavorite = async (req, res) => {
-  const userId = req.user.id;
-  const pipeline = await Pipeline.findById(req.params.id);
+  try {
+    const userId = req.user._id;
+    const pipeline = await Pipeline.findById(req.params.id);
 
-  if (!pipeline) {
-    return res.status(404).json({ message: 'Pipeline not found' });
+    if (!pipeline) {
+      return res.status(404).json({ message: "Pipeline not found" });
+    }
+
+    const alreadyStarred = pipeline.starredBy.includes(userId);
+
+    if (alreadyStarred) {
+      pipeline.starredBy.pull(userId);
+    } else {
+      pipeline.starredBy.push(userId);
+    }
+
+    await pipeline.save();
+
+    res.status(200).json({ isFavorite: !alreadyStarred });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
-
-  const alreadyStarred = pipeline.starredBy.includes(userId);
-
-  if (alreadyStarred) {
-    pipeline.starredBy.pull(userId);
-  } else {
-    pipeline.starredBy.push(userId);
-  }
-
-  await pipeline.save();
-
-  res.status(200).json({ isFavorite: !alreadyStarred });
 };
-
-
 
 const getFavoritePipelines = async (req, res) => {
-  const userId = req.user.id;
+  try {
+    const userId = req.user._id;
 
-  const pipelines = await Pipeline.find({
-    starredBy: userId,
-  }).populate('user', 'username');
+    const pipelines = await Pipeline.find({
+      starredBy: userId,
+    }).populate("user", "username");
 
-  res.status(200).json({ pipelines });
+    res.status(200).json({ pipelines });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };
-
 
 module.exports = {
   getAllPipelines,

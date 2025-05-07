@@ -5,21 +5,23 @@ import { Hero } from "@/components/shared/Hero";
 import { HowItWorks } from "@/components/shared/HowItWork";
 import { TeamInfo } from "@/components/shared/TeamInfo";
 import { Vortex } from "@/components/ui/vortex";
+import { useTheme } from "next-themes";
 
 export default function Home() {
+  const { theme } = useTheme();
   return (
     <main className="overflow-hidden">
-      <Vortex
-        rangeY={1200}
-        particleCount={500}
-        baseHue={120}
-        className="flex items-start flex-col bg-background dark:bg-black justify-center px-2 md:px-10 py-4 w-full h-full"
-      >
+      {theme === "dark" ? (
+        <Vortex rangeY={200} particleCount={500} baseHue={120}>
+          <Hero />
+        </Vortex>
+      ) : (
         <Hero />
-        <CardsContainer />
-        <HowItWorks />
-        <TeamInfo />
-      </Vortex>
+      )}
+
+      <CardsContainer />
+      <HowItWorks />
+      <TeamInfo />
     </main>
   );
 }
