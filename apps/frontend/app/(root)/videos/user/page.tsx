@@ -260,13 +260,13 @@ export default function VideoManager() {
                       <td className="p-4 align-middle">
                         <div className="flex flex-wrap gap-1">
                           {video.tags && video.tags.length > 0 ? (
-                            video.tags.map((tag: string, index: number) => (
+                            video.tags.map((tag: any, index: number) => (
                               <div
                                 key={index}
                                 className="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full flex items-center"
                               >
                                 <Tag className="h-3 w-3 mr-1" />
-                                {tag}
+                                {tag.tagName}
                               </div>
                             ))
                           ) : (
