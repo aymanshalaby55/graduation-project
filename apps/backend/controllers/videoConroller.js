@@ -60,6 +60,7 @@ exports.uploadVideo = CatchAsync(async (req, res, next) => {
           },
           title: req.body.title,
           storageLimit: newStorageLimit,
+          tags: req.body.tags,
         };
 
         return videoUploadQueue.add(jobData, {
@@ -218,7 +219,13 @@ exports.getUserVideos = CatchAsync(async (req, res) => {
   const { user } = req;
 
   // Get user with populated videos
-  const populatedUser = await User.findById(user._id).populate("videos");
+  const populatedUser = await User.findById(user._id).populate({
+    path: "videos",
+    populate: {
+      path: "tags",
+      model: "Tag"
+    }
+  });
   const userVideos = populatedUser.videos;
   res.status(200).json({
     status: "success",

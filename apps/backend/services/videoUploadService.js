@@ -5,6 +5,7 @@ const path = require("path");
 const Queue = require("bull");
 const Video = require("../models/videoModel");
 const User = require("../models/userModel");
+const TagModel = require("../models/tagModel");
 
 // Constants
 const MAX_FILE_SIZE = 1000 * 1024 * 1024; // 100MB
@@ -49,7 +50,7 @@ const upload = multer({
 
 // Process video upload jobs
 videoUploadQueue.process(async (job) => {
-  const { userId, file, storageLimit, title } = job.data;
+  const { userId, file, storageLimit, title, tags: tagName } = job.data;
 
   try {
     // Ensure storage directory exists
@@ -79,6 +80,33 @@ videoUploadQueue.process(async (job) => {
       user: userId,
     });
 
+    // Check if tags were provided in the job data
+    if (tagName && tagName.length > 0) {
+      const tagIds = [];
+
+      // Process each tag
+      {
+        // Find existing tag or create a new one
+        console.log(tagName);
+        let tag = await TagModel.findOne({ tagName });
+
+        if (!tag) {
+          // Create new tag if it doesn't exist
+          tag = await TagModel.create({
+            tagName: tagName.trim().toLowerCase(),
+          });
+        }
+
+        tagIds.push(tag._id);
+      }
+
+      // Update the video with the tags
+      if (tagIds.length > 0) {
+        await Video.findByIdAndUpdate(video._id, {
+          $addToSet: { tags: { $each: tagIds } },
+        });
+      }
+    }
     // Update user storage limit
     await User.findByIdAndUpdate(userId, {
       $inc: { storageLimit: -file.size },

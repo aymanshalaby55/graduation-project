@@ -7,11 +7,6 @@ const TagSchema = new mongoose.Schema({
     trim: true,
     unique: true,
   },
-  videoId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Video",
-    required: true,
-  },
   createdAt: {
     type: Date,
     default: Date.now,
