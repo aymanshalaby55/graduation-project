@@ -11,9 +11,9 @@
  - add the running job in screen                                                                             => He4a                                done
  - change the theme of the site                                                                              => wagih                               done
  - added delete node button                                                                                  => He4a                                done
- - fix login and out                                                                                         => He4a                                done   
- - fix fav endpoint                                                                                          => he4a                                done    
- - FIX THE FUCKING CACHE                                                                                     => he4a                                done    
+ - fix login and out                                                                                         => He4a                                done
+ - fix fav endpoint                                                                                          => he4a                                done
+ - FIX THE FUCKING CACHE                                                                                     => he4a                                done
 
  - return the correct video path to appear the video preview                                                 => Ayman
  - delete videos delete on and delete many in front                                                          => wagih
