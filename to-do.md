@@ -7,16 +7,16 @@
  - and when select add analyze button in video manager                                                       => wagih                               done
  - add star and clone pipeline add user pipeline in profile page                                             => wagih                               done
  - appear analyze process in flow page and disable run button                                                => He4a                                done
- - add 2 models                                                                                              => ateya                               done
+ - add 1 models                                                                                              => ateya                               done
  - add the running job in screen                                                                             => He4a                                done
  - change the theme of the site                                                                              => wagih                               done
- - fix login and out                                                                                        => He4a                                 done
+ - fix login and out                                                                                         => He4a                                done
+ - in video manager add preview for the video                                                                => wagih                               done
 
+ - return the correct video path to appear the video preview                                                 => Ayman
+ - delete videos delete on and delete many in front                                                          => wagih
 
- - in video manager add preview for the video                                                               => wagih
- - delete videos delete on and delete many in front                                                         => wagih
-
- - delete videos delete on and delete many in back                                                          => Ayman 
- - fix fav endpoint                                                                                         => Ayman 
- - video tags                                                                                               => Atman 
- - cost time || free plan || hour limit for user                                                            => He4a || Ayman
+ - delete videos delete on and delete many in back                                                           => Ayman 
+ - fix fav endpoint                                                                                          => Ayman 
+ - video tags                                                                                                => Atman 
+ - cost time || free plan || hour limit for user                                                             => He4a || Ayman
