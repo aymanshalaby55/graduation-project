@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { useDnD } from "@/context/DnDContext";
+import PlanDetails from "./PlanDetails";
 
 const Sidebar = () => {
   const [_, setType] = useDnD() || [];
@@ -34,7 +35,8 @@ const Sidebar = () => {
           <h1>YOLO Models</h1>
         </div>
       </div>
-      <div className="sticky bottom-0 border-gray-700 py-4 w-full border-t ">
+      <div className="sticky bottom-0 border-gray-700 py-4 w-full border-t flex flex-col gap-y-5">
+        <PlanDetails />
         <Link href="/community">
           <Button className="bg-blue-600 hover:bg-blue-700 w-full text-white">
             Show Community Pipelines

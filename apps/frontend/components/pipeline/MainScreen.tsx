@@ -93,7 +93,10 @@ const MainPipelineScreen = () => {
         id: getId(),
         type,
         position,
-        data: { label: `${type} node` },
+        data: { 
+          label: `${type} node`,
+          onDelete: handleDelete // Pass the handleDelete function to the node data
+        },
       };
 
       setNodes((nds: any) => nds.concat(newNode));

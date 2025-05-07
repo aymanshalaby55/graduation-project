@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   Card,
@@ -6,16 +6,16 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { useQuery } from '@tanstack/react-query';
-import { Button } from '@/components/ui/button';
-import { useToast } from '@/components/ui/use-toast';
-import Swal from 'sweetalert2';
-import Link from 'next/link';
+} from "@/components/ui/card";
+import { useQuery } from "@tanstack/react-query";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
+import Swal from "sweetalert2";
+import Link from "next/link";
 
-import FlowPreview from '@/components/shared/FlowPreview';
-import { useUserContext } from '@/context/UserContext';
-import api from '@/utils/api';
+import FlowPreview from "@/components/shared/FlowPreview";
+import { useUserContext } from "@/context/UserContext";
+import api from "@/utils/api";
 
 interface Pipeline {
   _id: string;
@@ -40,7 +40,7 @@ const PageWrapper = ({
         <div className="flex sm:items-center items-start flex-col sm:flex-row gap-2 sm:gap-0 justify-between">
           <h1 className="text-2xl font-semibold">My Pipelines</h1>
           <Link href="/flow">
-            <Button variant={'secondary'} className="cursor-pointer">
+            <Button variant={"secondary"} className="cursor-pointer">
               <span className="mr-1">+</span> Generate New
             </Button>
           </Link>
@@ -76,11 +76,12 @@ export default function Pipelines() {
   const {
     data: UserPipelines,
     isLoading,
+    isFetching,
     error,
   } = useQuery({
-    queryKey: ['Pipeline'],
+    queryKey: ["Pipeline"],
     queryFn: async () => {
-      const { data } = await api.get('pipeline/getUserPipeline');
+      const { data } = await api.get("pipeline/getUserPipeline");
       return data;
     },
     refetchOnWindowFocus: false,
@@ -88,7 +89,7 @@ export default function Pipelines() {
 
   console.log(UserPipelines);
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return (
       <PageWrapper>
         <div className="flex flex-col gap-4 justify-center items-center h-full">
@@ -107,34 +108,34 @@ export default function Pipelines() {
   const handleDelete = async (id: string) => {
     try {
       const result = await Swal.fire({
-        title: 'Are you sure?',
+        title: "Are you sure?",
         text: "You won't be able to revert this!",
-        icon: 'warning',
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!',
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
       });
 
       if (result.isConfirmed) {
         await api.delete(`pipeline/deletePipeline/${id}`);
         toast({
-          title: 'Pipeline deleted successfully!',
-          variant: 'default',
+          title: "Pipeline deleted successfully!",
+          variant: "default",
         });
         Swal.fire({
-          title: 'Deleted!',
-          text: 'Your pipeline has been deleted.',
-          icon: 'success',
+          title: "Deleted!",
+          text: "Your pipeline has been deleted.",
+          icon: "success",
         });
       }
     } catch (error) {
-      console.error('Error deleting pipeline:', error);
+      console.error("Error deleting pipeline:", error);
       toast({
-        title: 'Error deleting pipeline',
+        title: "Error deleting pipeline",
         description:
-          'There was an issue deleting the pipeline. Please try again.',
-        variant: 'destructive',
+          "There was an issue deleting the pipeline. Please try again.",
+        variant: "destructive",
       });
     }
   };
