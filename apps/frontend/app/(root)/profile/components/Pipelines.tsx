@@ -17,59 +17,6 @@ import FlowPreview from "@/components/shared/FlowPreview";
 import { useUserContext } from "@/context/UserContext";
 import api from "@/utils/api";
 
-interface Pipeline {
-  _id: string;
-  name: string;
-  user: {
-    username: string;
-  };
-  createdAt: Date;
-  flowData: string;
-}
-
-const PageWrapper = ({
-  children,
-  error,
-}: {
-  children: React.ReactNode;
-  error?: boolean;
-}) => (
-  <div className="">
-    <div className="flex flex-col gap-6">
-      <div className="container max-w-7xl px-4 mx-auto p-6 flex flex-col gap-6">
-        <div className="flex sm:items-center items-start flex-col sm:flex-row gap-2 sm:gap-0 justify-between">
-          <h1 className="text-2xl font-semibold">My Pipelines</h1>
-          <Link href="/flow">
-            <Button variant={"secondary"} className="cursor-pointer">
-              <span className="mr-1">+</span> Generate New
-            </Button>
-          </Link>
-        </div>
-
-        <div className="">
-          <div className="relative inline-block">
-            <select className="appearance-none cursor-pointer border rounded-md py-2 pl-3 pr-10 bg-white outline-none text-sm">
-              <option>Date updated</option>
-              <option>Title</option>
-              <option>Recently viewed</option>
-            </select>
-            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-              <svg
-                className="fill-current h-4 w-4"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-              >
-                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-              </svg>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="container max-w-7xl px-4 mx-auto pb-6">{children}</div>
-    </div>
-  </div>
-);
-
 export default function Pipelines() {
   const { user }: any = useUserContext();
   const { toast } = useToast();
@@ -86,24 +33,6 @@ export default function Pipelines() {
     },
     refetchOnWindowFocus: false,
   });
-
-  console.log(UserPipelines);
-
-  if (isLoading || isFetching) {
-    return (
-      <PageWrapper>
-        <div className="flex flex-col gap-4 justify-center items-center h-full">
-          <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
-          <p className="ml-4 text-xl font-semibold">Loading pipelines...</p>
-        </div>
-      </PageWrapper>
-    );
-  }
-
-  if (error) {
-    // eslint-disable-next-line react/no-children-prop
-    return <PageWrapper error children={undefined} />;
-  }
 
   const handleDelete = async (id: string) => {
     try {
@@ -140,11 +69,41 @@ export default function Pipelines() {
     }
   };
 
+  if (isLoading || isFetching) {
+    return (
+      <div className="container max-w-7xl px-4 mx-auto p-6 flex flex-col gap-6">
+        <div className="flex flex-col gap-4 justify-center items-center h-screen">
+          <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
+          <p className="ml-4 text-xl font-semibold">Loading pipelines...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container max-w-7xl px-4 mx-auto p-6 flex flex-col gap-6">
+        <p className="text-xl font-semibold text-red-500">
+          Error loading pipelines. Please try again later.
+        </p>
+      </div>
+    );
+  }
+
   return (
-    <PageWrapper>
+    <div className="container max-w-7xl px-4 mx-auto p-6 flex flex-col gap-6">
+      <div className="flex sm:items-center items-start flex-col sm:flex-row gap-2 sm:gap-0 justify-between">
+        <h1 className="text-2xl font-semibold">My Pipelines</h1>
+        <Link href="/flow">
+          <Button variant={"secondary"} className="cursor-pointer">
+            <span className="mr-1">+</span> Generate New
+          </Button>
+        </Link>
+      </div>
+
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {UserPipelines?.pipelines?.length > 0 ? (
-          UserPipelines.pipelines.map((pipeline: Pipeline) => (
+          UserPipelines.pipelines.map((pipeline: any) => (
             <Card key={pipeline._id} className="flex flex-col">
               <CardHeader className="!p-0 max-h-[200px]">
                 <FlowPreview pipelineId={pipeline._id} />
@@ -159,7 +118,7 @@ export default function Pipelines() {
                   </Link>
                   <div className="flex items-center justify-between gap-3">
                     <p>{pipeline?.user?.username}</p>
-                    <span>12/5/2025</span>
+                    <span>{pipeline?.createdAt?.split("T")[0] || "invalid"}</span>
                   </div>
                 </div>
               </CardContent>
@@ -179,6 +138,6 @@ export default function Pipelines() {
           </div>
         )}
       </div>
-    </PageWrapper>
+    </div>
   );
 }
