@@ -1,54 +1,66 @@
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Card,
   CardContent,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
-import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
-import Swal from "sweetalert2";
-import Link from "next/link";
-import { ReactFlow, ReactFlowProvider, Background } from "@xyflow/react";
-import LoadPipelineButton from "@/components/pipeline/LoadPipelineButton";
 import { Search } from "lucide-react";
+import Link from "next/link";
 import FlowPreview from "@/components/shared/FlowPreview";
-import { useUserContext } from "@/context/UserContext";
 import api from "@/utils/api";
 
-interface Pipeline {
-  _id: string;
-  name: string;
-  user: {
-    username: string;
-  };
-  createdAt: Date;
-  flowData: string;
-}
+export default function CommunityPage() {
+  const {
+    data: allPipelines,
+    isLoading,
+    isFetching,
+    error,
+  } = useQuery({
+    queryKey: ["Pipeline"],
+    queryFn: async () => {
+      const { data } = await api.get("pipeline/getAllPipelines");
+      return data;
+    },
+    refetchOnWindowFocus: false,
+  });
 
-const PageWrapper = ({
-  children,
-  error,
-}: {
-  children: React.ReactNode;
-  error?: boolean;
-}) => (
-  <div className="">
+console.log("allPipelines", allPipelines);
+
+
+  if (isLoading || isFetching) {
+    return (
+      <div className="flex flex-col gap-4 justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
+        <p className="ml-4 text-xl font-semibold">Loading pipelines...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex flex-col gap-6">
+        <p className="text-xl font-semibold text-red-500">
+          Error loading pipelines. Please try again later.
+        </p>
+      </div>
+    );
+  }
+
+  return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-4 bg-gray-100 dark:bg-secondary py-6">
-        <div className="flex items-center justify-center gap-4 ">
+        <div className="flex items-center justify-center gap-4">
           <div className="flex flex-col gap-4 w-1/2">
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight ">
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
               Pipeline Community
             </h1>
             <p className="text-lg text-muted-foreground">
               Explore and discover pipelines shared by our community. Get
-              inspired by how others organize their thoughts and ideas, or share
-              your own creations to help others learn and grow.
+              inspired by how others organize their thoughts and ideas, or
+              share your own creations to help others learn and grow.
             </p>
           </div>
           <div className="">
@@ -74,87 +86,43 @@ const PageWrapper = ({
             type="search"
             className="block w-full p-4 pl-10 text-sm border rounded-md bg-background border-input"
             placeholder="Search for a pipeline"
-            // value={search}
-            // onChange={(e) => setSearch(e.target.value)}
           />
         </div>
       </div>
-      <div className="container max-w-7xl mx-auto px-4 pb-6">{children}</div>
-    </div>
-  </div>
-);
 
-export default function CommunityPage() {
-  const { user }: any = useUserContext();
-  const { toast } = useToast();
-  const {
-    data: allPipelines,
-    isLoading,
-    isFetching,
-    error,
-  } = useQuery({
-    queryKey: ["Pipeline"],
-    queryFn: async () => {
-      const { data } = await api.get("pipeline/getAllPipelines");
-      return data;
-    },
-    refetchOnWindowFocus: false,
-  });
-
-  console.log("pipelines", allPipelines);
-
-  if (isLoading || isFetching) {
-    return (
-      <PageWrapper>
-        <div className="flex flex-col gap-4 justify-center items-center h-full">
-          <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
-          <p className="ml-4 text-xl font-semibold">Loading pipelines...</p>
-        </div>
-      </PageWrapper>
-    );
-  }
-
-  if (error) {
-    // eslint-disable-next-line react/no-children-prop
-    return <PageWrapper error children={undefined} />;
-  }
-
-  return (
-    <PageWrapper>
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {allPipelines?.pipelines?.length > 0 ? (
-          allPipelines.pipelines.map((pipeline: Pipeline) => (
-            <Card key={pipeline._id} className="flex flex-col">
-              <CardHeader className="!p-0 max-h-[200px]">
-                <FlowPreview pipelineId={pipeline._id} />
-              </CardHeader>
-              <CardContent className="pt-4">
-                <div className="flex flex-col gap-3">
-                  <Link
-                    className="hover:underline"
-                    href={`/flow/${pipeline?._id}`}
-                  >
-                    <CardTitle className="text-lg">{pipeline.name}</CardTitle>
-                  </Link>
-                  <div className="flex items-center justify-between gap-3">
-                    {/* <Link
+      <div className="container max-w-7xl mx-auto px-4 pb-6">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {allPipelines?.pipelines?.length > 0 ? (
+            allPipelines.pipelines.map((pipeline: any) => (
+              <Card key={pipeline._id} className="flex flex-col">
+                <CardHeader className="!p-0 max-h-[200px]">
+                  <FlowPreview pipelineId={pipeline._id} />
+                </CardHeader>
+                <CardContent className="pt-4">
+                  <div className="flex flex-col gap-3">
+                    <Link
                       className="hover:underline"
-                      href={`/profile/${pipeline?.user?._id}`}
+                      href={`/flow/${pipeline?._id}`}
                     >
-                    </Link> */}
-                    <p>{pipeline?.user?.username}</p>
-                    <span>12/5/2025</span>
+                      <CardTitle className="text-lg">{pipeline.name}</CardTitle>
+                    </Link>
+                    <div className="flex items-center justify-between gap-3">
+                      <p>{pipeline?.user?.username}</p>
+                      <span>
+                        {pipeline?.createdAt?.split("T")[0] || "invalid"}
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))
-        ) : (
-          <div className="flex justify-center items-center h-full">
-            <p className="text-xl font-semibold">No pipelines available</p>
-          </div>
-        )}
+                </CardContent>
+              </Card>
+            ))
+          ) : (
+            <div className="flex justify-center items-center h-full">
+              <p className="text-xl font-semibold">No pipelines available</p>
+            </div>
+          )}
+        </div>
       </div>
-    </PageWrapper>
+    </div>
   );
 }
