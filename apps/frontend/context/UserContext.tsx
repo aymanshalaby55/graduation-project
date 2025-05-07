@@ -44,6 +44,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
       console.error("Logout Error:", error);
     } finally {
       setLoading(false);
+      window.location.href = "/";
     }
   };
 

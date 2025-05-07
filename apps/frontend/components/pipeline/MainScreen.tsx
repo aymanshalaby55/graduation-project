@@ -23,6 +23,7 @@ import SavePipeline from "./SavePipeline";
 import AnalizeButton from "./AnalizeButton";
 import { useVideoAnalysisContext } from "@/context/VideoAnalysisContext";
 import { useDnD } from "@/context/DnDContext";
+import { useTheme } from "next-themes";
 
 const initialNodes: any[] = [];
 
@@ -40,6 +41,9 @@ const MainPipelineScreen = () => {
     selectorNode: VideoUploaderNode,
     yoloModels: DropDownNode,
   };
+
+  const { theme } = useTheme();
+  console.log(theme);
 
   // Use useSearchParams to access the URL query parameters
   const searchParams = useSearchParams();
@@ -111,6 +115,20 @@ const MainPipelineScreen = () => {
     [setNodes, setEdges, setViewport]
   );
 
+  const handleDelete = useCallback(
+    (nodeId: string) => {
+      setNodes((prevNodes) =>
+        prevNodes.filter((node: any) => node.id !== nodeId)
+      );
+      setEdges((prevEdges) =>
+        prevEdges.filter(
+          (edge: any) => edge.source !== nodeId && edge.target !== nodeId
+        )
+      );
+    },
+    [setEdges, setNodes]
+  );
+
   // Load the pipeline when the component mounts or the URL changes
   useEffect(() => {
     if (encodedFlow) {
@@ -141,9 +159,10 @@ const MainPipelineScreen = () => {
           onDragOver={onDragOver}
           fitView
           nodeTypes={nodeTypes}
+          style={{ backgroundColor: theme === "dark" ? "#1a1a1a" : "#F7F9FB" }}
         >
           <Controls />
-          <div className="absolute top-5 left-5 z-50 bg-white/80 backdrop-blur-sm rounded-lg p-4 shadow-lg">
+          <div className="absolute top-5 left-5 z-50 bg-secondary backdrop-blur-sm rounded-lg p-4 shadow-lg">
             <div className="text-sm font-medium">
               <h3 className="text-base font-bold mb-2">Jobs Status</h3>
               {Object.entries(socketStatus || {}).map(

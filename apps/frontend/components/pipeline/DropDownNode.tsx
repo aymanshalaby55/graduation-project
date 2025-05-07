@@ -42,15 +42,17 @@ const DropDownNode = ({ data }: any) => {
   };
 
   return (
-    <div className="flex flex-col gap-5 p-1 bg-black">
+    <div className="flex flex-col gap-5 p-1 border-1 border-gray-500 rounded">
       <div>
         <select
           className="p-2 rounded-lg capitalize"
           onChange={handleModelSelect}
         >
-          <option value="">Yolo Models</option>
+          <option className="text-black" value="">
+            Yolo Models
+          </option>
           {allModels?.data?.aiModels.map((model: any) => (
-            <option key={model._id} value={model._id}>
+            <option className="text-black" key={model._id} value={model._id}>
               {model.modelName}
             </option>
           ))}
