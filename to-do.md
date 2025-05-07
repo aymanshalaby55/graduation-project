@@ -10,6 +10,7 @@
  - add 2 models                                                                                              => ateya                               done
  - add the running job in screen                                                                             => He4a                                done
  - change the theme of the site                                                                              => wagih                               done
+ - fix login and out                                                                                        => He4a                                 done
 
 
  - in video manager add preview for the video                                                               => wagih
@@ -19,4 +20,3 @@
  - fix fav endpoint                                                                                         => Ayman 
  - video tags                                                                                               => Atman 
  - cost time || free plan || hour limit for user                                                            => He4a || Ayman
- - fix login and out                                                                                        => He4a || wagih

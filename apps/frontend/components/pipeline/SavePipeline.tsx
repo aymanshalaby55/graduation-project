@@ -1,21 +1,21 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '../ui/dialog';
-import { Label } from '../ui/label';
-import { Input } from '../ui/input';
-import { Button } from '../ui/button';
-import { useMutation } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
-import { useToast } from '@/components/ui/use-toast';
-import { useReactFlow } from '@xyflow/react';
-import api from '@/utils/api';
+} from "../ui/dialog";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
+import { useReactFlow } from "@xyflow/react";
+import api from "@/utils/api";
 // import { useReactFlow } from 'react-flow-renderer';
 
 interface Pipeline {
@@ -24,7 +24,7 @@ interface Pipeline {
 }
 
 const SavePipeline = ({ flowData }: { flowData: string }) => {
-  const [name, setName] = useState<string>('');
+  const [name, setName] = useState<string>("");
   const router = useRouter();
   const { toast } = useToast();
   const { mutate: savePipeline, isPending } = useMutation({
@@ -35,26 +35,26 @@ const SavePipeline = ({ flowData }: { flowData: string }) => {
     onSuccess: (data) => {
       console.log(data);
       toast({
-        title: 'Success',
-        description: 'Pipeline saved successfully.',
-        variant: 'default',
+        title: "Success",
+        description: "Pipeline saved successfully.",
+        variant: "default",
       });
-      router.push('/community');
+      router.push("/community");
     },
     onError: (err: any) => {
       console.log(err);
       if (err.response.status === 409) {
         toast({
-          title: 'Error',
-          description: 'There is already a user with this data.',
-          variant: 'destructive',
+          title: "Error",
+          description: "There is already a user with this data.",
+          variant: "destructive",
         });
       }
       if (err.response.status === 404) {
         toast({
-          title: 'Error',
-          description: 'Please make sure all data is entered correctly.',
-          variant: 'destructive',
+          title: "Error",
+          description: "Please make sure all data is entered correctly.",
+          variant: "destructive",
         });
       }
     },
@@ -68,17 +68,17 @@ const SavePipeline = ({ flowData }: { flowData: string }) => {
       edges: getEdges(),
       viewport: getViewport(),
     };
-    
-    savePipeline({ 
+
+    savePipeline({
       name,
-      flowData: JSON.stringify(currentFlow)
+      flowData: JSON.stringify(currentFlow),
     });
   };
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="z-50" variant={'default'}>
+        <Button className="z-50 dark:text-white" variant={"default"}>
           Save Pipeline
         </Button>
       </DialogTrigger>
@@ -96,11 +96,7 @@ const SavePipeline = ({ flowData }: { flowData: string }) => {
               placeholder="Enter pipeline title"
             />
           </div>
-          <Button
-            onClick={handleSave}
-            className="w-full"
-            disabled={isPending}
-          >
+          <Button onClick={handleSave} className="w-full" disabled={isPending}>
             Save
           </Button>
         </div>

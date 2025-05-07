@@ -23,7 +23,7 @@ body {
   border-right: 1px solid #eee;
   padding: 15px 10px;
   font-size: 12px;
-  background: #fcfcfc;
+  /* background: #fcfcfc; */
 }
 
 .dndflow aside .description {
@@ -41,6 +41,7 @@ body {
   justify-content: center;
   align-items: center;
   cursor: grab;
+  background: #1a192b;
 }
 
 .dndflow .dndnode.input {
@@ -58,6 +59,10 @@ body {
 
 .dndflow .selectall {
   margin-top: 10px;
+}
+
+.react-flow__node {
+  background: #1f1c1c;
 }
 
 @media screen and (min-width: 768px) {
