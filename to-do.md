@@ -16,11 +16,13 @@
  - fix cache                                                                                                 => he4a                   done
  - in video manager add preview for the video                                                                => wagih                  done
  - add the correct date in pipeline                                                                          => wagih                  done
- - convert the old fetch to reactquery fetch (/flow/[id])                                                    => wagih                  done
+ - convert the old fetch to react query fetch (/flow/[id])                                                   => wagih                  done
 
 
 
- - return the correct video path to appear the video preview                                                 => Ayman
+ - return the correct video path to appear the video preview                                                 => AI
+ - delete videos delete on and delete many in back                                                           => AI
+ - video tags                                                                                                => AI
 
  - delete videos delete on and delete many in front                                                          => wagih
  - delete videos delete on and delete many in front                                                          => wagih
@@ -28,7 +30,6 @@
  - add boxes bg to the light mode hero section                                                               => he4a
  - cost time || free plan || hour limit for user                                                             => he4a
 
- - delete videos delete on and delete many in back                                                           => TBD
- - video tags                                                                                                => TBD
+
  - handle types error                                                                                        => TBD
- - run pipelone                                                                                              => TBD
+ - run pipeline                                                                                              => TBD
