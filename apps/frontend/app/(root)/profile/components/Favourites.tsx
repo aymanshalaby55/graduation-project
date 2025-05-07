@@ -1,21 +1,15 @@
-'use client';
+"use client";
 
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import { useQuery } from '@tanstack/react-query';
-import { Button } from '@/components/ui/button';
-import { useToast } from '@/components/ui/use-toast';
-import Swal from 'sweetalert2';
-import Link from 'next/link';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useQuery } from "@tanstack/react-query";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
+import Swal from "sweetalert2";
+import Link from "next/link";
 
-import FlowPreview from '@/components/shared/FlowPreview';
-import { useUserContext } from '@/context/UserContext';
-import api from '@/utils/api';
+import FlowPreview from "@/components/shared/FlowPreview";
+import { useUserContext } from "@/context/UserContext";
+import api from "@/utils/api";
 
 interface Pipeline {
   _id: string;
@@ -40,7 +34,7 @@ const PageWrapper = ({
         <div className="flex sm:items-center items-start flex-col sm:flex-row gap-2 sm:gap-0 justify-between">
           <h1 className="text-2xl font-semibold">My Favorites Pipelines</h1>
           <Link href="/community">
-            <Button variant={'secondary'} className="cursor-pointer">
+            <Button variant={"secondary"} className="cursor-pointer">
               <span className="mr-1">+</span> Discover Community
             </Button>
           </Link>
@@ -76,11 +70,12 @@ export default function Favourites() {
   const {
     data: FavPipelines,
     isLoading,
+    isFetching,
     error,
   } = useQuery({
-    queryKey: ['Pipeline'],
+    queryKey: ["Pipeline"],
     queryFn: async () => {
-      const { data } = await api.get('pipeline/getFavoritePipelines');
+      const { data } = await api.get("pipeline/getFavorites");
       return data;
     },
     refetchOnWindowFocus: false,
@@ -88,7 +83,7 @@ export default function Favourites() {
 
   console.log(FavPipelines);
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return (
       <PageWrapper>
         <div className="flex flex-col gap-4 justify-center items-center h-full">

@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import api from "@/utils/api";
 import { useVideoAnalysisContext } from "@/context/VideoAnalysisContext";
 
-const DropDownNode = ({ data }: any) => {
+const DropDownNode = ({ data, id }: any) => {
   const { videoAnalysisData, setVideoAnalysisData }: any =
     useVideoAnalysisContext();
   const [selectedModels, setSelectedModels] = useState<string[]>([]);
@@ -42,8 +42,26 @@ const DropDownNode = ({ data }: any) => {
   };
 
   return (
-    <div className="flex flex-col gap-5 p-1 border-1 border-gray-500 rounded">
+    <div className="flex flex-col gap-5 p-1 border-1 border-gray-500 rounded positive">
       <div>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            data.onDelete(id);
+          }}
+          style={{
+            position: "absolute",
+            top: "-2px",
+            right: "2px",
+            cursor: "pointer",
+            background: "transparent",
+            border: "none",
+            fontSize: "15px",
+            color: "#ff0000",
+          }}
+        >
+          ×
+        </button>
         <select
           className="p-2 rounded-lg capitalize"
           onChange={handleModelSelect}

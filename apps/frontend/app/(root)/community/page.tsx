@@ -1,24 +1,24 @@
-'use client';
+"use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { useQuery } from '@tanstack/react-query';
-import { Button } from '@/components/ui/button';
-import { useToast } from '@/components/ui/use-toast';
-import Swal from 'sweetalert2';
-import Link from 'next/link';
-import { ReactFlow, ReactFlowProvider, Background } from '@xyflow/react';
-import LoadPipelineButton from '@/components/pipeline/LoadPipelineButton';
-import { Search } from 'lucide-react';
-import FlowPreview from '@/components/shared/FlowPreview';
-import { useUserContext } from '@/context/UserContext';
-import api from '@/utils/api';
+} from "@/components/ui/card";
+import { useQuery } from "@tanstack/react-query";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
+import Swal from "sweetalert2";
+import Link from "next/link";
+import { ReactFlow, ReactFlowProvider, Background } from "@xyflow/react";
+import LoadPipelineButton from "@/components/pipeline/LoadPipelineButton";
+import { Search } from "lucide-react";
+import FlowPreview from "@/components/shared/FlowPreview";
+import { useUserContext } from "@/context/UserContext";
+import api from "@/utils/api";
 
 interface Pipeline {
   _id: string;
@@ -90,11 +90,12 @@ export default function CommunityPage() {
   const {
     data: allPipelines,
     isLoading,
+    isFetching,
     error,
   } = useQuery({
-    queryKey: ['Pipeline'],
+    queryKey: ["Pipeline"],
     queryFn: async () => {
-      const { data } = await api.get('pipeline/getAllPipelines');
+      const { data } = await api.get("pipeline/getAllPipelines");
       return data;
     },
     refetchOnWindowFocus: false,
@@ -102,7 +103,7 @@ export default function CommunityPage() {
 
   console.log("pipelines", allPipelines);
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return (
       <PageWrapper>
         <div className="flex flex-col gap-4 justify-center items-center h-full">
@@ -141,7 +142,7 @@ export default function CommunityPage() {
                       href={`/profile/${pipeline?.user?._id}`}
                     >
                     </Link> */}
-                      <p>{pipeline?.user?.username}</p>
+                    <p>{pipeline?.user?.username}</p>
                     <span>12/5/2025</span>
                   </div>
                 </div>

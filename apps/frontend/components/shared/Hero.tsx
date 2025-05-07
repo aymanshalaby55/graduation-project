@@ -30,17 +30,17 @@ export function Hero() {
           with our cutting-edge AI analyzer
         </Highlight>
         {!user ? (
-          <Link href="/sign-in">
-            <button className="inline-flex mt-10 w-fit text-3xl py-3 animate-shimmer items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors">
-              Try For Free
+          <div className="w-full flex justify-center">
+            <button className="inline-flex mt-10 w-fit text-3xl py-3 animate-shimmer items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors cursor-pointer">
+              <Link href="/sign-in">Try For Free</Link>
             </button>
-          </Link>
+          </div>
         ) : (
-          <Link href={`/flow`}>
-            <button className="inline-flex mt-10 w-fit text-3xl py-3 animate-shimmer items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors ">
-              Start Analyzing
+          <div className="w-full flex justify-center">
+            <button className="inline-flex mt-10 w-fit text-3xl py-3 animate-shimmer items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors  cursor-pointer">
+              <Link href={`/flow`}>Start Analyzing</Link>
             </button>
-          </Link>
+          </div>
         )}
       </motion.h1>
     </HeroHighlight>
