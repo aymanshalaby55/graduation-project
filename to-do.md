@@ -25,7 +25,6 @@
  - video tags                                                                                                => AI
 
  - delete videos delete on and delete many in front                                                          => wagih
- - delete videos delete on and delete many in front                                                          => wagih
 
  - add boxes bg to the light mode hero section                                                               => he4a
  - cost time || free plan || hour limit for user                                                             => he4a
