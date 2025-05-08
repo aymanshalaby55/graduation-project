@@ -4,6 +4,7 @@ import CardsContainer from "@/components/shared/CardsContainer";
 import { Hero } from "@/components/shared/Hero";
 import { HowItWorks } from "@/components/shared/HowItWork";
 import { TeamInfo } from "@/components/shared/TeamInfo";
+import { GridBackgroundDemo } from "@/components/ui/bg-boxes";
 import { Vortex } from "@/components/ui/vortex";
 import { useTheme } from "next-themes";
 
@@ -16,7 +17,9 @@ export default function Home() {
           <Hero />
         </Vortex>
       ) : (
-        <Hero />
+        <GridBackgroundDemo>
+          <Hero />
+        </GridBackgroundDemo>
       )}
 
       <CardsContainer />

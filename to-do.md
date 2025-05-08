@@ -26,7 +26,7 @@
 
  - delete videos delete on and delete many in front                                                          => wagih
 
- - add boxes bg to the light mode hero section                                                               => he4a
+ - add boxes bg to the light mode hero section                                                               => he4a                    done
  - cost time || free plan || hour limit for user                                                             => he4a
 
 
