@@ -223,8 +223,8 @@ exports.getUserVideos = CatchAsync(async (req, res) => {
     path: "videos",
     populate: {
       path: "tags",
-      model: "Tag"
-    }
+      model: "Tag",
+    },
   });
   const userVideos = populatedUser.videos;
   res.status(200).json({
@@ -265,6 +265,7 @@ exports.deleteVideo = CatchAsync(async (req, res, next) => {
       await Video.findByIdAndDelete(videoId);
       user.videos = user.videos.filter((v) => v.toString() !== videoId);
       await user.save();
+      return res.status(200).json({ message: "Video deleted successfully" });
     }
 
     next(error);

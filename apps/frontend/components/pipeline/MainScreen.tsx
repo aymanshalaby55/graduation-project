@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // components/MainPipelineScreen.tsx
 "use client";
 import React, { useRef, useCallback, useEffect } from "react";
@@ -11,7 +12,6 @@ import {
   Controls,
   useReactFlow,
   Background,
-  MiniMap,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import "@/app/index.css";
@@ -19,6 +19,7 @@ import { Button } from "../ui/button";
 import VideoUploaderNode from "./VideoUploaderNode";
 import DropDownNode from "./DropDownNode";
 import Sidebar from "./Sidebar";
+import UserStorageLimit from "../shared/UserStorageLimit";
 import SavePipeline from "./SavePipeline";
 import AnalizeButton from "./AnalizeButton";
 import { useVideoAnalysisContext } from "@/context/VideoAnalysisContext";
@@ -51,13 +52,13 @@ const MainPipelineScreen = () => {
 
   const { socketStatus } = useVideoAnalysisContext();
 
-  const pendingJobs = Object.values(socketStatus || {}).filter(
-    (job) => job.status === "pending"
-  );
+  // const pendingJobs = Object.values(socketStatus || {}).filter(
+  //   (job) => job.status === "pending"
+  // );
 
-  const completedJobs = Object.values(socketStatus || {}).filter(
-    (job) => job.status === "completed"
-  );
+  // const completedJobs = Object.values(socketStatus || {}).filter(
+  //   (job) => job.status === "completed"
+  // );
 
   const flow = toObject();
   const jsonFlow = JSON.stringify(flow, null, 2);
@@ -93,9 +94,9 @@ const MainPipelineScreen = () => {
         id: getId(),
         type,
         position,
-        data: { 
+        data: {
           label: `${type} node`,
-          onDelete: handleDelete // Pass the handleDelete function to the node data
+          onDelete: handleDelete, // Pass the handleDelete function to the node data
         },
       };
 
@@ -197,6 +198,7 @@ const MainPipelineScreen = () => {
                 ))}
             </div>
           </div>
+          <UserStorageLimit />
           <Background />
           {nodes.length > 0 && (
             <div className="relative h-screen">

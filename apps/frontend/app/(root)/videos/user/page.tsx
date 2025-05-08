@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import { useState, useMemo } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import { useState, useMemo } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
+} from "@/components/ui/dialog";
 import {
   Upload,
   Play,
@@ -19,18 +19,19 @@ import {
   Trash,
   Tag,
   X,
-} from 'lucide-react';
-import { useQuery } from '@tanstack/react-query';
-import VideoUploader from '@/components/shared/VideoUploader';
+} from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import VideoUploader from "@/components/shared/VideoUploader";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Checkbox } from '@/components/ui/checkbox';
-import Link from 'next/link';
-import api, { BASEURL } from '@/utils/api';
+} from "@/components/ui/dropdown-menu";
+import { Checkbox } from "@/components/ui/checkbox";
+import Link from "next/link";
+import api, { BASEURL } from "@/utils/api";
+import DeleteVideoButton from "@/components/shared/DeleteVideoButton";
 
 interface Video {
   id?: string;
@@ -44,12 +45,12 @@ interface Video {
 
 interface SortConfig {
   key: keyof Video;
-  direction: 'asc' | 'desc';
+  direction: "asc" | "desc";
 }
 
 export default function VideoManager() {
   const { data: userVideos } = useQuery({
-    queryKey: ['userVideos'],
+    queryKey: ["userVideos"],
     queryFn: async () => {
       const { data } = await api.get(`videos/getUserVideos`);
       return data;
@@ -59,21 +60,23 @@ export default function VideoManager() {
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
   const [selectedVideos, setSelectedVideos] = useState<string[]>([]);
   const [sortConfig, setSortConfig] = useState<SortConfig>({
-    key: 'title',
-    direction: 'asc',
+    key: "title",
+    direction: "asc",
   });
 
   const videos = userVideos?.data?.userVideos || [];
   console.log(videos);
 
   const handlePlayVideo = (videoPath: string) => {
-    const supportedFormats = ['.mp4', '.webm', '.ogg'];
+    const supportedFormats = [".mp4", ".webm", ".ogg"];
     const isSupported = supportedFormats.some((format) =>
       videoPath.toLowerCase().endsWith(format)
     );
     if (!isSupported) {
-      console.error('Unsupported video format:', videoPath);
-      alert('This video format is not supported. Please use MP4, WebM, or OGG.');
+      console.error("Unsupported video format:", videoPath);
+      alert(
+        "This video format is not supported. Please use MP4, WebM, or OGG."
+      );
       return;
     }
     // // const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3000';
@@ -86,16 +89,16 @@ export default function VideoManager() {
     setSortConfig({
       key,
       direction:
-        sortConfig.key === key && sortConfig.direction === 'asc'
-          ? 'desc'
-          : 'asc',
+        sortConfig.key === key && sortConfig.direction === "asc"
+          ? "desc"
+          : "asc",
     });
   };
 
   const handleSelectAll = (checked: boolean) => {
     if (checked) {
       setSelectedVideos(
-        videos.map((video: Video) => video.id || video._id || '')
+        videos.map((video: Video) => video.id || video._id || "")
       );
     } else {
       setSelectedVideos([]);
@@ -111,32 +114,34 @@ export default function VideoManager() {
   };
 
   function formatFileSize(bytes: number): string {
-    if (!bytes || bytes === 0) return '0 Bytes';
+    if (!bytes || bytes === 0) return "0 Bytes";
 
     const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
 
     return (
-      Number.parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
+      Number.parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i]
     );
   }
+
+  console.log(userVideos);
 
   const sortedVideos = useMemo(() => {
     if (!videos.length) return [];
 
     return [...videos].sort((a, b) => {
-      if (sortConfig.key === 'videoSize') {
-        return sortConfig.direction === 'asc'
+      if (sortConfig.key === "videoSize") {
+        return sortConfig.direction === "asc"
           ? a.videoSize - b.videoSize
           : b.videoSize - a.videoSize;
       }
 
       if (a[sortConfig.key] < b[sortConfig.key]) {
-        return sortConfig.direction === 'asc' ? -1 : 1;
+        return sortConfig.direction === "asc" ? -1 : 1;
       }
       if (a[sortConfig.key] > b[sortConfig.key]) {
-        return sortConfig.direction === 'asc' ? 1 : -1;
+        return sortConfig.direction === "asc" ? 1 : -1;
       }
       return 0;
     });
@@ -154,7 +159,7 @@ export default function VideoManager() {
                   <Trash className="h-4 w-4 mr-2" />
                   Delete Selected ({selectedVideos.length})
                 </Button>
-                <Link href={'/flow'}>
+                <Link href={"/flow"}>
                   <Button variant="default" size="sm">
                     <Play className="h-4 w-4 mr-2" />
                     Analyze Selected ({selectedVideos.length})
@@ -198,14 +203,14 @@ export default function VideoManager() {
                     <th className="h-12 px-4 text-left align-middle font-medium">
                       <button
                         className="flex items-center font-medium"
-                        onClick={() => handleSort('title')}
+                        onClick={() => handleSort("title")}
                       >
                         Title
                         <ArrowUpDown
                           className={`ml-2 h-4 w-4 ${
-                            sortConfig.key === 'title'
-                              ? 'text-primary'
-                              : 'text-muted-foreground'
+                            sortConfig.key === "title"
+                              ? "text-primary"
+                              : "text-muted-foreground"
                           }`}
                         />
                       </button>
@@ -213,14 +218,14 @@ export default function VideoManager() {
                     <th className="h-12 px-4 text-left align-middle font-medium">
                       <button
                         className="flex items-center font-medium text-nowrap"
-                        onClick={() => handleSort('originalName')}
+                        onClick={() => handleSort("originalName")}
                       >
                         File Name
                         <ArrowUpDown
                           className={`ml-2 h-4 w-4 ${
-                            sortConfig.key === 'originalName'
-                              ? 'text-primary'
-                              : 'text-muted-foreground'
+                            sortConfig.key === "originalName"
+                              ? "text-primary"
+                              : "text-muted-foreground"
                           }`}
                         />
                       </button>
@@ -228,14 +233,14 @@ export default function VideoManager() {
                     <th className="h-12 px-4 text-left align-middle font-medium">
                       <button
                         className="flex items-center font-medium"
-                        onClick={() => handleSort('videoSize')}
+                        onClick={() => handleSort("videoSize")}
                       >
                         Size
                         <ArrowUpDown
                           className={`ml-2 h-4 w-4 ${
-                            sortConfig.key === 'videoSize'
-                              ? 'text-primary'
-                              : 'text-muted-foreground'
+                            sortConfig.key === "videoSize"
+                              ? "text-primary"
+                              : "text-muted-foreground"
                           }`}
                         />
                       </button>
@@ -261,7 +266,7 @@ export default function VideoManager() {
                           )}
                           onCheckedChange={(checked) =>
                             handleSelectVideo(
-                              video.id || video._id || '',
+                              video.id || video._id || "",
                               !!checked
                             )
                           }
@@ -273,7 +278,7 @@ export default function VideoManager() {
                         </div>
                       </td> */}
                       <td className="p-4 align-middle font-medium flex gap-2">
-                        <FileVideo className="h-5 w-5 text-primary" />{' '}
+                        <FileVideo className="h-5 w-5 text-primary" />{" "}
                         {video.title}
                       </td>
                       <td className="p-4 align-middle truncate max-w-xs">
@@ -322,7 +327,7 @@ export default function VideoManager() {
                             </DropdownMenuItem>
                             <DropdownMenuItem className="text-destructive">
                               <Trash className="mr-2 h-4 w-4" />
-                              <span>Delete</span>
+                              <DeleteVideoButton videoId={video?._id} />
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>
@@ -348,31 +353,33 @@ export default function VideoManager() {
 
       {/* Video Player Modal */}
       {selectedVideo && (
-  <Dialog
-    open={!!selectedVideo}
-    onOpenChange={() => setSelectedVideo(null)}
-  >
-    <DialogContent className="max-w-4xl">
-      <DialogHeader>
-        <DialogTitle>Video Player</DialogTitle>
-      </DialogHeader>
-      {selectedVideo ? (
-        <video
-          src={selectedVideo}
-          className="w-full"
-          controls
-          autoPlay
-          onError={(e) => {
-            console.error('Video playback error:', e);
-            alert('Failed to load video. Please check the video URL or try again.');
-          }}
-        />
-      ) : (
-        <p className="text-red-500">No video selected.</p>
+        <Dialog
+          open={!!selectedVideo}
+          onOpenChange={() => setSelectedVideo(null)}
+        >
+          <DialogContent className="max-w-4xl">
+            <DialogHeader>
+              <DialogTitle>Video Player</DialogTitle>
+            </DialogHeader>
+            {selectedVideo ? (
+              <video
+                src={selectedVideo}
+                className="w-full"
+                controls
+                autoPlay
+                onError={(e) => {
+                  console.error("Video playback error:", e);
+                  alert(
+                    "Failed to load video. Please check the video URL or try again."
+                  );
+                }}
+              />
+            ) : (
+              <p className="text-red-500">No video selected.</p>
+            )}
+          </DialogContent>
+        </Dialog>
       )}
-    </DialogContent>
-  </Dialog>
-)}
     </div>
   );
 }
