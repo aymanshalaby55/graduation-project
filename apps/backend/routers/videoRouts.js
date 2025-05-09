@@ -12,7 +12,7 @@ router.get("/getUserVideos", protect, videoController.getUserVideos);
 router.post("/uploadVideo", videoController.uploadVideo);
 router.post("/addTag/:videoId", videoController.addVideoTag);
 router.get("/getAllTags", videoController.getTags);
-// router.get('/getVideo', videoController.getVideo);
+router.get("/deleteVideos", videoController.deleteVideos);
 
 router.delete("/deleteVideo/:videoId", videoController.deleteVideo);
 //router.get('/analyzeVideo/:videourl', videoController.analyzeVideo);

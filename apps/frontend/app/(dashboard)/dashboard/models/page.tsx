@@ -12,7 +12,7 @@ const AdminModels = () => {
   const { data: allModels } = useQuery({
     queryKey: ["models"],
     queryFn: async () => {
-      const { data } = await api.get("aiModels/admin/getAllModels");
+      const { data } = await api.get("models/getAllModels");
       return data;
     },
   });

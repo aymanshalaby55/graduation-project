@@ -271,3 +271,45 @@ exports.deleteVideo = CatchAsync(async (req, res, next) => {
     next(error);
   }
 });
+
+exports.deleteVideos = CatchAsync(async (req, res, next) => {
+  const { videoIds } = req.body; // Expecting array of video IDs
+  const { user } = req;
+
+  if (!videoIds || !Array.isArray(videoIds) || videoIds.length === 0) {
+    return res.status(400).json({ message: "No video IDs provided" });
+  }
+
+  // Find all videos
+  const videos = await Video.find({ _id: { $in: videoIds } });
+
+  if (videos.length === 0) {
+    return res.status(404).json({ message: "No videos found" });
+  }
+
+  try {
+    // Delete all video files from disk
+    await Promise.all(videos.map((video) => unlink(video.videoPath)));
+
+    // Remove videos from Video model
+    await Video.deleteMany({ _id: { $in: videoIds } });
+
+    // Remove videos from user's videos array
+    user.videos = user.videos.filter((v) => !videoIds.includes(v.toString()));
+    await user.save();
+
+    res.status(200).json({ message: "Videos deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting videos:", error);
+
+    if (error.code === "ENOENT") {
+      // File not found error - still proceed with database cleanup
+      await Video.deleteMany({ _id: { $in: videoIds } });
+      user.videos = user.videos.filter((v) => !videoIds.includes(v.toString()));
+      await user.save();
+      return res.status(200).json({ message: "Videos deleted successfully" });
+    }
+
+    next(error);
+  }
+});

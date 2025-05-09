@@ -155,7 +155,7 @@ export default function VideoManager() {
           <div className="flex flex-wrap md:flex-row flex-row-reverse gap-2">
             {selectedVideos.length > 0 && (
               <>
-                <Button variant="destructive" size="sm">
+                <Button variant="destructive" size="sm" onClick={delete}>
                   <Trash className="h-4 w-4 mr-2" />
                   Delete Selected ({selectedVideos.length})
                 </Button>

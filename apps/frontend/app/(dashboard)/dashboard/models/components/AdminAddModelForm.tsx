@@ -23,7 +23,7 @@ import api from "@/utils/api";
 const AdminAddModelForm = () => {
   const { mutate: createModel } = useMutation({
     mutationFn: async (modelData: any) => {
-      const { data } = await api.post("aiModels/createModel", modelData);
+      const { data } = await api.post("models/createModel", modelData);
       return data;
     },
     onSuccess: () => {
