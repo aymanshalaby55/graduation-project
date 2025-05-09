@@ -32,6 +32,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
 import api, { BASEURL } from "@/utils/api";
 import DeleteVideoButton from "@/components/shared/DeleteVideoButton";
+import DeleteVideosButton from "@/components/shared/DeleteVideosButton";
 
 interface Video {
   id?: string;
@@ -79,10 +80,6 @@ export default function VideoManager() {
       );
       return;
     }
-    // // const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3000';
-    // const fullPath = videoPath.startsWith('http') ? videoPath : `${BASEURL}${videoPath}`;
-    // console.log('Playing video with path:', fullPath);
-    // setSelectedVideo(fullPath);
   };
 
   const handleSort = (key: keyof Video) => {
@@ -155,10 +152,7 @@ export default function VideoManager() {
           <div className="flex flex-wrap md:flex-row flex-row-reverse gap-2">
             {selectedVideos.length > 0 && (
               <>
-                <Button variant="destructive" size="sm" onClick={delete}>
-                  <Trash className="h-4 w-4 mr-2" />
-                  Delete Selected ({selectedVideos.length})
-                </Button>
+                <DeleteVideosButton selectedVideos={selectedVideos} />
                 <Link href={"/flow"}>
                   <Button variant="default" size="sm">
                     <Play className="h-4 w-4 mr-2" />
