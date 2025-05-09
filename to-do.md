@@ -18,17 +18,13 @@
  - add the correct date in pipeline                                                                          => wagih                  done
  - convert the old fetch to react query fetch (/flow/[id])                                                   => wagih                  done
  - add boxes bg to the light mode hero section                                                               => he4a                   done
+ - video tags                                                                                                => Ayman                  done
+ - delete videos delete on and delete many in front                                                          => wagih                  done
+ - delete videos delete on and delete many in back                                                           => Ayman                  done
+ - return the correct video path to appear the video preview                                                 => wagih                  done
 
-
-
- - return the correct video path to appear the video preview                                                 => AI
- - delete videos delete on and delete many in back                                                           => AI
- - video tags                                                                                                => AI
-
- - delete videos delete on and delete many in front                                                          => wagih
-
- - cost time || free plan || hour limit for user                                                             => he4a
-
+ - cost time || free plan || hour limit for user                                                             => he4a              need updates
+ - make fire model work                                                                                      => ateya || Ayman    need updates
+ - run pipeline                                                                                              => TBD
 
  - handle types error                                                                                        => TBD
- - run pipeline                                                                                              => TBD

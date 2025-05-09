@@ -35,7 +35,7 @@ const Users = () => {
   });
 
   return (
-    <div className="p-5">
+    <div className="p-5 bg-secondary rounded-lg">
       <SelectSorting setSortParam={setSortParam} />
       <Table>
         <TableCaption>A list of your recent users.</TableCaption>
