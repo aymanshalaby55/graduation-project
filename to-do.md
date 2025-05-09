@@ -17,6 +17,7 @@
  - in video manager add preview for the video                                                                => wagih                  done
  - add the correct date in pipeline                                                                          => wagih                  done
  - convert the old fetch to react query fetch (/flow/[id])                                                   => wagih                  done
+ - add boxes bg to the light mode hero section                                                               => he4a                   done
 
 
 
@@ -26,7 +27,6 @@
 
  - delete videos delete on and delete many in front                                                          => wagih
 
- - add boxes bg to the light mode hero section                                                               => he4a
  - cost time || free plan || hour limit for user                                                             => he4a
 
 
