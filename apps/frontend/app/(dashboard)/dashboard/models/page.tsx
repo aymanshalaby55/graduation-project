@@ -18,7 +18,7 @@ const AdminModels = () => {
   });
 
   return (
-    <div className="bg-white shadow-md rounded-lg p-6">
+    <div className="bg-secondary shadow-md rounded-lg p-6">
       <h1 className="text-center font-semibold text-2xl mb-4">
         Model Activation
       </h1>

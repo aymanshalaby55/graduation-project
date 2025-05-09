@@ -21,9 +21,10 @@
  - video tags                                                                                                => Ayman                  done
  - delete videos delete on and delete many in front                                                          => wagih                  done
  - delete videos delete on and delete many in back                                                           => Ayman                  done
+ - return the correct video path to appear the video preview                                                 => wagih                  done
 
-
- - return the correct video path to appear the video preview                                                 => wagih
- - cost time || free plan || hour limit for user                                                             => he4a
+ - cost time || free plan || hour limit for user                                                             => he4a              need updates
+ - make fire model work                                                                                      => ateya || Ayman    need updates
  - run pipeline                                                                                              => TBD
+
  - handle types error                                                                                        => TBD

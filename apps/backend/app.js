@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const { createServer } = require("http");
 const morgan = require("morgan");
+const path = require("path");
 const { initializeSocket } = require("./utils/socket");
 // Import routes
 const videoRouter = require("./routers/videoRouts");
@@ -12,10 +13,7 @@ const userRouter = require("./routers/userRoutes");
 const aiModelRouter = require("./routers/AiModelsRoutes");
 const aiCallRoutes = require("./routers/aiCallsRoutes");
 const pipelineRoutes = require("./routers/pipelineRoutes");
-
 // Create Express app and HTTP server
-
-
 
 const app = express();
 const httpServer = createServer(app);
@@ -53,6 +51,8 @@ app.use("/api/v1/models", aiModelRouter);
 app.use("/api/v1/videos", videoRouter);
 app.use("/api/v1/aiCalls", aiCallRoutes);
 app.use("/api/v1/pipeline", pipelineRoutes);
+// apps/backend/index.js or server.js
+app.use('/AllVideos', express.static(path.join(__dirname, 'public/AllVideos')));
 
 // Health check route
 app.get("/health", (req, res) => {

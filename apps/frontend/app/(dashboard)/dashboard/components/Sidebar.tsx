@@ -14,10 +14,10 @@ const Sidebar = () => {
       name: 'Users',
       navTo: 'users',
     },
-    {
-      name: 'Edit Model',
-      navTo: 'models/editModel',
-    },
+    // {
+    //   name: 'Edit Model',
+    //   navTo: 'models/editModel',
+    // },
     {
       name: 'Models',
       navTo: 'models',
