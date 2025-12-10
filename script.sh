@@ -4,6 +4,19 @@ CONFIG_FILE="$HOME/.config/rclone/rclone.conf"
 LOG_FILE="/var/backup.log"
 BACKUP_DIR="/var/Backup"
 
+# Ensure necessary directories and files exist with proper permissions
+mkdir -p "$(dirname "$LOG_FILE")" 2>/dev/null || sudo mkdir -p "$(dirname "$LOG_FILE")"
+mkdir -p "$BACKUP_DIR" 2>/dev/null || sudo mkdir -p "$BACKUP_DIR"
+
+# Ensure log file exists and is writable
+if [ ! -f "$LOG_FILE" ]; then
+    sudo touch "$LOG_FILE" 2>/dev/null || touch "$LOG_FILE" 2>/dev/null
+fi
+sudo chmod 666 "$LOG_FILE" 2>/dev/null || chmod 666 "$LOG_FILE" 2>/dev/null
+
+# Ensure backup directory is writable
+sudo chown $USER:$USER "$BACKUP_DIR" 2>/dev/null || chown $USER:$USER "$BACKUP_DIR" 2>/dev/null
+sudo chmod 755 "$BACKUP_DIR" 2>/dev/null || chmod 755 "$BACKUP_DIR" 2>/dev/null
 
 #Functions
 
