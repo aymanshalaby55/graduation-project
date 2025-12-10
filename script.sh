@@ -79,18 +79,25 @@ compress_files(){
     
     # Check if source exists
     if [ ! -e "$source" ]; then
-        echo "Error: Source '$source' does not exist"
-        exit 1
+        echo "Error: Source '$source' does not exist" >&2
+        return 1
+    fi
+    
+    # Check if source is readable
+    if [ ! -r "$source" ]; then
+        echo "Error: Source '$source' is not readable" >&2
+        return 1
     fi
 
-    tar -czf "${output}.tar.gz" -C "$(dirname "$source")" "$(basename "$source")"
+    tar -czf "${output}.tar.gz" -C "$(dirname "$source")" "$(basename "$source")" 2>/dev/null
     
     if [ $? -eq 0 ]; then
         echo "File ${output}.tar.gz Compressed Successfully"
         echo "$output.tar.gz"  # Return the compressed file path
+        return 0
     else
-        echo "Error: Compression failed"
-        exit 1
+        echo "Error: Compression failed for '$source'" >&2
+        return 1
     fi
 }
 
@@ -99,6 +106,12 @@ perform_backup() {
     
     if [ -z "$source_path" ]; then
         echo "Error: No source path provided"
+        exit 1
+    fi
+    
+    # Verify the source path exists before attempting backup
+    if [ ! -e "$source_path" ]; then
+        echo "Error: Backup source '$source_path' does not exist"
         exit 1
     fi
     
@@ -127,8 +140,24 @@ perform_backup() {
 # Run the backup
 check_options $1
 
+# Get the last argument (the file/directory to backup)
+source_to_backup="${@: -1}"
+
+# Validate that a source was provided
+if [ -z "$source_to_backup" ]; then
+    echo "Error: No file or directory specified for backup"
+    echo "Usage: $0 [options] <file_or_directory>"
+    exit 1
+fi
+
+# Check if the source exists before attempting compression
+if [ ! -e "$source_to_backup" ]; then
+    echo "Error: Source '$source_to_backup' does not exist"
+    exit 1
+fi
+
 # Compress files and capture the output
-compressed_file=$(compress_files "${@: -1}")
+compressed_file=$(compress_files "$source_to_backup")
 
 # Check if compression was successful
 if [ $? -ne 0 ]; then
@@ -140,5 +169,5 @@ fi
 perform_backup "$BACKUP_DIR"
 
 
-# clean up backup folder
-rm -r "$BACKUP_DIR"
+# clean up backup folder contents (not the directory itself)
+rm -rf "$BACKUP_DIR"/*
